@@ -8,11 +8,13 @@ import {
   TextInput,
   Button,
   Pressable,
-  Alert
+  Alert,
+  Share
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/AntDesign";
+// import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 
 Date.prototype.format = function (f) {
@@ -117,6 +119,16 @@ export default function GeupsikScreen() {
     onChangeText(newDate.format("yyyy/MM/dd"));
   };
 
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${meal}`
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   AsyncStorage.getItem("schoolcode", (err, result) => {
     setSchoolCode(result * 1);
   });
@@ -192,7 +204,11 @@ export default function GeupsikScreen() {
     <View style={styles.container}>
       <View style={styles.rowContainer}>
         <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
-          <Icon name="leftcircleo" size={20} color={colors.colors.text} />
+          <Icon
+            name="keyboard-arrow-left"
+            size={20}
+            color={colors.colors.text}
+          />
         </Pressable>
         <TouchableOpacity onPress={showDatePicker}>
           <TextInput
@@ -205,7 +221,11 @@ export default function GeupsikScreen() {
           />
         </TouchableOpacity>
         <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
-          <Icon name="rightcircleo" size={20} color={colors.colors.text} />
+          <Icon
+            name="keyboard-arrow-right"
+            size={20}
+            color={colors.colors.text}
+          />
         </Pressable>
       </View>
       {isDatePickerVisible && Platform.OS != "ios" && (
@@ -218,6 +238,9 @@ export default function GeupsikScreen() {
         />
       )}
       <Text style={styles.title}>{meal}</Text>
+      <Pressable onPress={onShare}>
+        <Icon name="share" size={20} color={colors.colors.text} />
+      </Pressable>
     </View>
   );
 }
