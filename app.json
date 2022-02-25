@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Geupsik-application",
-    "slug": "Geupsik-application",
+    "name": "급식",
+    "slug": "Geupsik",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,17 +13,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "com.sungho0205.geupsik"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "userInterfaceStyle": "automatic",
+      "package": "com.sungho0205.geupsik",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
