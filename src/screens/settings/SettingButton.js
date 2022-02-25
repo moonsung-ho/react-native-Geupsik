@@ -23,7 +23,10 @@ export default function Button(props) {
       marginLeft: 5
     },
     switch: {},
-    Icon: { marginRight: 10 }
+    Icon: {
+      marginRight: props.iconMarginRight,
+      marginLeft: props.iconMarginLeft
+    }
   });
 
   return (

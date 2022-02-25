@@ -39,6 +39,8 @@ export default function SettingsScreen({ navigation }) {
         onPress={() => navigation.navigate("학교 설정")}
         icon="school"
         toggle={false}
+        iconMarginLeft={0}
+        iconMarginRight={15}
       />
       {/* <Button
         title="다크 모드"
@@ -47,6 +49,14 @@ export default function SettingsScreen({ navigation }) {
         icon="moon"
         toggle={true}
       /> */}
+      <Button
+        title="앱 정보"
+        onPress={() => navigation.navigate("정보")}
+        icon="info"
+        toggle={false}
+        iconMarginLeft={9}
+        iconMarginRight={24}
+      />
     </View>
   );
 }

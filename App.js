@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./src/navigations/Tab";
 import { AppearanceProvider } from "react-native-appearance";

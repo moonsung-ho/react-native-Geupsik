@@ -4,6 +4,7 @@ import GeupsikScreen from "./GeupsikScreen";
 import SettingsScreen from "./SettingsScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SchoolSettingScreen from "./settings/SchoolSettingScreen";
+import AppInfoScreen from "./settings/AppInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export const Settings = () => {
       <Stack.Navigator>
         <Stack.Screen name="설정" component={SettingsScreen} />
         <Stack.Screen name="학교 설정" component={SchoolSettingScreen} />
+        <Stack.Screen name="정보" component={AppInfoScreen} />
       </Stack.Navigator>
     </Container>
   );

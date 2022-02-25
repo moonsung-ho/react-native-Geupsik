@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -6,20 +6,16 @@ import {
   AsyncStorage,
   TouchableOpacity,
   TextInput,
-  Button,
   Pressable,
-  Alert,
   Share
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "@react-navigation/native";
-// import Icon from "react-native-vector-icons/AntDesign";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
-
   var weekName = [
     "일요일",
     "월요일",
@@ -30,7 +26,6 @@ Date.prototype.format = function (f) {
     "토요일"
   ];
   var d = this;
-
   return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function ($1) {
     switch ($1) {
       case "yyyy":
@@ -58,7 +53,6 @@ Date.prototype.format = function (f) {
     }
   });
 };
-
 String.prototype.string = function (len) {
   var s = "",
     i = 0;
@@ -73,7 +67,6 @@ String.prototype.zf = function (len) {
 Number.prototype.zf = function (len) {
   return this.toString().zf(len);
 };
-
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
 export default function GeupsikScreen() {
@@ -119,7 +112,7 @@ export default function GeupsikScreen() {
     onChangeText(newDate.format("yyyy/MM/dd"));
   };
 
-  const onShare = async () => {
+  const onShare = async (message) => {
     try {
       await Share.share({
         message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${meal}`
@@ -158,7 +151,8 @@ export default function GeupsikScreen() {
 
   const styles = StyleSheet.create({
     container: {
-      alignItems: "center"
+      alignItems: "center",
+      flex: 1
     },
     buttonText: {
       fontWeight: "bold",
@@ -197,6 +191,18 @@ export default function GeupsikScreen() {
       padding: 13,
       marginHorizontal: 20,
       borderColor: colors.colors.border
+    },
+    shareButton: {
+      width: 60,
+      height: 60,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 0,
+      borderRadius: 100,
+      backgroundColor: colors.colors.primary,
+      position: "absolute",
+      bottom: 10,
+      right: 10
     }
   });
 
@@ -238,8 +244,8 @@ export default function GeupsikScreen() {
         />
       )}
       <Text style={styles.title}>{meal}</Text>
-      <Pressable onPress={onShare}>
-        <Icon name="share" size={20} color={colors.colors.text} />
+      <Pressable onPress={onShare} style={styles.shareButton}>
+        <Icon name="share" size={22} color={"#FFF"} />
       </Pressable>
     </View>
   );
