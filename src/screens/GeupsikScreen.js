@@ -198,12 +198,11 @@ export default function GeupsikScreen() {
       borderColor: colors.colors.border
     },
     button: {
-      padding: 5,
+      justifyContent: "center",
       borderRadius: 12,
       borderWidth: 1,
       width: 50,
       alignItems: "center",
-      padding: 13,
       marginHorizontal: 20,
       borderColor: colors.colors.border
     },

@@ -6,11 +6,11 @@ export default function AppInfoScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: "center"
+      alignItems: "center",
+      justifyContent: "center"
     },
     text: {
       color: colors.colors.primary,
-      marginTop: 50,
       fontSize: 30
     }
   });
