@@ -42,6 +42,14 @@ export default function SettingsScreen({ navigation }) {
         iconMarginLeft={0}
         iconMarginRight={15}
       />
+      <Button
+        title="알레르기 설정"
+        onPress={() => navigation.navigate("알레르기 설정")}
+        icon="virus"
+        toggle={false}
+        iconMarginLeft={2}
+        iconMarginRight={18}
+      />
       {/* <Button
         title="다크 모드"
         onPress={toggleDarkmode}

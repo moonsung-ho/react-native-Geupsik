@@ -13,6 +13,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
+import GestureRecognizer from "react-native-swipe-gestures";
+import ParsedText from "react-native-parsed-text";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -75,6 +77,7 @@ export default function GeupsikScreen() {
   const [date, setDate] = useState(new Date());
   const [schoolCode, setSchoolCode] = useState("7031159");
   const [officeCode, setOfficeCode] = useState("B09");
+  const [allergy, setAlergy] = useState("");
   const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -112,7 +115,7 @@ export default function GeupsikScreen() {
     onChangeText(newDate.format("yyyy/MM/dd"));
   };
 
-  const onShare = async (message) => {
+  const onShare = async () => {
     try {
       await Share.share({
         message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${meal}`
@@ -128,6 +131,9 @@ export default function GeupsikScreen() {
   AsyncStorage.getItem("officecode", (err, result) => {
     setOfficeCode(result);
   });
+  AsyncStorage.getItem("allergy", (err, result) => {
+    setAlergy(result);
+  });
 
   const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=4c1690204c08404ca7f1775720f17054&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
     "yyyyMMdd"
@@ -140,6 +146,15 @@ export default function GeupsikScreen() {
       } else {
         let meal =
           json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").join("\n");
+
+        let menus = meal.split("\n");
+        let n = 0;
+        while (n < menus.length) {
+          if (menus[n].includes(allergy + ".")) {
+            meal = meal.replace(menus[n], `ㅤ${menus[n]}ㅤ`);
+          }
+          n = n + 1;
+        }
         meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
         meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
         setMeal(meal);
@@ -207,46 +222,67 @@ export default function GeupsikScreen() {
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.rowContainer}>
-        <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
-          <Icon
-            name="keyboard-arrow-left"
-            size={20}
-            color={colors.colors.text}
+    <GestureRecognizer
+      onSwipeLeft={seeTomorrowGeupsik}
+      onSwipeRight={seeYesterdayGeupsik}
+      style={{ flex: 1 }}
+      config={{
+        velocityThreshold: 0.1,
+        directionalOffsetThreshold: 60
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.rowContainer}>
+          <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
+            <Icon
+              name="keyboard-arrow-left"
+              size={20}
+              color={colors.colors.text}
+            />
+          </Pressable>
+          <TouchableOpacity onPress={showDatePicker}>
+            <TextInput
+              pointerEvents="none"
+              style={styles.textInput}
+              placeholderTextColor="#000000"
+              underlineColorAndroid="transparent"
+              editable={false}
+              value={text}
+            />
+          </TouchableOpacity>
+          <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
+            <Icon
+              name="keyboard-arrow-right"
+              size={20}
+              color={colors.colors.text}
+            />
+          </Pressable>
+        </View>
+        {isDatePickerVisible && Platform.OS != "ios" && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleConfirm}
           />
-        </Pressable>
-        <TouchableOpacity onPress={showDatePicker}>
-          <TextInput
-            pointerEvents="none"
-            style={styles.textInput}
-            placeholderTextColor="#000000"
-            underlineColorAndroid="transparent"
-            editable={false}
-            value={text}
-          />
-        </TouchableOpacity>
-        <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
-          <Icon
-            name="keyboard-arrow-right"
-            size={20}
-            color={colors.colors.text}
-          />
+        )}
+        <Text style={styles.title}>
+          <ParsedText
+            parse={[
+              {
+                pattern: /ㅤ.*ㅤ/,
+                style: { color: colors.colors.error }
+              }
+            ]}
+          >
+            {meal}
+          </ParsedText>
+        </Text>
+        <Pressable onPress={onShare} style={styles.shareButton}>
+          <Icon name="share" size={22} color={"#FFF"} />
         </Pressable>
       </View>
-      {isDatePickerVisible && Platform.OS != "ios" && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          display="default"
-          onChange={handleConfirm}
-        />
-      )}
-      <Text style={styles.title}>{meal}</Text>
-      <Pressable onPress={onShare} style={styles.shareButton}>
-        <Icon name="share" size={22} color={"#FFF"} />
-      </Pressable>
-    </View>
+    </GestureRecognizer>
   );
 }
