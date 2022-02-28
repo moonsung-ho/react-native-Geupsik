@@ -24,7 +24,7 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
       <Tab.Screen
-        name="급식"
+        name="급식tab"
         component={Geupsik}
         options={{
           headerShown: false,
@@ -34,7 +34,7 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="설정"
+        name="설정tab"
         component={Settings}
         options={{
           headerShown: false,

@@ -15,6 +15,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import ParsedText from "react-native-parsed-text";
+import checkIfFirstLaunch from "../detectAppFirstLaunch";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -71,7 +72,7 @@ Number.prototype.zf = function (len) {
 };
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
-export default function GeupsikScreen() {
+export default function GeupsikScreen({ navigation }) {
   const colors = useTheme();
   const [meal, setMeal] = useState("급식을 가져오는 중입니다.");
   const [date, setDate] = useState(new Date());
@@ -80,6 +81,10 @@ export default function GeupsikScreen() {
   const [allergy, setAlergy] = useState("");
   const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  if (checkIfFirstLaunch() === true) {
+    navigation.navigate("first-launch");
+  }
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -151,7 +156,7 @@ export default function GeupsikScreen() {
         let n = 0;
         while (n < menus.length) {
           if (menus[n].includes(allergy + ".")) {
-            meal = meal.replace(menus[n], `ㅤ${menus[n]}ㅤ`);
+            meal = meal.replace(menus[n], `​${menus[n]}​`);
           }
           n = n + 1;
         }
@@ -183,7 +188,8 @@ export default function GeupsikScreen() {
       textAlign: "center",
       fontSize: 30,
       fontWeight: "bold",
-      color: colors.colors.text
+      color: colors.colors.text,
+      alignContent: "center"
     },
     textInput: {
       fontSize: 16,
@@ -270,7 +276,7 @@ export default function GeupsikScreen() {
           <ParsedText
             parse={[
               {
-                pattern: /ㅤ.*ㅤ/,
+                pattern: /​.*​/,
                 style: { color: colors.colors.error }
               }
             ]}

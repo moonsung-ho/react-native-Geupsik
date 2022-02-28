@@ -10,7 +10,6 @@ import {
   FlatList,
   TouchableOpacity
 } from "react-native";
-import { Divider } from "react-native-elements/dist/divider/Divider";
 
 export default function SchoolSettingScreen() {
   const colors = useTheme();
@@ -77,13 +76,15 @@ export default function SchoolSettingScreen() {
     },
     input: {
       height: 40,
-      width: 250,
       marginTop: 30,
       borderColor: colors.colors.border,
       borderWidth: 1,
       color: colors.colors.text,
       padding: 10,
-      borderRadius: 10
+      borderRadius: 100,
+      flex: 1,
+      margin: 40,
+      textAlign: "center"
     },
     text: {
       color: colors.colors.text
@@ -102,12 +103,14 @@ export default function SchoolSettingScreen() {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="학교 검색"
-        onSubmitEditing={(event) => searchSchool(event.nativeEvent.text)}
-        placeholderTextColor={colors.colors.border}
-      />
+      <View style={{ flexDirection: "row" }}>
+        <TextInput
+          style={styles.input}
+          placeholder="학교 검색"
+          onSubmitEditing={(event) => searchSchool(event.nativeEvent.text)}
+          placeholderTextColor={colors.colors.border}
+        />
+      </View>
       <Text style={styles.error}>{message}</Text>
       <FlatList data={data} renderItem={renderItem} />
     </View>

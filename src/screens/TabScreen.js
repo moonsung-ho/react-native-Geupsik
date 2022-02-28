@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SchoolSettingScreen from "./settings/SchoolSettingScreen";
 import AppInfoScreen from "./settings/AppInfoScreen";
 import AllergySettingScreen from "./settings/AllergySettingScreen";
+import AppfirstLaunchScreen from "./AppFirstLaunch";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,18 @@ const Container = styled.View`
 export const Geupsik = () => {
   return (
     <Container>
-      <GeupsikScreen />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="급식"
+          component={GeupsikScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="first-launch"
+          component={AppfirstLaunchScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </Container>
   );
 };

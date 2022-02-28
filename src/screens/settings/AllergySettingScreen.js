@@ -40,7 +40,7 @@ export default function AllergySettingScreen() {
         itemStyle={{ color: colors.colors.text }}
         style={styles.picker}
       >
-        <Picker.Item label="없음" value="0" />
+        <Picker.Item label="없음" value="000" />
         <Picker.Item label="난류" value="1" />
         <Picker.Item label="우유" value="2" />
         <Picker.Item label="메밀" value="3" />

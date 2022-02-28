@@ -1,15 +1,6 @@
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  Alert,
-  Pressable,
-  AsyncStorage
-} from "react-native";
+import { View, AsyncStorage } from "react-native";
 import { useState } from "react";
 import Button from "./settings/SettingButton";
-import * as Update from "expo-updates";
 
 export default function SettingsScreen({ navigation }) {
   const [isDarkmodeAsyncStorage, setIsDarkmodeAsyncStorage] = useState(false);
@@ -26,6 +17,7 @@ export default function SettingsScreen({ navigation }) {
     // setIsDarkmodeToggled((previous) => !previous);
     // AsyncStorage.setItem("isdarkmode", `${isDarkmodeToggled}`, () => {});
   }
+
   return (
     <View
       style={{

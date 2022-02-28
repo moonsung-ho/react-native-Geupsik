@@ -52,7 +52,7 @@ export default function Button(props) {
         <View style={styles.switchView}>
           {(props.toggle && (
             <Switch
-              style={{ marginLeft: 10 }}
+              style={{ alignSelf: "flex-end" }}
               onValueChange={props.onPress}
               value={props.value}
             />
