@@ -131,17 +131,15 @@ export default function GeupsikScreen({ navigation }) {
     }
   };
 
-  useEffect(() => {
-    AsyncStorage.getItem("schoolcode", (err, result) => {
-      setSchoolCode(result * 1);
-    });
-    AsyncStorage.getItem("officecode", (err, result) => {
-      setOfficeCode(result);
-    });
-    AsyncStorage.getItem("allergy", (err, result) => {
-      setAlergy(result);
-    });
-  }, []);
+  AsyncStorage.getItem("schoolcode", (err, result) => {
+    setSchoolCode(result * 1);
+  });
+  AsyncStorage.getItem("officecode", (err, result) => {
+    setOfficeCode(result);
+  });
+  AsyncStorage.getItem("allergy", (err, result) => {
+    setAlergy(result);
+  });
 
   const Item = ({ menu }) => (
     <TouchableOpacity

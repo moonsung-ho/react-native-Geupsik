@@ -80,7 +80,6 @@ export default function SchoolSettingScreen() {
       alignItems: "center"
     },
     result: {
-      borderTopWidth: 1,
       borderBottomWidth: 1,
       borderColor: colors.colors.border,
       width: Dimensions.get("window").width,
@@ -95,8 +94,7 @@ export default function SchoolSettingScreen() {
       padding: 10,
       flex: 7,
       textAlign: "center",
-      borderLeftWidth: 0,
-      borderBottomWidth: 1
+      borderLeftWidth: 0
     },
     text: {
       color: colors.colors.text,
@@ -116,7 +114,6 @@ export default function SchoolSettingScreen() {
       height: 40,
       flex: 1,
       borderWidth: 2,
-      borderBottomWidth: 1,
       borderColor: colors.colors.border,
       borderLeftWidth: 0,
       alignItems: "center",
