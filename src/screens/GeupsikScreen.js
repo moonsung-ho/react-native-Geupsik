@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,14 +7,16 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
-  Share
+  Share,
+  FlatList,
+  Alert,
+  Linking
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
-import ParsedText from "react-native-parsed-text";
 import checkIfFirstLaunch from "../detectAppFirstLaunch";
 
 Date.prototype.format = function (f) {
@@ -74,7 +76,7 @@ Number.prototype.zf = function (len) {
 
 export default function GeupsikScreen({ navigation }) {
   const colors = useTheme();
-  const [meal, setMeal] = useState("급식을 가져오는 중입니다.");
+  const [data, setData] = useState(["급식을 가져오는 중입니다."]);
   const [date, setDate] = useState(new Date());
   const [schoolCode, setSchoolCode] = useState("7031159");
   const [officeCode, setOfficeCode] = useState("B09");
@@ -100,7 +102,6 @@ export default function GeupsikScreen({ navigation }) {
     } else {
     }
   };
-
   const seeYesterdayGeupsik = () => {
     const newDate = new Date(
       date.getFullYear(),
@@ -123,51 +124,97 @@ export default function GeupsikScreen({ navigation }) {
   const onShare = async () => {
     try {
       await Share.share({
-        message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${meal}`
+        message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${data}`
       });
     } catch (error) {
       alert(error.message);
     }
   };
 
-  AsyncStorage.getItem("schoolcode", (err, result) => {
-    setSchoolCode(result * 1);
-  });
-  AsyncStorage.getItem("officecode", (err, result) => {
-    setOfficeCode(result);
-  });
-  AsyncStorage.getItem("allergy", (err, result) => {
-    setAlergy(result);
-  });
-
-  const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=4c1690204c08404ca7f1775720f17054&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
-    "yyyyMMdd"
-  )}`;
-  fetch(url)
-    .then((response) => response.json())
-    .then((json) => {
-      if (!("mealServiceDietInfo" in json)) {
-        setMeal("급식이 없는 날입니다.");
-      } else {
-        let meal =
-          json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").join("\n");
-
-        let menus = meal.split("\n");
-        let n = 0;
-        while (n < menus.length) {
-          if (menus[n].includes(allergy + ".")) {
-            meal = meal.replace(menus[n], `​${menus[n]}​`);
-          }
-          n = n + 1;
-        }
-        meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
-        meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
-        setMeal(meal);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
+  useEffect(() => {
+    AsyncStorage.getItem("schoolcode", (err, result) => {
+      setSchoolCode(result * 1);
     });
+    AsyncStorage.getItem("officecode", (err, result) => {
+      setOfficeCode(result);
+    });
+    AsyncStorage.getItem("allergy", (err, result) => {
+      setAlergy(result);
+    });
+  }, []);
+
+  const Item = ({ menu }) => (
+    <TouchableOpacity
+      onLongPress={() => {
+        Alert.alert(
+          "이 음식이 뭐지?",
+          menu + "을(를) 검색해 보자.",
+          [
+            {
+              text: "취소",
+              style: "cancel"
+            },
+            {
+              text: "검색",
+              onPress: () =>
+                Linking.openURL("https://www.google.com/search?q=" + menu),
+              style: "default"
+            }
+          ],
+          {
+            cancelable: true
+          }
+        );
+      }}
+      activeOpacity={0.8}
+    >
+      <View>
+        <Text style={styles.title}>
+          {menu.includes("<") && menu.includes(">") ? (
+            <Text style={{ color: "red" }}>
+              {menu.replace("<", "").replace(">", "")}
+            </Text>
+          ) : (
+            menu
+          )}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const renderItem = ({ item }) => <Item menu={item} />;
+
+  useEffect(() => {
+    const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=4c1690204c08404ca7f1775720f17054&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
+      "yyyyMMdd"
+    )}`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => {
+        if (!("mealServiceDietInfo" in json)) {
+          setData(["급식이 없는 날입니다."]);
+        } else {
+          let meal =
+            json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").join(
+              "\n"
+            );
+          let menus = meal.split("\n");
+          let n = 0;
+          while (n < menus.length) {
+            if (menus[n].includes(allergy + ".")) {
+              meal = meal.replace(menus[n], `<${menus[n]}>`);
+            }
+            n = n + 1;
+          }
+          meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
+          meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
+          setData(meal.split("\n"));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [text]);
 
   const styles = StyleSheet.create({
     container: {
@@ -183,8 +230,6 @@ export default function GeupsikScreen({ navigation }) {
       marginTop: 40
     },
     title: {
-      marginTop: 100,
-      paddingVertical: 8,
       textAlign: "center",
       fontSize: 30,
       fontWeight: "bold",
@@ -272,7 +317,12 @@ export default function GeupsikScreen({ navigation }) {
             onChange={handleConfirm}
           />
         )}
-        <Text style={styles.title}>
+        <FlatList
+          style={{ marginTop: 100 }}
+          data={data}
+          renderItem={renderItem}
+        />
+        {/* <Text style={styles.title}>
           <ParsedText
             parse={[
               {
@@ -283,7 +333,7 @@ export default function GeupsikScreen({ navigation }) {
           >
             {meal}
           </ParsedText>
-        </Text>
+        </Text> */}
         <Pressable onPress={onShare} style={styles.shareButton}>
           <Icon name="share" size={22} color={"#FFF"} />
         </Pressable>

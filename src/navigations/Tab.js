@@ -14,13 +14,6 @@ const MaterialCommunityIconsSet = ({ name, size, color }) => {
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const [geupsikScreenTitle, setGeupsikScreenTitle] = useState("급식");
-  AsyncStorage.getItem("schoolname", (err, result) => {
-    setGeupsikScreenTitle(result + "의 급식");
-    if (result === null) {
-      Alert.alert("설정에서 학교를 설정해주세요!");
-    }
-  });
   return (
     <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
       <Tab.Screen

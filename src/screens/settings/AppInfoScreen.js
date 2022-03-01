@@ -1,5 +1,6 @@
-import { Linking, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import Carousel from "react-native-snap-carousel";
 
 export default function AppInfoScreen() {
   const colors = useTheme();
@@ -10,18 +11,14 @@ export default function AppInfoScreen() {
       justifyContent: "center"
     },
     text: {
-      color: colors.colors.primary,
-      fontSize: 30
+      color: colors.colors.text,
+      fontSize: 50,
+      margin: 15
     }
   });
   return (
     <View style={styles.container}>
-      <Text
-        style={styles.text}
-        onPress={() => Linking.openURL("https://github.com/sungho0205")}
-      >
-        문성호
-      </Text>
+      <Text style={styles.text}>문성호</Text>
     </View>
   );
 }

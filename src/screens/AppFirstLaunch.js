@@ -29,20 +29,33 @@ export default function AppfirstLaunchScreen({ navigation }) {
           style={{ height: 100, width: 100, alignSelf: "center" }}
           source={icon}
         />
-        <Text>설치해 주셔서 감사합니다!</Text>
-        <Text>아래 버튼을 누르면 설정으로 이동합니다.</Text>
-        <Text>설정에서는 학교 설정 및 알레르기 유발 식품 설정을</Text>
-        <Text>할 수 있습니다.</Text>
-        <Button
-          onPress={() => {
-            navigation.navigate("급식tab", { screen: "급식" });
-            navigation.navigate("설정tab");
-          }}
-          title="설정으로 이동"
-        />
+        <Text style={{ color: colors.colors.text }}>
+          설치해 주셔서 감사합니다!
+        </Text>
+        <Text style={{ color: colors.colors.text }}>
+          아래 버튼을 누르면 설정으로 이동합니다.
+        </Text>
+        <Text style={{ color: colors.colors.text }}>
+          설정에서는 학교 설정 및 알레르기 유발 식품 설정을
+        </Text>
+        <Text style={{ color: colors.colors.text }}>할 수 있습니다.</Text>
+        <View style={{ marginTop: 15 }}>
+          <Button
+            onPress={() => {
+              navigation.navigate("급식tab", { screen: "급식" });
+              navigation.navigate("설정tab");
+            }}
+            title="설정으로 이동"
+          />
+        </View>
       </View>
       <Text
-        style={{ textAlignVertical: "bottom", margin: 5, alignSelf: "center" }}
+        style={{
+          textAlignVertical: "bottom",
+          margin: 5,
+          alignSelf: "center",
+          color: colors.colors.text
+        }}
       >
         문성호
       </Text>
