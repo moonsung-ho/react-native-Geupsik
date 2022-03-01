@@ -146,25 +146,27 @@ export default function GeupsikScreen({ navigation }) {
   const Item = ({ menu }) => (
     <TouchableOpacity
       onLongPress={() => {
-        Alert.alert(
-          "이 음식이 뭐지?",
-          menu + "을(를) 검색해 보자.",
-          [
+        if (menu !== "급식이 없는 날입니다.") {
+          Alert.alert(
+            "이 음식이 뭐지?",
+            menu.replace("<", "").replace(">", "") + "을(를) 검색해 보자.",
+            [
+              {
+                text: "취소",
+                style: "cancel"
+              },
+              {
+                text: "검색",
+                onPress: () =>
+                  Linking.openURL("https://www.google.com/search?q=" + menu),
+                style: "default"
+              }
+            ],
             {
-              text: "취소",
-              style: "cancel"
-            },
-            {
-              text: "검색",
-              onPress: () =>
-                Linking.openURL("https://www.google.com/search?q=" + menu),
-              style: "default"
+              cancelable: true
             }
-          ],
-          {
-            cancelable: true
-          }
-        );
+          );
+        }
       }}
       activeOpacity={0.8}
     >
