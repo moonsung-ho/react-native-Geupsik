@@ -52,6 +52,14 @@ export default function SettingsScreen({ navigation }) {
       <Button
         title="도움말"
         onPress={() => navigation.navigate("도움말")}
+        icon="question"
+        toggle={false}
+        iconMarginLeft={4}
+        iconMarginRight={20}
+      />
+      <Button
+        title="앱 정보"
+        onPress={() => navigation.navigate("앱 정보")}
         icon="info"
         toggle={false}
         iconMarginLeft={9}

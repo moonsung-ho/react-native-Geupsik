@@ -1,7 +1,7 @@
 export const darkTheme = {
   dark: true,
   colors: {
-    primary: "#007AFF",
+    primary: "#ef5350",
     background: "#121212",
     border: "#676767",
     card: "rgb(18,18,18)",
@@ -13,7 +13,7 @@ export const darkTheme = {
 export const lightTheme = {
   dark: false,
   colors: {
-    primary: "#007AFF",
+    primary: "#ef5350",
     background: "#FFF",
     border: "rgb(216, 216, 216)",
     card: "rgb(255,255,255)",

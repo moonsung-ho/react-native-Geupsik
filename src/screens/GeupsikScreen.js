@@ -156,7 +156,10 @@ export default function GeupsikScreen({ navigation }) {
               {
                 text: "검색",
                 onPress: () =>
-                  Linking.openURL("https://www.google.com/search?q=" + menu),
+                  Linking.openURL(
+                    "https://www.google.com/search?q=" +
+                      menu.replace("<", "").replace(">", "")
+                  ),
                 style: "default"
               }
             ],
@@ -171,7 +174,7 @@ export default function GeupsikScreen({ navigation }) {
       <View>
         <Text style={styles.title}>
           {menu.includes("<") && menu.includes(">") ? (
-            <Text style={{ color: "red" }}>
+            <Text style={{ color: "tomato" }}>
               {menu.replace("<", "").replace(">", "")}
             </Text>
           ) : (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AsyncStorage } from "react-native";
 
-const HAS_LAUNCHED = "hasLaunched";
+const HAS_LAUNCHED = "HasLaunched";
 
 function setAppLaunched() {
   AsyncStorage.setItem(HAS_LAUNCHED, "true");

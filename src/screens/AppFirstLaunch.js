@@ -42,8 +42,8 @@ export default function AppfirstLaunchScreen({ navigation }) {
         <View style={{ marginTop: 15 }}>
           <Button
             onPress={() => {
-              navigation.navigate("급식tab", { screen: "급식" });
-              navigation.navigate("설정tab");
+              navigation.navigate("급식", { screen: "급식screen" });
+              navigation.navigate("설정");
             }}
             title="설정으로 이동"
           />
