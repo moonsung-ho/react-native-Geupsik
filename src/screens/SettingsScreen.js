@@ -1,6 +1,7 @@
-import { View, AsyncStorage } from "react-native";
+import { View } from "react-native";
 import { useState } from "react";
 import Button from "./settings/SettingButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SettingsScreen({ navigation }) {
   const [isDarkmodeAsyncStorage, setIsDarkmodeAsyncStorage] = useState(false);
