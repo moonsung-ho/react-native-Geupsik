@@ -5,17 +5,48 @@ import {
   Text,
   TextInput,
   Alert,
-  AsyncStorage,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from "react-native";
+import { KEYS, useAsyncStorage } from "../../hooks/asyncStorage";
 
-export default function SchoolSettingScreen() {
+const Item = ({ title, address, schoolCode, officeCode }) => {
   const colors = useTheme();
 
-  const Item = ({ title, address, schoolCode, officeCode }) => (
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
+  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE);
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
+  const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
+
+  function selectSchool([schoolCode, officeCode, schoolName]) {
+    schoolCodeAS.setValue(schoolCode);
+    officeCodeAS.setValue(officeCode);
+    schoolNameAS.setValue(schoolName);
+
+    // 학교를 설정하는 경우에 hasLaunched를 true로 설정합니다.
+    // 학교를 설정한 경우에만 AppfirstLaunchScreen으로 이동하지 않습니다.
+    hasLaunchedAS.setValue("true");
+
+    Alert.alert("선택되었습니다.", schoolName);
+  }
+
+  const styles = StyleSheet.create({
+    result: {
+      borderBottomWidth: 1,
+      borderColor: colors.colors.border,
+      width: Dimensions.get("window").width,
+      alignItems: "center",
+      paddingVertical: 5,
+    },
+    text: {
+      color: colors.colors.text,
+      textAlign: "center",
+    },
+  });
+
+  return (
     <TouchableOpacity
       onPress={() => {
         selectSchool([schoolCode, officeCode, title]);
@@ -27,16 +58,14 @@ export default function SchoolSettingScreen() {
       </View>
     </TouchableOpacity>
   );
+};
+
+export default function SchoolSettingScreen() {
+  const colors = useTheme();
+
   const [message, setMessage] = useState("");
   const [data, setData] = useState();
   const [input, setInput] = useState("");
-
-  function selectSchool([schoolCode, officeCode, schoolName]) {
-    AsyncStorage.setItem("schoolcode", schoolCode);
-    AsyncStorage.setItem("officecode", officeCode);
-    AsyncStorage.setItem("schoolname", schoolName);
-    Alert.alert("선택되었습니다.", schoolName);
-  }
 
   const renderItem = ({ item }) => (
     <Item
@@ -77,14 +106,7 @@ export default function SchoolSettingScreen() {
   const styles = StyleSheet.create({
     container: {
       justifyContent: "flex-start",
-      alignItems: "center"
-    },
-    result: {
-      borderBottomWidth: 1,
-      borderColor: colors.colors.border,
-      width: Dimensions.get("window").width,
       alignItems: "center",
-      paddingVertical: 5
     },
     input: {
       height: 40,
@@ -94,21 +116,17 @@ export default function SchoolSettingScreen() {
       padding: 10,
       flex: 7,
       textAlign: "center",
-      borderLeftWidth: 0
-    },
-    text: {
-      color: colors.colors.text,
-      textAlign: "center"
+      borderLeftWidth: 0,
     },
     toptext: {
       marginLeft: 30,
-      marginTop: 50
+      marginTop: 50,
     },
     divider: {
-      marginTop: 30
+      marginTop: 30,
     },
     error: {
-      color: "tomato"
+      color: "tomato",
     },
     searchButton: {
       height: 40,
@@ -117,9 +135,9 @@ export default function SchoolSettingScreen() {
       borderColor: colors.colors.border,
       borderLeftWidth: 0,
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     },
-    searchButtonText: { color: colors.colors.text }
+    searchButtonText: { color: colors.colors.text },
   });
 
   return (
@@ -139,7 +157,11 @@ export default function SchoolSettingScreen() {
           <Text style={styles.searchButtonText}>검색</Text>
         </TouchableOpacity>
       </View>
-      <FlatList data={data} renderItem={renderItem} />
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.SD_SCHUL_CODE}
+      />
     </View>
   );
 }

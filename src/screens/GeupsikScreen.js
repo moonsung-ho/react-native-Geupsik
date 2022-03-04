@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  AsyncStorage,
   TouchableOpacity,
   TextInput,
   Pressable,
@@ -17,7 +16,7 @@ import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
-import checkIfFirstLaunch from "../detectAppFirstLaunch";
+import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -80,13 +79,9 @@ export default function GeupsikScreen({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [schoolCode, setSchoolCode] = useState("7031159");
   const [officeCode, setOfficeCode] = useState("B09");
-  const [allergy, setAlergy] = useState("");
+  const [allergy, setAllergy] = useState("");
   const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  if (checkIfFirstLaunch() === true) {
-    navigation.navigate("first-launch");
-  }
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -131,15 +126,33 @@ export default function GeupsikScreen({ navigation }) {
     }
   };
 
-  AsyncStorage.getItem("schoolcode", (err, result) => {
-    setSchoolCode(result * 1);
-  });
-  AsyncStorage.getItem("officecode", (err, result) => {
-    setOfficeCode(result);
-  });
-  AsyncStorage.getItem("allergy", (err, result) => {
-    setAlergy(result);
-  });
+  const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
+  useEffect(() => {
+    if (!hasLaunchedAS.isLoading && !hasLaunchedAS.state) {
+      navigation.navigate("first-launch");
+    }
+  }, [hasLaunchedAS.isLoading, hasLaunchedAS.state]);
+
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
+  useEffect(() => {
+    if (!schoolCodeAS.isLoading) {
+      setSchoolCode(schoolCodeAS.state * 1)
+    }
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state])
+
+  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE);
+  useEffect(() => {
+    if (!officeCodeAS.isLoading) {
+      setOfficeCode(officeCodeAS.state)
+    }
+  }, [officeCodeAS.isLoading, officeCodeAS.state])
+
+  const allergyAS = useAsyncStorage(KEYS.ALLERGY);
+  useEffect(() => {
+    if (!allergyAS.isLoading) {
+      setAllergy(allergyAS.state)
+    }
+  }, [allergyAS.isLoading, allergyAS.state])
 
   const Item = ({ menu }) => (
     <TouchableOpacity
@@ -324,6 +337,7 @@ export default function GeupsikScreen({ navigation }) {
           style={{ marginTop: 100 }}
           data={data}
           renderItem={renderItem}
+          keyExtractor={(item) => item}
         />
         {/* <Text style={styles.title}>
           <ParsedText
