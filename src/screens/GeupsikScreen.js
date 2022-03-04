@@ -136,23 +136,23 @@ export default function GeupsikScreen({ navigation }) {
   const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
   useEffect(() => {
     if (!schoolCodeAS.isLoading) {
-      setSchoolCode(schoolCodeAS.state * 1)
+      setSchoolCode(schoolCodeAS.state * 1);
     }
-  }, [schoolCodeAS.isLoading, schoolCodeAS.state])
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
 
   const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE);
   useEffect(() => {
     if (!officeCodeAS.isLoading) {
-      setOfficeCode(officeCodeAS.state)
+      setOfficeCode(officeCodeAS.state);
     }
-  }, [officeCodeAS.isLoading, officeCodeAS.state])
+  }, [officeCodeAS.isLoading, officeCodeAS.state]);
 
   const allergyAS = useAsyncStorage(KEYS.ALLERGY);
   useEffect(() => {
     if (!allergyAS.isLoading) {
-      setAllergy(allergyAS.state)
+      setAllergy(allergyAS.state);
     }
-  }, [allergyAS.isLoading, allergyAS.state])
+  }, [allergyAS.isLoading, allergyAS.state]);
 
   const Item = ({ menu }) => (
     <TouchableOpacity
@@ -187,7 +187,7 @@ export default function GeupsikScreen({ navigation }) {
       <View>
         <Text style={styles.title}>
           {menu.includes("<") && menu.includes(">") ? (
-            <Text style={{ color: "tomato" }}>
+            <Text style={{ color: colors.colors.error }}>
               {menu.replace("<", "").replace(">", "")}
             </Text>
           ) : (
