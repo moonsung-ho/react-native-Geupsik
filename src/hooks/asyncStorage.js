@@ -6,7 +6,7 @@ export const KEYS = {
   SCHOOL_CODE: "schoolcode",
   OFFICE_CODE: "officecode",
   SCHOOL_NAME: "schoolname",
-  ALLERGY: "allergy",
+  ALLERGY: "allergy"
 };
 
 export const useAsyncStorage = (key) => {
@@ -20,7 +20,7 @@ export const useAsyncStorage = (key) => {
     });
 
     return () => {};
-  }, [key]);
+  }, [key, state]);
 
   const setValue = (value) => {
     AsyncStorage.setItem(key, value)
