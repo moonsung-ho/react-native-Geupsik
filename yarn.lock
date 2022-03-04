@@ -6245,8 +6245,8 @@ untildify@4.0.0:
   resolved "https://registry.npmjs.org/untildify/-/untildify-4.0.0.tgz"
 
 urijs@^1.19.6:
-  version "1.19.8"
-  resolved "https://registry.npmjs.org/urijs/-/urijs-1.19.8.tgz"
+  version "1.19.9"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.9.tgz#3b15844835de3732866d420768c16f24be7d3e65"
 
 urix@^0.1.0:
   version "0.1.0"
