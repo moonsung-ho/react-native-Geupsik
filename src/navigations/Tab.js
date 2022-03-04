@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Geupsik, Settings } from "../screens/TabScreen";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Alert, AsyncStorage } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 const MaterialIconsSet = ({ name, size, color }) => {

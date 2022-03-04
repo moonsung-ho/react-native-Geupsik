@@ -1,8 +1,8 @@
 import { useTheme } from "@react-navigation/native";
-import { Button, Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import { AsyncStorage, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AllergySettingScreen() {
   const [selectedValue, setSelectedValue] = useState("");
