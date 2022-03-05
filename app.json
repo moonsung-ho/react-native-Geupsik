@@ -26,7 +26,8 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 100
+      "versionCode": 101,
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"
