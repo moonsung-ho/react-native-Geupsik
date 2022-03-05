@@ -8,7 +8,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Dimensions,
+  Dimensions
 } from "react-native";
 import { KEYS, useAsyncStorage } from "../../hooks/asyncStorage";
 
@@ -38,12 +38,12 @@ const Item = ({ title, address, schoolCode, officeCode }) => {
       borderColor: colors.colors.border,
       width: Dimensions.get("window").width,
       alignItems: "center",
-      paddingVertical: 5,
+      paddingVertical: 5
     },
     text: {
       color: colors.colors.text,
-      textAlign: "center",
-    },
+      textAlign: "center"
+    }
   });
 
   return (
@@ -106,7 +106,7 @@ export default function SchoolSettingScreen() {
   const styles = StyleSheet.create({
     container: {
       justifyContent: "flex-start",
-      alignItems: "center",
+      alignItems: "center"
     },
     input: {
       height: 40,
@@ -116,17 +116,17 @@ export default function SchoolSettingScreen() {
       padding: 10,
       flex: 7,
       textAlign: "center",
-      borderLeftWidth: 0,
+      borderLeftWidth: 0
     },
     toptext: {
       marginLeft: 30,
-      marginTop: 50,
+      marginTop: 50
     },
     divider: {
-      marginTop: 30,
+      marginTop: 30
     },
     error: {
-      color: "tomato",
+      color: "tomato"
     },
     searchButton: {
       height: 40,
@@ -135,9 +135,9 @@ export default function SchoolSettingScreen() {
       borderColor: colors.colors.border,
       borderLeftWidth: 0,
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "center"
     },
-    searchButtonText: { color: colors.colors.text },
+    searchButtonText: { color: colors.colors.text }
   });
 
   return (
