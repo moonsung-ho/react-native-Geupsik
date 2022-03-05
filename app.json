@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식",
     "slug": "Geupsik",
-    "version": "4.3.1",
+    "version": "4.3.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

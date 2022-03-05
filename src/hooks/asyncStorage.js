@@ -9,7 +9,7 @@ export const KEYS = {
   ALLERGY: "allergy"
 };
 
-export const useAsyncStorage = (key) => {
+export const useAsyncStorage = (key, reloadState) => {
   const [isLoading, setLoading] = useState(true);
   const [state, setState] = useState();
 
@@ -20,7 +20,7 @@ export const useAsyncStorage = (key) => {
     });
 
     return () => {};
-  }, [key, state]);
+  }, [key, state, reloadState]);
 
   const setValue = (value) => {
     AsyncStorage.setItem(key, value)

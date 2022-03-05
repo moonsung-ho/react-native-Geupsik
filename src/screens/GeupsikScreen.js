@@ -133,21 +133,21 @@ export default function GeupsikScreen({ navigation }) {
     }
   }, [hasLaunchedAS.isLoading, hasLaunchedAS.state]);
 
-  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, text);
   useEffect(() => {
     if (!schoolCodeAS.isLoading) {
       setSchoolCode(schoolCodeAS.state * 1);
     }
   }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
 
-  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE);
+  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, text);
   useEffect(() => {
     if (!officeCodeAS.isLoading) {
       setOfficeCode(officeCodeAS.state);
     }
   }, [officeCodeAS.isLoading, officeCodeAS.state]);
 
-  const allergyAS = useAsyncStorage(KEYS.ALLERGY);
+  const allergyAS = useAsyncStorage(KEYS.ALLERGY, text);
   useEffect(() => {
     if (!allergyAS.isLoading) {
       setAllergy(allergyAS.state);
@@ -262,7 +262,8 @@ export default function GeupsikScreen({ navigation }) {
       borderRadius: 12,
       color: colors.colors.text,
       padding: 10,
-      borderColor: colors.colors.border
+      borderColor: colors.colors.border,
+      textAlign: "center"
     },
     button: {
       justifyContent: "center",

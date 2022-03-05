@@ -21,6 +21,7 @@ const TabNavigation = () => {
         component={Geupsik}
         options={{
           headerShown: false,
+          headerTitle: "급식",
           headerTitleAlign: "center",
           tabBarLabelPosition: "beside-icon",
           tabBarActiveTintColor: colors.colors.primary,

@@ -1,9 +1,11 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { useState } from "react";
 import Button from "./settings/SettingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTheme } from "@react-navigation/native";
 
 export default function SettingsScreen({ navigation }) {
+  const colors = useTheme();
   const [isDarkmodeAsyncStorage, setIsDarkmodeAsyncStorage] = useState(false);
   AsyncStorage.getItem("isdarkmode", (err, result) => {
     if (result != null) {
@@ -22,9 +24,11 @@ export default function SettingsScreen({ navigation }) {
   return (
     <View
       style={{
-        flex: 1,
         alignItems: "flex-start",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: colors.colors.border
       }}
     >
       <Button

@@ -22,12 +22,12 @@ export const Geupsik = () => {
         <Stack.Screen
           name="급식screen"
           component={GeupsikScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, headerTitle: "급식" }}
         />
         <Stack.Screen
           name="first-launch"
           component={AppfirstLaunchScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, headerTitle: "급식" }}
         />
       </Stack.Navigator>
     </Container>
