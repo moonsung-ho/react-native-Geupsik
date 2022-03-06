@@ -17,7 +17,8 @@
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
-      "bundleIdentifier": "com.sungho0205.geupsik"
+      "bundleIdentifier": "com.sungho0205.geupsik",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +27,7 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 101,
+      "versionCode": 102,
       "permissions": []
     },
     "web": {
