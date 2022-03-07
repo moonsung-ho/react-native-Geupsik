@@ -9,7 +9,8 @@ import {
   Share,
   FlatList,
   Alert,
-  Linking
+  Linking,
+  ActivityIndicator
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "@react-navigation/native";
@@ -74,6 +75,12 @@ Number.prototype.zf = function (len) {
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
 export default function GeupsikScreen({ navigation }) {
+  const loading = {
+    beforeLoading: "BEFORE_LOADING",
+    loading: "LOADING",
+    loaded: "LOADED",
+    error: "ERROR"
+  };
   const colors = useTheme();
   const [data, setData] = useState(["급식을 가져오는 중입니다."]);
   const [date, setDate] = useState(new Date());
@@ -81,7 +88,11 @@ export default function GeupsikScreen({ navigation }) {
   const [officeCode, setOfficeCode] = useState("B09");
   const [allergy, setAllergy] = useState("");
   const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
+  const [apiLoadingState, setApiLoadingState] = useState(loading.beforeLoading);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const loadingSpinnerTop =
+    (Platform.OS === "ios" && 20) || (Platform.OS === "android" && 5) || 5;
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -201,13 +212,19 @@ export default function GeupsikScreen({ navigation }) {
   const renderItem = ({ item }) => <Item menu={item} />;
 
   useEffect(() => {
+    if (apiLoadingState === loading.beforeLoading) {
+      setData(["로딩 중입니다."]);
+    }
     const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=4c1690204c08404ca7f1775720f17054&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
       "yyyyMMdd"
     )}`;
+    setApiLoadingState(loading.loading);
+    setData(["로딩 중입니다."]);
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
         if (!("mealServiceDietInfo" in json)) {
+          setApiLoadingState(loading.loaded);
           setData(["급식이 없는 날입니다."]);
         } else {
           let meal =
@@ -225,9 +242,11 @@ export default function GeupsikScreen({ navigation }) {
           meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
           meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
           setData(meal.split("\n"));
+          setApiLoadingState(loading.loaded);
         }
       })
       .catch((error) => {
+        setApiLoadingState(loading.error);
         console.log(error);
       });
   }, [text]);
@@ -325,6 +344,26 @@ export default function GeupsikScreen({ navigation }) {
             />
           </Pressable>
         </View>
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            right: 5,
+            top: loadingSpinnerTop,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          color={
+            (apiLoadingState === loading.error && colors.colors.error) ||
+            "#999999"
+          }
+          size="large"
+          animating={
+            (apiLoadingState === loading.loaded && false) ||
+            (apiLoadingState === loading.loading && true) ||
+            (apiLoadingState === loading.beforeLoading && true) ||
+            (apiLoadingState === loading.error && true)
+          }
+        />
         {isDatePickerVisible && Platform.OS != "ios" && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -340,18 +379,6 @@ export default function GeupsikScreen({ navigation }) {
           renderItem={renderItem}
           keyExtractor={(item) => item}
         />
-        {/* <Text style={styles.title}>
-          <ParsedText
-            parse={[
-              {
-                pattern: /​.*​/,
-                style: { color: colors.colors.error }
-              }
-            ]}
-          >
-            {meal}
-          </ParsedText>
-        </Text> */}
         <Pressable onPress={onShare} style={styles.shareButton}>
           <Icon name="share" size={22} color={"#FFF"} />
         </Pressable>
