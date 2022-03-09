@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식",
     "slug": "Geupsik",
-    "version": "4.3.4",
+    "version": "4.3.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "1"
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
