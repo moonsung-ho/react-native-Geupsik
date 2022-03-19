@@ -249,6 +249,11 @@ export default function GeupsikScreen({ navigation }) {
         setApiLoadingState(loading.error);
         console.log(error);
       });
+
+    return () => {
+      setApiLoadingState(loading.beforeLoading);
+      setData(["급식을 가져오는 중입니다."]);
+    }
   }, [text]);
 
   const styles = StyleSheet.create({
