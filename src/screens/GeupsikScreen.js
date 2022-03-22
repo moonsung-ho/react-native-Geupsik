@@ -81,14 +81,14 @@ export default function GeupsikScreen({ navigation }) {
     loaded: "LOADED",
     error: "ERROR"
   };
+  const [apiLoadingState, setApiLoadingState] = useState(loading.beforeLoading);
   const colors = useTheme();
   const [data, setData] = useState(["급식을 가져오는 중입니다."]);
-  const [date, setDate] = useState(new Date());
   const [schoolCode, setSchoolCode] = useState("7031159");
   const [officeCode, setOfficeCode] = useState("B09");
   const [allergy, setAllergy] = useState("");
+  const [date, setDate] = useState(new Date());
   const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
-  const [apiLoadingState, setApiLoadingState] = useState(loading.beforeLoading);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const loadingSpinnerTop =

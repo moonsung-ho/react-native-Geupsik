@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Geupsik, Settings } from "../screens/TabScreen";
+import { Geupsik, Settings, Calendar } from "../screens/TabScreen";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 
@@ -23,10 +23,21 @@ const TabNavigation = () => {
           headerShown: false,
           headerTitle: "급식",
           headerTitleAlign: "center",
-          tabBarLabelPosition: "beside-icon",
           tabBarActiveTintColor: colors.colors.primary,
           tabBarIcon: (props) =>
             MaterialCommunityIconsSet({ ...props, name: "food-fork-drink" })
+        }}
+      />
+      <Tab.Screen
+        name="시간표"
+        component={Calendar}
+        options={{
+          headerShown: false,
+          headerTitle: "시간표",
+          headerTitleAlign: "center",
+          tabBarActiveTintColor: colors.colors.primary,
+          tabBarIcon: (props) =>
+            MaterialCommunityIconsSet({ ...props, name: "calendar-month" })
         }}
       />
       <Tab.Screen
@@ -34,7 +45,6 @@ const TabNavigation = () => {
         component={Settings}
         options={{
           headerShown: false,
-          tabBarLabelPosition: "beside-icon",
           tabBarActiveTintColor: colors.colors.primary,
           tabBarIcon: (props) =>
             MaterialIconsSet({ ...props, name: "settings" })

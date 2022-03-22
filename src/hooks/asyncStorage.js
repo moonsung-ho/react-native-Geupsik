@@ -6,7 +6,10 @@ export const KEYS = {
   SCHOOL_CODE: "schoolcode",
   OFFICE_CODE: "officecode",
   SCHOOL_NAME: "schoolname",
-  ALLERGY: "allergy"
+  ALLERGY: "allergy",
+  SCHOOL_FORM: "schoolform",
+  CLASS: "class",
+  GRADE: "grade"
 };
 
 export const useAsyncStorage = (key, reloadState) => {

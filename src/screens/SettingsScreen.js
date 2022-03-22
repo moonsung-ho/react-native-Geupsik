@@ -48,22 +48,30 @@ export default function SettingsScreen({ navigation }) {
         iconMarginRight={18}
       />
       {/* <Button
+        title="학년 및 반 설정"
+        onPress={() => navigation.navigate("학년 & 반 설정")}
+        icon="id-card"
+        toggle={false}
+        iconMarginLeft={1}
+        iconMarginRight={16}
+      /> */}
+      {/* <Button
         title="다크 모드"
         onPress={toggleDarkmode}
         value={isDarkmodeToggled}
         icon="moon"
         toggle={true}
       /> */}
-      <Button
+      {/* <Button
         title="도움말"
         onPress={() => navigation.navigate("도움말")}
         icon="question"
         toggle={false}
         iconMarginLeft={4}
         iconMarginRight={20}
-      />
+      /> */}
       <Button
-        title="앱 정보"
+        title="앱 정보 & FAQ "
         onPress={() => navigation.navigate("앱 정보")}
         icon="info"
         toggle={false}

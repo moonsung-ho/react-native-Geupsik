@@ -42,12 +42,12 @@ export default function AllergySettingScreen() {
     <View>
       <View style={styles.pickerContainer}>
         <Picker
-          dropdownIconColor={colors.colors.text}
           selectedValue={selectedValue}
           onValueChange={(itemValue, itemIndex) => {
             onAllergySelected(itemValue);
             setSelectedValue(itemValue);
           }}
+          dropdownIconColor={colors.colors.text}
           itemStyle={{ color: colors.colors.text }}
           style={styles.picker}
         >

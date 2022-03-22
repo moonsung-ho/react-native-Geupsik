@@ -12,24 +12,34 @@ import {
 } from "react-native";
 import { KEYS, useAsyncStorage } from "../../hooks/asyncStorage";
 
-const Item = ({ title, address, schoolCode, officeCode }) => {
+const Item = ({
+  title,
+  address,
+  schoolCode,
+  officeCode,
+  schoolForm,
+  navigation
+}) => {
   const colors = useTheme();
 
   const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
   const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE);
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
+  const schoolFormAS = useAsyncStorage(KEYS.SCHOOL_FORM);
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
 
-  function selectSchool([schoolCode, officeCode, schoolName]) {
+  function selectSchool([schoolCode, officeCode, schoolName, schoolForm]) {
     schoolCodeAS.setValue(schoolCode);
     officeCodeAS.setValue(officeCode);
     schoolNameAS.setValue(schoolName);
+    schoolFormAS.setValue(schoolForm);
 
     // 학교를 설정하는 경우에 hasLaunched를 true로 설정합니다.
     // 학교를 설정한 경우에만 AppfirstLaunchScreen으로 이동하지 않습니다.
     hasLaunchedAS.setValue("true");
 
     Alert.alert("선택되었습니다.", schoolName);
+    navigation.navigate("학년 & 반 설정", { schoolCode, schoolForm });
   }
 
   const styles = StyleSheet.create({
@@ -49,7 +59,7 @@ const Item = ({ title, address, schoolCode, officeCode }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        selectSchool([schoolCode, officeCode, title]);
+        selectSchool([schoolCode, officeCode, title, schoolForm]);
       }}
     >
       <View style={styles.result}>
@@ -60,7 +70,7 @@ const Item = ({ title, address, schoolCode, officeCode }) => {
   );
 };
 
-export default function SchoolSettingScreen() {
+export default function SchoolSettingScreen({ navigation }) {
   const colors = useTheme();
 
   const [message, setMessage] = useState("");
@@ -73,6 +83,8 @@ export default function SchoolSettingScreen() {
       address={item.ORG_RDNMA}
       schoolCode={item.SD_SCHUL_CODE}
       officeCode={item.ATPT_OFCDC_SC_CODE}
+      schoolForm={item.SCHUL_KND_SC_NM}
+      navigation={navigation}
     />
   );
 

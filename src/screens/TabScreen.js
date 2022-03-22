@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import GeupsikScreen from "./GeupsikScreen";
+import CalendarScreen from "./CalendarScreen";
 import SettingsScreen from "./SettingsScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SchoolSettingScreen from "./settings/SchoolSettingScreen";
@@ -8,6 +9,8 @@ import HelpScreen from "./settings/HelpScreen";
 import AllergySettingScreen from "./settings/AllergySettingScreen";
 import AppfirstLaunchScreen from "./AppFirstLaunch";
 import AppInfoScreen from "./settings/AppInfoScreen";
+import GradeClassSettingScreen from "./settings/GradeClassSettingScreen";
+import CalendarErrorScreen from "./CalendarErrorScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +37,29 @@ export const Geupsik = () => {
   );
 };
 
+export const Calendar = () => {
+  return (
+    <Container>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="시간표screen"
+          component={CalendarScreen}
+          options={{
+            headerShown: false,
+            headerTitle: "시간표",
+            title: "시간표"
+          }}
+        />
+        <Stack.Screen
+          name="에러"
+          component={CalendarErrorScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </Container>
+  );
+};
+
 export const Settings = () => {
   return (
     <Container>
@@ -47,6 +73,10 @@ export const Settings = () => {
         <Stack.Screen name="알레르기 설정" component={AllergySettingScreen} />
         <Stack.Screen name="도움말" component={HelpScreen} />
         <Stack.Screen name="앱 정보" component={AppInfoScreen} />
+        <Stack.Screen
+          name="학년 & 반 설정"
+          component={GradeClassSettingScreen}
+        />
       </Stack.Navigator>
     </Container>
   );
