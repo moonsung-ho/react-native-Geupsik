@@ -23,6 +23,7 @@
     "expo": "~44.0.0",
     "expo-cli": "^5.3.0",
     "expo-dev-client": "~0.8.4",
+    "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
     "react": "17.0.1",
@@ -43,10 +44,13 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-swiper-flatlist": "^3.0.16",
     "react-native-web": "0.17.1",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  "private": true
+  "private": true,
+  "repository": "https://github.com/sungho0205/react-native-Geupsik.git",
+  "license": "MIT"
 }

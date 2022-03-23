@@ -140,6 +140,9 @@ function CalendarScreen({ navigation }) {
   useEffect(() => {
     if (!classAS.isLoading) {
       setClassN(classAS.state * 1);
+      if (classAS.state === "undefined") {
+        navigation.navigate("에러");
+      }
     }
   }, [classAS.isLoading, classAS.state, text]);
   const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, text);
@@ -221,9 +224,6 @@ function CalendarScreen({ navigation }) {
     }
   });
   useEffect(() => {
-    if (!classN) {
-      navigation.navigate("에러");
-    }
     if (apiLoadingState === loading.beforeLoading) {
       setCalendar([{ subject: "로딩 중입니다.", period: "1" }]);
     }
