@@ -1,5 +1,5 @@
 import { useTheme } from "@react-navigation/native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -18,17 +18,23 @@ const Item = ({
   schoolCode,
   officeCode,
   schoolForm,
-  navigation
+  navigation,
+  previousSchool
 }) => {
   const colors = useTheme();
-
   const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
   const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE);
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
   const schoolFormAS = useAsyncStorage(KEYS.SCHOOL_FORM);
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
 
-  function selectSchool([schoolCode, officeCode, schoolName, schoolForm]) {
+  function selectSchool([
+    schoolCode,
+    officeCode,
+    schoolName,
+    schoolForm,
+    previousSchool
+  ]) {
     schoolCodeAS.setValue(schoolCode);
     officeCodeAS.setValue(officeCode);
     schoolNameAS.setValue(schoolName);
@@ -39,7 +45,11 @@ const Item = ({
     hasLaunchedAS.setValue("true");
 
     Alert.alert("선택되었습니다.", schoolName);
-    navigation.navigate("학년 & 반 설정", { schoolCode, schoolForm });
+    navigation.navigate("학년 & 반 설정", {
+      schoolCode,
+      schoolForm,
+      previousSchool
+    });
   }
 
   const styles = StyleSheet.create({
@@ -59,7 +69,13 @@ const Item = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        selectSchool([schoolCode, officeCode, title, schoolForm]);
+        selectSchool([
+          schoolCode,
+          officeCode,
+          title,
+          schoolForm,
+          previousSchool
+        ]);
       }}
     >
       <View style={styles.result}>
@@ -72,10 +88,17 @@ const Item = ({
 
 export default function SchoolSettingScreen({ navigation }) {
   const colors = useTheme();
-
+  const [previousSchoolCode, setPreviousSchoolCode] = useState("");
   const [message, setMessage] = useState("");
   const [data, setData] = useState();
   const [input, setInput] = useState("");
+
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
+  useEffect(() => {
+    if (!schoolCodeAS.isLoading) {
+      setPreviousSchoolCode(schoolCodeAS.state);
+    }
+  }, []);
 
   const renderItem = ({ item }) => (
     <Item
@@ -85,6 +108,7 @@ export default function SchoolSettingScreen({ navigation }) {
       officeCode={item.ATPT_OFCDC_SC_CODE}
       schoolForm={item.SCHUL_KND_SC_NM}
       navigation={navigation}
+      previousSchool={previousSchoolCode}
     />
   );
 

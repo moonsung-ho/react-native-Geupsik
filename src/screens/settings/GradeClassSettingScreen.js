@@ -8,13 +8,25 @@ import { KEYS, useAsyncStorage } from "../../hooks/asyncStorage";
 function GradeClassSettingScreen(props) {
   const [classN, setClassN] = useState("1");
   const [grade, setGrade] = useState("1");
-  const [classCount, setClassCount] = useState("");
-  const [data, setData] = useState();
   const [classArray, setClassArray] = useState(new Array());
   const colors = useTheme();
 
   const gradeAS = useAsyncStorage(KEYS.GRADE);
   const classAS = useAsyncStorage(KEYS.CLASS);
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE);
+
+  useEffect(() => {
+    if (!schoolCodeAS.isLoading) {
+      if (props.route.params.previousSchool === schoolCodeAS.state) {
+        if (!gradeAS.isLoading) {
+          setGrade(gradeAS.state);
+        }
+        if (!classAS.isLoading) {
+          setClassN(classAS.state);
+        }
+      }
+    }
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
 
   function setGradeClass(classN, grade) {
     gradeAS.setValue(grade);
@@ -39,8 +51,6 @@ function GradeClassSettingScreen(props) {
     )
       .then((response) => response.json())
       .then((json) => {
-        setClassCount(json.classInfo[0].head[0].list_total_count);
-        setData(json.classInfo[1].row);
         let n = 1;
         let classArray = new Array();
         while (n <= json.classInfo[0].head[0].list_total_count * 1) {
@@ -70,6 +80,7 @@ function GradeClassSettingScreen(props) {
           >
             <Picker.Item
               value="1"
+              key={"1"}
               label={"1"}
               style={{
                 color: colors.colors.text,
@@ -78,6 +89,7 @@ function GradeClassSettingScreen(props) {
             />
             <Picker.Item
               value="2"
+              key={"2"}
               label={"2"}
               style={{
                 color: colors.colors.text,
@@ -86,6 +98,7 @@ function GradeClassSettingScreen(props) {
             />
             <Picker.Item
               value="3"
+              key={"3"}
               label={"3"}
               style={{
                 color: colors.colors.text,
@@ -94,6 +107,7 @@ function GradeClassSettingScreen(props) {
             />
             <Picker.Item
               value="4"
+              key={"4"}
               label={"4"}
               style={{
                 color: colors.colors.text,
@@ -103,6 +117,7 @@ function GradeClassSettingScreen(props) {
             <Picker.Item
               value="5"
               label={"5"}
+              key={"5"}
               style={{
                 color: colors.colors.text,
                 backgroundColor: colors.colors.background
@@ -110,6 +125,7 @@ function GradeClassSettingScreen(props) {
             />
             <Picker.Item
               value="6"
+              key={"6"}
               label={"6"}
               style={{
                 color: colors.colors.text,
@@ -129,6 +145,7 @@ function GradeClassSettingScreen(props) {
             <Picker.Item
               value="1"
               label={"1"}
+              key={"1"}
               style={{
                 color: colors.colors.text,
                 backgroundColor: colors.colors.background
@@ -137,6 +154,7 @@ function GradeClassSettingScreen(props) {
             <Picker.Item
               value="2"
               label={"2"}
+              key={"2"}
               style={{
                 color: colors.colors.text,
                 backgroundColor: colors.colors.background
@@ -144,6 +162,7 @@ function GradeClassSettingScreen(props) {
             />
             <Picker.Item
               value="3"
+              key={"3"}
               label={"3"}
               style={{
                 color: colors.colors.text,
@@ -168,6 +187,7 @@ function GradeClassSettingScreen(props) {
               <Picker.Item
                 value={`${className}`}
                 label={`${className}`}
+                key={`${className}`}
                 style={{
                   color: colors.colors.text,
                   backgroundColor: colors.colors.background
