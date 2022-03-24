@@ -17,7 +17,7 @@ function GradeClassSettingScreen(props) {
 
   useEffect(() => {
     if (!schoolCodeAS.isLoading) {
-      if (props.route.params.previousSchool === schoolCodeAS.state) {
+      if (props.route.params.previousSchool * 1 === schoolCodeAS.state * 1) {
         if (!gradeAS.isLoading) {
           setGrade(gradeAS.state);
         }
