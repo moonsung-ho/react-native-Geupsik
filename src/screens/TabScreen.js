@@ -11,6 +11,7 @@ import AppfirstLaunchScreen from "./AppFirstLaunch";
 import AppInfoScreen from "./settings/AppInfoScreen";
 import GradeClassSettingScreen from "./settings/GradeClassSettingScreen";
 import CalendarErrorScreen from "./CalendarErrorScreen";
+import NoticeScreen from "./settings/NoticeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ export const Settings = () => {
         <Stack.Screen name="알레르기 설정" component={AllergySettingScreen} />
         <Stack.Screen name="도움말" component={HelpScreen} />
         <Stack.Screen name="앱 정보" component={AppInfoScreen} />
+        <Stack.Screen name="공지사항" component={NoticeScreen} />
         <Stack.Screen
           name="학년 & 반 설정"
           component={GradeClassSettingScreen}

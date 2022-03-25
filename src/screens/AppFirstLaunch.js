@@ -23,7 +23,7 @@ export default function AppfirstLaunchScreen({ navigation }) {
             fontWeight: "bold"
           }}
         >
-          급식
+          급식시간
         </Text>
         <Image
           style={{ height: 100, width: 100, alignSelf: "center" }}

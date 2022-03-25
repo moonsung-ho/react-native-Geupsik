@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식시간",
     "slug": "Geupsik",
-    "version": "5.0.6",
+    "version": "5.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "githubUrl": "https://github.com/sungho0205/react-native-Geupsik",

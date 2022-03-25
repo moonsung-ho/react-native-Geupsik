@@ -70,6 +70,7 @@ export default function SettingsScreen({ navigation }) {
         iconMarginLeft={4}
         iconMarginRight={20}
       /> */}
+
       <Button
         title="앱 정보 & FAQ "
         onPress={() => navigation.navigate("앱 정보")}
@@ -77,6 +78,14 @@ export default function SettingsScreen({ navigation }) {
         toggle={false}
         iconMarginLeft={9}
         iconMarginRight={24}
+      />
+      <Button
+        title="공지사항"
+        onPress={() => navigation.navigate("공지사항")}
+        icon="archive"
+        toggle={false}
+        iconMarginLeft={4}
+        iconMarginRight={17}
       />
     </View>
   );
