@@ -126,7 +126,10 @@ export default function GeupsikScreen({ navigation }) {
     setDate(newDate);
     onChangeText(newDate.format("yyyy/MM/dd"));
   };
-
+  function notLaunchedToday() {
+    fetch("https://geupsik-user-server.herokuapp.com/");
+    launchedTodayAS.setValue(new Date().toString());
+  }
   const onShare = async () => {
     try {
       await Share.share({
@@ -150,6 +153,26 @@ export default function GeupsikScreen({ navigation }) {
       setSchoolCode(schoolCodeAS.state * 1);
     }
   }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
+
+  const launchedTodayAS = useAsyncStorage(KEYS.LAUNCHED_TODAY);
+  useEffect(() => {
+    if (!launchedTodayAS.isLoading) {
+      const dateFromStorage = new Date(launchedTodayAS.state);
+      const date = new Date();
+      if (launchedTodayAS.state === null) {
+        notLaunchedToday();
+      } else if (
+        date.getFullYear().toString() +
+          date.getMonth().toString() +
+          date.getDate().toString() !==
+        dateFromStorage.getFullYear().toString() +
+          dateFromStorage.getMonth().toString() +
+          dateFromStorage.getDate().toString()
+      ) {
+        notLaunchedToday();
+      }
+    }
+  }, [launchedTodayAS.isLoading, launchedTodayAS.state]);
 
   const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, text);
   useEffect(() => {
@@ -253,7 +276,7 @@ export default function GeupsikScreen({ navigation }) {
     return () => {
       setApiLoadingState(loading.beforeLoading);
       setData(["급식을 가져오는 중입니다."]);
-    }
+    };
   }, [text]);
 
   const styles = StyleSheet.create({
@@ -279,7 +302,7 @@ export default function GeupsikScreen({ navigation }) {
     textInput: {
       fontSize: 16,
       height: 50,
-      width: "auto",
+      width: 120,
       alignItems: "center",
       alignContent: "center",
       borderWidth: 1,
