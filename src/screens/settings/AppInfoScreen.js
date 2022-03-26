@@ -1,8 +1,17 @@
 import { useTheme } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Linking } from "react-native";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 
 export default function AppInfoScreen() {
+  const [userCount, setUserCount] = useState(0);
+  useEffect(() => {
+    fetch("https://geupsik-user-server.herokuapp.com/usercount")
+      .then((res) => res.json())
+      .then((json) => {
+        setUserCount(json[0].count);
+      });
+  }, []);
   const colors = useTheme();
   const styles = StyleSheet.create({
     text: {
@@ -124,6 +133,8 @@ export default function AppInfoScreen() {
         </Text>{" "}
         입니다.
       </Text>
+      <Divider style={styles.divider} />
+      <Text style={styles.text}>오늘의 유저 수: {userCount}</Text>
     </ScrollView>
   );
 }
