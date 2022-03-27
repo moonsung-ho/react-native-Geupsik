@@ -16,6 +16,7 @@ import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import GestureRecognizer from "react-native-swipe-gestures";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import * as Analytics from "expo-firebase-analytics";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -73,6 +74,10 @@ Number.prototype.zf = function (len) {
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
 function CalendarScreen({ navigation }) {
+  useEffect(() => {
+    Analytics.logEvent("calendarScreenEnter");
+  }, []);
+
   const loading = {
     beforeLoading: "BEFORE_LOADING",
     loading: "LOADING",
@@ -109,6 +114,7 @@ function CalendarScreen({ navigation }) {
   };
 
   const onShare = async () => {
+    Analytics.logEvent("CalendarShare");
     try {
       await Share.share({
         message: `${date.format("yyyy년 MM월 dd일")} 시간표: ${calendar.map(

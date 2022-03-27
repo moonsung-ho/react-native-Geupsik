@@ -18,6 +18,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
+import * as Analytics from "expo-firebase-analytics";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -75,6 +76,9 @@ Number.prototype.zf = function (len) {
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
 export default function GeupsikScreen({ navigation }) {
+  useEffect(() => {
+    Analytics.logEvent("geupsikScreenEnter");
+  }, []);
   const loading = {
     beforeLoading: "BEFORE_LOADING",
     loading: "LOADING",
@@ -131,6 +135,7 @@ export default function GeupsikScreen({ navigation }) {
     launchedTodayAS.setValue(new Date().toString());
   }
   const onShare = async () => {
+    Analytics.logEvent("GeupsikShare");
     try {
       await Share.share({
         message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${data}`

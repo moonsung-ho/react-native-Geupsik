@@ -1,10 +1,14 @@
 import { View, Text } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./settings/SettingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "@react-navigation/native";
+import * as Analytics from "expo-firebase-analytics";
 
 export default function SettingsScreen({ navigation }) {
+  useEffect(() => {
+    Analytics.logEvent("settingScreenEnter");
+  }, []);
   const colors = useTheme();
   const [isDarkmodeAsyncStorage, setIsDarkmodeAsyncStorage] = useState(false);
   AsyncStorage.getItem("isdarkmode", (err, result) => {
