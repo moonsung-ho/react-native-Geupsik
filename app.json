@@ -19,20 +19,33 @@
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "7"
+      "buildNumber": "7",
+      "googleServicesFile": "./firebase/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
       "versionCode": 111,
       "permissions": []
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyBC8u4WJ4aP03ZGJlgt8sTC1PhAkdUBdg0",
+          "authDomain": "geupsik-c2401.firebaseapp.com",
+          "projectId": "geupsik-c2401",
+          "storageBucket": "geupsik-c2401.appspot.com",
+          "messagingSenderId": "4378957303",
+          "appId": "1:4378957303:web:6b626029626f7deb664af2",
+          "measurementId": "G-6BGYP9XFT0"
+        }
+      }
     }
   }
 }

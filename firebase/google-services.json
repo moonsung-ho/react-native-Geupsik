@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "4378957303",
+    "project_id": "geupsik-c2401",
+    "storage_bucket": "geupsik-c2401.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4378957303:android:e8b9ea9b9ef8ad30664af2",
+        "android_client_info": {
+          "package_name": "com.sungho0205.geupsik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4378957303-edd0e1kg0k20o2c93t2mvdldm7ptmvnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBxO1XhkDTmTDIepYuS34o70e_Mz64kXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4378957303-edd0e1kg0k20o2c93t2mvdldm7ptmvnj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "4378957303-g8miedra9p92ql0nbfr65mlhk9ipm34e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sungho0205.geupsik",
+                "app_store_id": "1613044393"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

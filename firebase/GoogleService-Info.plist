@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>4378957303-g8miedra9p92ql0nbfr65mlhk9ipm34e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.4378957303-g8miedra9p92ql0nbfr65mlhk9ipm34e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDbp6MlETi4QRZGVMqxkk4y2zpD8NZYdAc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>4378957303</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.sungho0205.geupsik</string>
+	<key>PROJECT_ID</key>
+	<string>geupsik-c2401</string>
+	<key>STORAGE_BUCKET</key>
+	<string>geupsik-c2401.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:4378957303:ios:f05ae4a26cadcaf3664af2</string>
+</dict>
+</plist>
