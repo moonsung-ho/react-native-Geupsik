@@ -172,7 +172,6 @@ function CalendarScreen({ navigation }) {
   const renderItem = ({ item }) => <Item menu={item} />;
   const styles = StyleSheet.create({
     view: { alignItems: "center", justifyContent: "center", flex: 1 },
-    text: {},
     textInput: {
       fontSize: 16,
       height: 50,

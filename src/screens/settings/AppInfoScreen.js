@@ -4,9 +4,9 @@ import { View, Text, StyleSheet, ScrollView, Linking } from "react-native";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 
 export default function AppInfoScreen() {
-  const [userCount, setUserCount] = useState(0);
+  const [userCount, setUserCount] = useState("로딩중...");
   useEffect(() => {
-    fetch("https://geupsik-user-server.herokuapp.com/usercount")
+    fetch("https://geupsikapp.azurewebsites.net/usercount")
       .then((res) => res.json())
       .then((json) => {
         setUserCount(json[0].count);

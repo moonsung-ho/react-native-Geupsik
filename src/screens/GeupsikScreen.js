@@ -127,7 +127,7 @@ export default function GeupsikScreen({ navigation }) {
     onChangeText(newDate.format("yyyy/MM/dd"));
   };
   function notLaunchedToday() {
-    fetch("https://geupsik-user-server.herokuapp.com/");
+    fetch("https://geupsikapp.azurewebsites.net/newuser");
     launchedTodayAS.setValue(new Date().toString());
   }
   const onShare = async () => {
