@@ -120,7 +120,9 @@ export default function SettingsScreen({ navigation }) {
           }}
         >
           <View style={{ width: "100%" }}>
-            <Text style={{ fontWeight: "bold" }}>오늘의 코로나19</Text>
+            <Text style={{ fontWeight: "bold", color: colors.colors.text }}>
+              오늘의 코로나19
+            </Text>
             <Text
               style={{
                 color: "gray",
@@ -134,11 +136,11 @@ export default function SettingsScreen({ navigation }) {
             </Text>
           </View>
         </View>
-        <Text style={{ marginHorizontal: 14 }}>
+        <Text style={{ marginHorizontal: 14, color: colors.colors.text }}>
           오늘의 확진자 수:{" "}
           {todayPositive.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}명
         </Text>
-        <Text style={{ marginHorizontal: 14 }}>
+        <Text style={{ marginHorizontal: 14, color: colors.colors.text }}>
           총 확진자 수: {totalPositive}명
         </Text>
       </View>

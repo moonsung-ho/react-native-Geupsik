@@ -19,6 +19,7 @@ const Item = ({
   officeCode,
   schoolForm,
   navigation,
+  schoolName,
   previousSchool
 }) => {
   const colors = useTheme();
@@ -39,7 +40,6 @@ const Item = ({
     officeCodeAS.setValue(officeCode);
     schoolNameAS.setValue(schoolName);
     schoolFormAS.setValue(schoolForm);
-
     // 학교를 설정하는 경우에 hasLaunched를 true로 설정합니다.
     // 학교를 설정한 경우에만 AppfirstLaunchScreen으로 이동하지 않습니다.
     hasLaunchedAS.setValue("true");
@@ -75,7 +75,8 @@ const Item = ({
           officeCode,
           title,
           schoolForm,
-          previousSchool
+          previousSchool,
+          schoolName
         ]);
       }}
     >
@@ -109,6 +110,7 @@ export default function SchoolSettingScreen({ navigation }) {
       officeCode={item.ATPT_OFCDC_SC_CODE}
       schoolForm={item.SCHUL_KND_SC_NM}
       navigation={navigation}
+      schoolName={item.SCHUL_NM}
       previousSchool={previousSchoolCode}
     />
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import GeupsikScreen from "./GeupsikScreen";
 import CalendarScreen from "./CalendarScreen";
@@ -12,6 +12,7 @@ import AppInfoScreen from "./settings/AppInfoScreen";
 import GradeClassSettingScreen from "./settings/GradeClassSettingScreen";
 import CalendarErrorScreen from "./CalendarErrorScreen";
 import NoticeScreen from "./settings/NoticeScreen";
+import { useAsyncStorage, KEYS } from "../hooks/asyncStorage";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,13 +21,20 @@ const Container = styled.View`
 `;
 
 export const Geupsik = () => {
+  const [schoolName, setSchoolName] = useState("");
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
+  useEffect(() => {
+    if (!schoolNameAS.isLoading) {
+      setSchoolName(` - ${schoolNameAS.state}`);
+    }
+  }, [schoolNameAS.isLoading, schoolNameAS.state]);
   return (
     <Container>
       <Stack.Navigator>
         <Stack.Screen
           name="급식screen"
           component={GeupsikScreen}
-          options={{ headerTitle: "급식", title: "급식" }}
+          options={{ headerTitle: "급식" + schoolName, title: "급식" }}
         />
         <Stack.Screen
           name="first-launch"
@@ -39,6 +47,13 @@ export const Geupsik = () => {
 };
 
 export const Calendar = () => {
+  const [schoolName, setSchoolName] = useState("");
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
+  useEffect(() => {
+    if (!schoolNameAS.isLoading) {
+      setSchoolName(` - ${schoolNameAS.state}`);
+    }
+  }, [schoolNameAS.isLoading, schoolNameAS.state]);
   return (
     <Container>
       <Stack.Navigator>
@@ -46,7 +61,7 @@ export const Calendar = () => {
           name="시간표screen"
           component={CalendarScreen}
           options={{
-            headerTitle: "시간표",
+            headerTitle: "시간표" + schoolName,
             title: "시간표"
           }}
         />
