@@ -26,7 +26,7 @@ export const Geupsik = () => {
         <Stack.Screen
           name="급식screen"
           component={GeupsikScreen}
-          options={{ headerShown: false, headerTitle: "급식", title: "급식" }}
+          options={{ headerTitle: "급식", title: "급식" }}
         />
         <Stack.Screen
           name="first-launch"
@@ -46,7 +46,6 @@ export const Calendar = () => {
           name="시간표screen"
           component={CalendarScreen}
           options={{
-            headerShown: false,
             headerTitle: "시간표",
             title: "시간표"
           }}
@@ -68,7 +67,7 @@ export const Settings = () => {
         <Stack.Screen
           name="설정screen"
           component={SettingsScreen}
-          options={{ headerTitle: "설정" }}
+          options={{ headerTitle: "더보기" }}
         />
         <Stack.Screen name="학교 설정" component={SchoolSettingScreen} />
         <Stack.Screen name="알레르기 설정" component={AllergySettingScreen} />

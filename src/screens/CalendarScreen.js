@@ -181,7 +181,7 @@ function CalendarScreen({ navigation }) {
     textInput: {
       fontSize: 16,
       height: 50,
-      width: "auto",
+      width: 120,
       alignItems: "center",
       alignContent: "center",
       borderWidth: 1,
@@ -213,7 +213,7 @@ function CalendarScreen({ navigation }) {
     },
     rowContainer: {
       flexDirection: "row",
-      marginTop: 40
+      marginTop: 20
     },
     shareButton: {
       width: 60,

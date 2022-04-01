@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Linking } from "react-native";
 import { useEffect, useState } from "react";
 import Button from "./settings/SettingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -6,6 +6,9 @@ import { useTheme } from "@react-navigation/native";
 import * as Analytics from "expo-firebase-analytics";
 
 export default function SettingsScreen({ navigation }) {
+  const [coronaApiSource, setCoronaApiSource] = useState("로딩중");
+  const [todayPositive, setTodayPositive] = useState("로딩중");
+  const [totalPositive, setTotalPositive] = useState("로딩중");
   useEffect(() => {
     Analytics.logEvent("settingScreenEnter");
   }, []);
@@ -19,6 +22,21 @@ export default function SettingsScreen({ navigation }) {
   const [isDarkmodeToggled, setIsDarkmodeToggled] = useState(
     isDarkmodeAsyncStorage
   );
+
+  useEffect(() => {
+    fetch(
+      "https://api.corona-19.kr/korea/?serviceKey=LXNyctsed96ahp2mViJKQZ3EnAzTHwvUk"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setTodayPositive(json.TotalCaseBefore);
+        setCoronaApiSource(json.source);
+        setTotalPositive(json.TotalCase);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  }, []);
 
   function toggleDarkmode() {
     // setIsDarkmodeToggled((previous) => !previous);
@@ -52,14 +70,6 @@ export default function SettingsScreen({ navigation }) {
         iconMarginRight={18}
       />
       {/* <Button
-        title="학년 및 반 설정"
-        onPress={() => navigation.navigate("학년 & 반 설정")}
-        icon="id-card"
-        toggle={false}
-        iconMarginLeft={1}
-        iconMarginRight={16}
-      /> */}
-      {/* <Button
         title="다크 모드"
         onPress={toggleDarkmode}
         value={isDarkmodeToggled}
@@ -74,7 +84,6 @@ export default function SettingsScreen({ navigation }) {
         iconMarginLeft={4}
         iconMarginRight={20}
       /> */}
-
       <Button
         title="앱 정보 & FAQ "
         onPress={() => navigation.navigate("앱 정보")}
@@ -91,6 +100,52 @@ export default function SettingsScreen({ navigation }) {
         iconMarginLeft={4}
         iconMarginRight={17}
       />
+      <Button
+        title="건강상태 자가진단 바로가기"
+        onPress={() =>
+          Linking.openURL("https://hcs.eduro.go.kr").catch((error) => {
+            console.warn(error);
+          })
+        }
+        icon="check"
+        toggle={false}
+        iconMarginLeft={4}
+        iconMarginRight={16}
+      />
+      <View style={{ paddingVertical: 11 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: 11
+          }}
+        >
+          <View style={{ width: "100%" }}>
+            <Text style={{ fontWeight: "bold" }}>오늘의 코로나19</Text>
+            <Text
+              style={{
+                color: "gray",
+                position: "absolute",
+                right: 9,
+                flex: 1,
+                fontSize: 11
+              }}
+            >
+              출처: {coronaApiSource}
+            </Text>
+          </View>
+        </View>
+        <Text style={{ marginHorizontal: 14 }}>
+          오늘의 확진자 수:{" "}
+          {todayPositive.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}명
+        </Text>
+        <Text style={{ marginHorizontal: 14 }}>
+          총 확진자 수:{" "}
+          {totalPositive
+            .replaceAll(",", "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          명
+        </Text>
+      </View>
     </View>
   );
 }

@@ -41,13 +41,13 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="설정"
+        name="더보기"
         component={Settings}
         options={{
           headerShown: false,
           tabBarActiveTintColor: colors.colors.primary,
           tabBarIcon: (props) =>
-            MaterialIconsSet({ ...props, name: "settings" })
+            MaterialCommunityIconsSet({ ...props, name: "dots-horizontal" })
         }}
       />
     </Tab.Navigator>

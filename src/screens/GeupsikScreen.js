@@ -295,7 +295,7 @@ export default function GeupsikScreen({ navigation }) {
     },
     rowContainer: {
       flexDirection: "row",
-      marginTop: 40
+      marginTop: 20
     },
     title: {
       textAlign: "center",
