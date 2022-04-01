@@ -29,9 +29,9 @@ export default function SettingsScreen({ navigation }) {
     )
       .then((response) => response.json())
       .then((json) => {
-        setTodayPositive(json.TotalCaseBefore);
+        setTodayPositive(json.TotalCaseBefore + "명");
         setCoronaApiSource(json.source);
-        setTotalPositive(json.TotalCase);
+        setTotalPositive(json.TotalCase + "명");
       })
       .catch((error) => {
         console.warn(error);
@@ -138,10 +138,10 @@ export default function SettingsScreen({ navigation }) {
         </View>
         <Text style={{ marginHorizontal: 14, color: colors.colors.text }}>
           오늘의 확진자 수:{" "}
-          {todayPositive.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}명
+          {todayPositive.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Text>
         <Text style={{ marginHorizontal: 14, color: colors.colors.text }}>
-          총 확진자 수: {totalPositive}명
+          총 확진자 수: {totalPositive}
         </Text>
       </View>
     </View>
