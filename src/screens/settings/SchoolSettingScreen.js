@@ -48,7 +48,8 @@ const Item = ({
     navigation.navigate("학년 & 반 설정", {
       schoolCode,
       schoolForm,
-      previousSchool
+      previousSchool,
+      officeCode
     });
   }
 
@@ -127,7 +128,7 @@ export default function SchoolSettingScreen({ navigation }) {
           dataCandidate = dataCandidate.concat(json.schoolInfo[1].row[0]);
         } else {
           let n = 0;
-          while (n < dataTotalCount - 1) {
+          while (n < dataTotalCount) {
             dataCandidate = dataCandidate.concat(json.schoolInfo[1].row[n]);
             n++;
           }
