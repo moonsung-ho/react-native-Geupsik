@@ -139,11 +139,7 @@ export default function SettingsScreen({ navigation }) {
           {todayPositive.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}명
         </Text>
         <Text style={{ marginHorizontal: 14 }}>
-          총 확진자 수:{" "}
-          {totalPositive
-            .replaceAll(",", "")
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          명
+          총 확진자 수: {totalPositive}명
         </Text>
       </View>
     </View>
