@@ -23,7 +23,7 @@ export default function CalendarErrorScreen({ navigation }) {
             fontWeight: "bold"
           }}
         >
-          급식
+          급식시간
         </Text>
         <Image
           style={{ height: 100, width: 100, alignSelf: "center" }}
@@ -46,7 +46,7 @@ export default function CalendarErrorScreen({ navigation }) {
           <Button
             onPress={() => {
               navigation.navigate("급식", { screen: "급식screen" });
-              navigation.navigate("설정");
+              navigation.navigate("더보기");
             }}
             title="설정으로 이동"
           />

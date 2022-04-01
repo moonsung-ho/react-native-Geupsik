@@ -43,7 +43,7 @@ export default function AppfirstLaunchScreen({ navigation }) {
           <Button
             onPress={() => {
               navigation.navigate("급식", { screen: "급식screen" });
-              navigation.navigate("설정");
+              navigation.navigate("더보기");
             }}
             title="설정으로 이동"
           />
