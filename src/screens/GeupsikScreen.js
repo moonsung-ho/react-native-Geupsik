@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,11 @@ import {
   ActivityIndicator
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useTheme } from "@react-navigation/native";
+import {
+  useTheme,
+  useFocusEffect,
+  useIsFocused
+} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -76,6 +80,16 @@ Number.prototype.zf = function (len) {
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
 export default function GeupsikScreen({ navigation }) {
+  const [schoolName, setSchoolName] = useState("");
+  const isFocused = useIsFocused();
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME, isFocused);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!schoolNameAS.isLoading) {
+        navigation.setOptions({ headerTitle: `급식 - ${schoolNameAS.state}` });
+      }
+    }, [])
+  );
   useEffect(() => {
     Analytics.logEvent("geupsikScreenEnter");
   }, []);
@@ -255,6 +269,9 @@ export default function GeupsikScreen({ navigation }) {
           setApiLoadingState(loading.loaded);
           setData(["급식이 없는 날입니다."]);
         } else {
+          navigation.setOptions({
+            headerTitle: `급식 - ${json.mealServiceDietInfo[1].row[0].SCHUL_NM}`
+          });
           let meal =
             json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").join(
               "\n"
@@ -265,6 +282,52 @@ export default function GeupsikScreen({ navigation }) {
             if (menus[n].includes(allergy + ".")) {
               meal = meal.replace(menus[n], `<${menus[n]}>`);
             }
+            if (menus[n].includes("밥")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍚`);
+            }
+            if (menus[n].includes("우유")) {
+              meal = meal.replace(menus[n], `${menus[n]}🥛`);
+            }
+            if (menus[n].includes("사과")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍎`);
+            }
+            if (menus[n].includes("카레")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍛`);
+            }
+            if (menus[n].includes("닭")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍗`);
+            }
+            if (menus[n].includes("오렌지")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍊`);
+            }
+            if (menus[n].includes("포도")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍇`);
+            }
+            if (menus[n].includes("새우")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍤`);
+            }
+            if (menus[n].includes("스테이크")) {
+              meal = meal.replace(menus[n], `${menus[n]}🥩`);
+            }
+            if (menus[n].includes("파인애플")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍍`);
+            }
+            if (menus[n].includes("바나나")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍌`);
+            }
+            if (menus[n].includes("멜론") || menus[n].includes("메론")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍈`);
+            }
+            if (menus[n].includes("수박")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍉`);
+            }
+            if (menus[n].includes("버섯")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍄`);
+            }
+            if (menus[n].includes("오리")) {
+              meal = meal.replace(menus[n], `${menus[n]}🍗`);
+            }
+            //메뉴 뒤에 이모지 표시
             n = n + 1;
           }
           meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거

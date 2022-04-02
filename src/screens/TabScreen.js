@@ -13,6 +13,7 @@ import GradeClassSettingScreen from "./settings/GradeClassSettingScreen";
 import CalendarErrorScreen from "./CalendarErrorScreen";
 import NoticeScreen from "./settings/NoticeScreen";
 import { useAsyncStorage, KEYS } from "../hooks/asyncStorage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,11 +24,13 @@ const Container = styled.View`
 export const Geupsik = () => {
   const [schoolName, setSchoolName] = useState("");
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
-  useEffect(() => {
-    if (!schoolNameAS.isLoading) {
-      setSchoolName(` - ${schoolNameAS.state}`);
-    }
-  }, [schoolNameAS.isLoading, schoolNameAS.state]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!schoolNameAS.isLoading) {
+        setSchoolName(` - ${schoolNameAS.state}`);
+      }
+    }, [schoolNameAS.isLoading, schoolNameAS.state])
+  );
   return (
     <Container>
       <Stack.Navigator>
@@ -49,11 +52,13 @@ export const Geupsik = () => {
 export const Calendar = () => {
   const [schoolName, setSchoolName] = useState("");
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
-  useEffect(() => {
-    if (!schoolNameAS.isLoading) {
-      setSchoolName(` - ${schoolNameAS.state}`);
-    }
-  }, [schoolNameAS.isLoading, schoolNameAS.state]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!schoolNameAS.isLoading) {
+        setSchoolName(` - ${schoolNameAS.state}`);
+      }
+    }, [schoolNameAS.isLoading, schoolNameAS.state])
+  );
   return (
     <Container>
       <Stack.Navigator>

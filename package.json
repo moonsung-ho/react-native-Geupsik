@@ -10,7 +10,7 @@
     "eject": "expo eject",
     "build": "eas build --auto-submit",
     "git": "git add .&&git commit -m 'd'&&git push origin master",
-    "pub": "yarn git&&expo publish"
+    "pub": "nvm use 16.14.0&&yarn git&&expo publish"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.5",

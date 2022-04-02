@@ -246,24 +246,138 @@ function CalendarScreen({ navigation }) {
           let calendar = new Array();
           if (schoolForm === "els") {
             while (n < json.elsTimetable[0].head[0].list_total_count * 1) {
+              let subject = json.elsTimetable[1].row[n].ITRT_CNTNT;
+              if (subject.includes("음악")) {
+                subject = subject + "🎼";
+              }
+              if (subject.includes("수학")) {
+                subject = subject + "🧮";
+              }
+              if (subject.includes("영어")) {
+                subject = subject + "🔠";
+              }
+              if (subject.includes("과학")) {
+                subject = subject + "🧪";
+              }
+              if (subject.includes("국어")) {
+                subject = subject + "📚";
+              }
+              if (subject.includes("실과")) {
+                subject = subject + "🪡";
+              }
+              if (subject.includes("도덕")) {
+                subject = subject + "😇";
+              }
+              if (subject.includes("체육")) {
+                subject = subject + "💪";
+              }
+              if (subject.includes("자율활동")) {
+                subject = subject + "🆓";
+              }
+              if (subject.includes("미술")) {
+                subject = subject + "🎨";
+              }
+              if (subject.includes("사회")) {
+                subject = subject + "🏬";
+              }
               calendar = calendar.concat({
-                subject: json.elsTimetable[1].row[n].ITRT_CNTNT,
+                subject: subject,
                 period: json.elsTimetable[1].row[n].PERIO
               });
               n++;
             }
           } else if (schoolForm === "mis") {
             while (n < json.misTimetable[0].head[0].list_total_count * 1) {
+              let subject = json.misTimetable[1].row[n].ITRT_CNTNT;
+              if (subject.includes("음악")) {
+                subject = subject + "🎼";
+              }
+              if (subject.includes("수학")) {
+                subject = subject + "🧮";
+              }
+              if (subject.includes("영어")) {
+                subject = subject + "🔠";
+              }
+              if (subject.includes("과학")) {
+                subject = subject + "🧪";
+              }
+              if (subject.includes("국어")) {
+                subject = subject + "📚";
+              }
+              if (subject.includes("도덕")) {
+                subject = subject + "😇";
+              }
+              if (subject.includes("체육")) {
+                subject = subject + "💪";
+              }
+              if (subject.includes("자율활동")) {
+                subject = subject + "🆓";
+              }
+              if (subject.includes("미술")) {
+                subject = subject + "🎨";
+              }
+              if (subject.includes("사회")) {
+                subject = subject + "🏬";
+              }
+              if (subject.includes("역사")) {
+                subject = subject + "📜";
+              }
+              if (subject.includes("기술")) {
+                subject = subject + "📡";
+              }
               calendar = calendar.concat({
-                subject: json.misTimetable[1].row[n].ITRT_CNTNT,
+                subject: subject,
                 period: json.misTimetable[1].row[n].PERIO
               });
               n++;
             }
           } else if (schoolForm === "his") {
             while (n < json.hisTimetable[0].head[0].list_total_count * 1) {
+              let subject = json.hisTimetable[1].row[n].ITRT_CNTNT;
+              if (subject.includes("음악")) {
+                subject = subject + "🎼";
+              }
+              if (subject.includes("수학")) {
+                subject = subject + "𝔁";
+              }
+              if (subject.includes("영어")) {
+                subject = subject + "📃";
+              }
+              if (subject.includes("과학")) {
+                subject = subject + "🧪";
+              }
+              if (subject.includes("물리학")) {
+                subject = subject + "🧪";
+              }
+              if (subject.includes("화학")) {
+                subject = subject + "🧪";
+              }
+              if (subject.includes("문학")) {
+                subject = subject + "📖";
+              }
+              if (subject.includes("운동")) {
+                subject = subject + "💪";
+              }
+              if (subject.includes("진로")) {
+                subject = subject + "🧐";
+              }
+              if (subject.includes("확률")) {
+                subject = subject + "📊";
+              }
+              if (subject.includes("미술")) {
+                subject = subject + "🎨";
+              }
+              if (subject.includes("지리")) {
+                subject = subject + "🗺";
+              }
+              if (subject.includes("윤리")) {
+                subject = subject + "😇";
+              }
+              if (subject.includes("사회")) {
+                subject = subject + "🏬";
+              }
               calendar = calendar.concat({
-                subject: json.hisTimetable[1].row[n].ITRT_CNTNT,
+                subject: subject,
                 period: json.hisTimetable[1].row[n].PERIO
               });
               n++;
