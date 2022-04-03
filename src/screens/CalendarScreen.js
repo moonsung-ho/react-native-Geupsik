@@ -396,96 +396,71 @@ function CalendarScreen({ navigation }) {
       });
   }, [schoolCode, classN, grade, text]);
   return (
-    <GestureRecognizer
-      onSwipeLeft={() => {
-        const newDate = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + 1
-        );
-        setDate(newDate);
-        onChangeText(newDate.format("yyyy/MM/dd"));
-      }}
-      onSwipeRight={() => {
-        const newDate = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() - 1
-        );
-        setDate(newDate);
-        onChangeText(newDate.format("yyyy/MM/dd"));
-      }}
-      style={{ flex: 1 }}
-      config={{
-        velocityThreshold: 0.1,
-        directionalOffsetThreshold: 60
-      }}
-    >
-      <View style={styles.view}>
-        <View style={styles.rowContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              const newDate = new Date(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate() - 1
-              );
-              setDate(newDate);
-              onChangeText(newDate.format("yyyy/MM/dd"));
-            }}
-          >
-            <Icon
-              name="keyboard-arrow-left"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
-          <TouchableOpacity onPress={showDatePicker}>
-            <TextInput
-              pointerEvents="none"
-              style={styles.textInput}
-              placeholderTextColor="#000000"
-              underlineColorAndroid="transparent"
-              editable={false}
-              value={text}
-            />
-          </TouchableOpacity>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              const newDate = new Date(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate() + 1
-              );
-              setDate(newDate);
-              onChangeText(newDate.format("yyyy/MM/dd"));
-            }}
-          >
-            <Icon
-              name="keyboard-arrow-right"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
-        </View>
-        <FlatList
-          style={{ marginTop: 100 }}
-          data={calendar}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.period}
-        />
-        {isDatePickerVisible && Platform.OS != "ios" && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode="date"
-            display="default"
-            onChange={handleConfirm}
+    <View style={styles.view}>
+      <View style={styles.rowContainer}>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            const newDate = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate() - 1
+            );
+            setDate(newDate);
+            onChangeText(newDate.format("yyyy/MM/dd"));
+          }}
+        >
+          <Icon
+            name="keyboard-arrow-left"
+            size={20}
+            color={colors.colors.text}
           />
-        )}
+        </Pressable>
+        <TouchableOpacity onPress={showDatePicker}>
+          <TextInput
+            pointerEvents="none"
+            style={styles.textInput}
+            placeholderTextColor="#000000"
+            underlineColorAndroid="transparent"
+            editable={false}
+            value={text}
+          />
+        </TouchableOpacity>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            const newDate = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate() + 1
+            );
+            setDate(newDate);
+            onChangeText(newDate.format("yyyy/MM/dd"));
+          }}
+        >
+          <Icon
+            name="keyboard-arrow-right"
+            size={20}
+            color={colors.colors.text}
+          />
+        </Pressable>
       </View>
+      <FlatList
+        style={{ marginTop: 100 }}
+        data={calendar}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.period}
+      />
+      {isDatePickerVisible && Platform.OS != "ios" && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleConfirm}
+        />
+      )}
+
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Icon name="share" size={22} color={"#FFF"} />
       </Pressable>
@@ -509,7 +484,7 @@ function CalendarScreen({ navigation }) {
           (apiLoadingState === loading.error && true)
         }
       />
-    </GestureRecognizer>
+    </View>
   );
 }
 

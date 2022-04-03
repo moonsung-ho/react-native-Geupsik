@@ -404,81 +404,71 @@ export default function GeupsikScreen({ navigation }) {
   });
 
   return (
-    <GestureRecognizer
-      onSwipeLeft={seeTomorrowGeupsik}
-      onSwipeRight={seeYesterdayGeupsik}
-      style={{ flex: 1 }}
-      config={{
-        velocityThreshold: 0.1,
-        directionalOffsetThreshold: 60
-      }}
-    >
-      <View style={styles.container}>
-        <View style={styles.rowContainer}>
-          <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
-            <Icon
-              name="keyboard-arrow-left"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
-          <TouchableOpacity onPress={showDatePicker}>
-            <TextInput
-              pointerEvents="none"
-              style={styles.textInput}
-              placeholderTextColor="#000000"
-              underlineColorAndroid="transparent"
-              editable={false}
-              value={text}
-            />
-          </TouchableOpacity>
-          <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
-            <Icon
-              name="keyboard-arrow-right"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
-        </View>
-        <ActivityIndicator
-          style={{
-            position: "absolute",
-            right: 5,
-            top: loadingSpinnerTop,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-          color={
-            (apiLoadingState === loading.error && colors.colors.error) ||
-            "#999999"
-          }
-          size="large"
-          animating={
-            (apiLoadingState === loading.loaded && false) ||
-            (apiLoadingState === loading.loading && true) ||
-            (apiLoadingState === loading.beforeLoading && true) ||
-            (apiLoadingState === loading.error && true)
-          }
-        />
-        {isDatePickerVisible && Platform.OS != "ios" && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode="date"
-            display="default"
-            onChange={handleConfirm}
+    <View style={styles.container}>
+      <View style={styles.rowContainer}>
+        <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
+          <Icon
+            name="keyboard-arrow-left"
+            size={20}
+            color={colors.colors.text}
           />
-        )}
-        <FlatList
-          style={{ marginTop: 100 }}
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item}
-        />
-        <Pressable onPress={onShare} style={styles.shareButton}>
-          <Icon name="share" size={22} color={"#FFF"} />
+        </Pressable>
+        <TouchableOpacity onPress={showDatePicker}>
+          <TextInput
+            pointerEvents="none"
+            style={styles.textInput}
+            placeholderTextColor="#000000"
+            underlineColorAndroid="transparent"
+            editable={false}
+            value={text}
+          />
+        </TouchableOpacity>
+        <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
+          <Icon
+            name="keyboard-arrow-right"
+            size={20}
+            color={colors.colors.text}
+          />
         </Pressable>
       </View>
-    </GestureRecognizer>
+      <ActivityIndicator
+        style={{
+          position: "absolute",
+          right: 5,
+          top: loadingSpinnerTop,
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        color={
+          (apiLoadingState === loading.error && colors.colors.error) ||
+          "#999999"
+        }
+        size="large"
+        animating={
+          (apiLoadingState === loading.loaded && false) ||
+          (apiLoadingState === loading.loading && true) ||
+          (apiLoadingState === loading.beforeLoading && true) ||
+          (apiLoadingState === loading.error && true)
+        }
+      />
+      {isDatePickerVisible && Platform.OS != "ios" && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleConfirm}
+        />
+      )}
+      <FlatList
+        style={{ marginTop: 100 }}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item}
+      />
+      <Pressable onPress={onShare} style={styles.shareButton}>
+        <Icon name="share" size={22} color={"#FFF"} />
+      </Pressable>
+    </View>
   );
 }
