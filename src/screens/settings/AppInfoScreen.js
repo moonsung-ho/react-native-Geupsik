@@ -2,15 +2,18 @@ import { useTheme } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Linking } from "react-native";
 import { Divider } from "react-native-elements/dist/divider/Divider";
+import Constants from "expo-constants";
 
 export default function AppInfoScreen() {
   const [userCount, setUserCount] = useState("로딩중...");
+  const [version, setVersion] = useState("로딩중...");
   useEffect(() => {
     fetch("https://geupsikapp.azurewebsites.net/usercount")
       .then((res) => res.json())
       .then((json) => {
         setUserCount(json[0].count);
       });
+    setVersion(Constants.manifest.version);
   }, []);
   const colors = useTheme();
   const styles = StyleSheet.create({
@@ -134,7 +137,10 @@ export default function AppInfoScreen() {
         입니다.
       </Text>
       <Divider style={styles.divider} />
-      <Text style={styles.text}>오늘의 유저 수: {userCount}</Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={styles.text}>오늘의 유저 수: {userCount}</Text>
+        <Text style={styles.text}>앱 버전: {version}</Text>
+      </View>
     </ScrollView>
   );
 }
