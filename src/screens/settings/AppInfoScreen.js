@@ -12,6 +12,9 @@ export default function AppInfoScreen() {
       .then((res) => res.json())
       .then((json) => {
         setUserCount(json[0].count);
+      })
+      .catch((error) => {
+        console.log(error);
       });
     setVersion(Constants.manifest.version);
   }, []);

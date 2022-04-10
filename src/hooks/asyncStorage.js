@@ -10,7 +10,8 @@ export const KEYS = {
   SCHOOL_FORM: "schoolform",
   CLASS: "class",
   GRADE: "grade",
-  LAUNCHED_TODAY: "Launchedtoday"
+  LAUNCHED_TODAY: "Launchedtoday",
+  SELECTED_DATE: "selecteddate"
 };
 
 export const useAsyncStorage = (key, reloadState) => {

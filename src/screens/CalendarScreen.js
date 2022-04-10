@@ -17,6 +17,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import GestureRecognizer from "react-native-swipe-gestures";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import * as Analytics from "expo-firebase-analytics";
+import * as React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -73,7 +75,7 @@ Number.prototype.zf = function (len) {
 };
 /* 출처: https://stove99.tistory.com/46 [스토브 훌로구] */
 
-function CalendarScreen({ navigation }) {
+export default function CalendarScreen({ navigation }) {
   useEffect(() => {
     Analytics.logEvent("calendarScreenEnter");
   }, []);
@@ -167,8 +169,64 @@ function CalendarScreen({ navigation }) {
       } else if (schoolFormAS.state === "고등학교") {
         setSchoolForm("his");
       }
+      getCalendar();
     }
-  }, [officeCodeAS.isLoading, officeCodeAS.state, text]);
+  }, [schoolFormAS.isLoading, schoolFormAS.state, text]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: (props) => (
+        <View style={styles.rowContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              const newDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate() - 1
+              );
+              setDate(newDate);
+              onChangeText(newDate.format("yyyy/MM/dd"));
+            }}
+          >
+            <Icon
+              name="keyboard-arrow-left"
+              size={20}
+              color={colors.colors.text}
+            />
+          </Pressable>
+          <TouchableOpacity onPress={showDatePicker}>
+            <TextInput
+              pointerEvents="none"
+              style={styles.textInput}
+              placeholderTextColor="#000000"
+              underlineColorAndroid="transparent"
+              editable={false}
+              value={text}
+            />
+          </TouchableOpacity>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              const newDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate() + 1
+              );
+              setDate(newDate);
+              onChangeText(newDate.format("yyyy/MM/dd"));
+            }}
+          >
+            <Icon
+              name="keyboard-arrow-right"
+              size={20}
+              color={colors.colors.text}
+            />
+          </Pressable>
+        </View>
+      )
+    });
+  }, [text]);
 
   const Item = ({ menu }) => (
     <View>
@@ -177,7 +235,7 @@ function CalendarScreen({ navigation }) {
   );
   const renderItem = ({ item }) => <Item menu={item} />;
   const styles = StyleSheet.create({
-    view: { alignItems: "center", justifyContent: "center", flex: 1 },
+    view: { alignItems: "center", flex: 1 },
     textInput: {
       fontSize: 16,
       height: 50,
@@ -189,7 +247,17 @@ function CalendarScreen({ navigation }) {
       color: colors.colors.text,
       padding: 10,
       borderColor: colors.colors.border,
-      textAlign: "center"
+      textAlign: "center",
+      ...Platform.select({
+        ios: {
+          shadowColor: "grey",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.6,
+          shadowRadius: 7
+        },
+        android: { elevation: 10 }
+      }),
+      backgroundColor: colors.colors.background
     },
     button: {
       justifyContent: "center",
@@ -198,7 +266,17 @@ function CalendarScreen({ navigation }) {
       width: 50,
       alignItems: "center",
       marginHorizontal: 20,
-      borderColor: colors.colors.border
+      borderColor: colors.colors.border,
+      ...Platform.select({
+        ios: {
+          shadowColor: "grey",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.6,
+          shadowRadius: 7
+        },
+        android: { elevation: 10 }
+      }),
+      backgroundColor: colors.colors.background
     },
     buttonText: {
       fontWeight: "bold",
@@ -213,7 +291,12 @@ function CalendarScreen({ navigation }) {
     },
     rowContainer: {
       flexDirection: "row",
-      marginTop: 20
+      marginTop: 50,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.colors.border,
+      width: "100%",
+      paddingBottom: 15,
+      justifyContent: "center"
     },
     shareButton: {
       width: 60,
@@ -225,10 +308,86 @@ function CalendarScreen({ navigation }) {
       backgroundColor: colors.colors.primary,
       position: "absolute",
       bottom: 10,
-      right: 10
+      right: 10,
+      ...Platform.select({
+        ios: {
+          shadowColor: "grey",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.6,
+          shadowRadius: 7
+        },
+        android: { elevation: 10 }
+      })
     }
   });
   useEffect(() => {
+    getCalendar();
+  }, [schoolForm, classN, grade, text]);
+
+  return (
+    <View style={styles.view}>
+      <View
+        style={{
+          ...Platform.select({
+            ios: {
+              shadowColor: "grey",
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.6,
+              shadowRadius: 7
+            },
+            android: { elevation: 10 }
+          }),
+          width: "80%",
+          backgroundColor: colors.colors.background,
+          marginTop: 70,
+          borderRadius: 20,
+          padding: 40
+        }}
+      >
+        <FlatList
+          style={{}}
+          data={calendar}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.period}
+        />
+      </View>
+      {isDatePickerVisible && Platform.OS != "ios" && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleConfirm}
+        />
+      )}
+
+      <Pressable onPress={onShare} style={styles.shareButton}>
+        <Icon name="share" size={22} color={"#FFF"} />
+      </Pressable>
+      <ActivityIndicator
+        style={{
+          position: "absolute",
+          right: 5,
+          top: loadingSpinnerTop,
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        color={
+          (apiLoadingState === loading.error && colors.colors.error) ||
+          "#999999"
+        }
+        size="large"
+        animating={
+          (apiLoadingState === loading.loaded && false) ||
+          (apiLoadingState === loading.loading && true) ||
+          (apiLoadingState === loading.beforeLoading && true) ||
+          (apiLoadingState === loading.error && true)
+        }
+      />
+    </View>
+  );
+
+  function getCalendar() {
     if (apiLoadingState === loading.beforeLoading) {
       setCalendar([{ subject: "로딩 중입니다.", period: "1" }]);
     }
@@ -241,7 +400,7 @@ function CalendarScreen({ navigation }) {
     )
       .then((response) => response.json())
       .then((json) => {
-        if (JSON.stringify(json).includes("INFO-000")) {
+        if (JSON.stringify(json).includes("Timetable")) {
           let n = 0;
           let calendar = new Array();
           if (schoolForm === "els") {
@@ -394,98 +553,5 @@ function CalendarScreen({ navigation }) {
         console.warn(error);
         setApiLoadingState(loading.error);
       });
-  }, [schoolCode, classN, grade, text]);
-  return (
-    <View style={styles.view}>
-      <View style={styles.rowContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            const newDate = new Date(
-              date.getFullYear(),
-              date.getMonth(),
-              date.getDate() - 1
-            );
-            setDate(newDate);
-            onChangeText(newDate.format("yyyy/MM/dd"));
-          }}
-        >
-          <Icon
-            name="keyboard-arrow-left"
-            size={20}
-            color={colors.colors.text}
-          />
-        </Pressable>
-        <TouchableOpacity onPress={showDatePicker}>
-          <TextInput
-            pointerEvents="none"
-            style={styles.textInput}
-            placeholderTextColor="#000000"
-            underlineColorAndroid="transparent"
-            editable={false}
-            value={text}
-          />
-        </TouchableOpacity>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            const newDate = new Date(
-              date.getFullYear(),
-              date.getMonth(),
-              date.getDate() + 1
-            );
-            setDate(newDate);
-            onChangeText(newDate.format("yyyy/MM/dd"));
-          }}
-        >
-          <Icon
-            name="keyboard-arrow-right"
-            size={20}
-            color={colors.colors.text}
-          />
-        </Pressable>
-      </View>
-      <FlatList
-        style={{ marginTop: 100 }}
-        data={calendar}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.period}
-      />
-      {isDatePickerVisible && Platform.OS != "ios" && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          display="default"
-          onChange={handleConfirm}
-        />
-      )}
-
-      <Pressable onPress={onShare} style={styles.shareButton}>
-        <Icon name="share" size={22} color={"#FFF"} />
-      </Pressable>
-      <ActivityIndicator
-        style={{
-          position: "absolute",
-          right: 5,
-          top: loadingSpinnerTop,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-        color={
-          (apiLoadingState === loading.error && colors.colors.error) ||
-          "#999999"
-        }
-        size="large"
-        animating={
-          (apiLoadingState === loading.loaded && false) ||
-          (apiLoadingState === loading.loading && true) ||
-          (apiLoadingState === loading.beforeLoading && true) ||
-          (apiLoadingState === loading.error && true)
-        }
-      />
-    </View>
-  );
+  }
 }
-
-export default CalendarScreen;

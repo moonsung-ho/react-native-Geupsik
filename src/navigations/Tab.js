@@ -1,10 +1,7 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Geupsik, Settings, Calendar } from "../screens/TabScreen";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
-import { Text } from "react-native";
 
 const MaterialIconsSet = ({ name, size, color }) => {
   return <MaterialIcons name={name} size={size} color={color} />;
@@ -56,8 +53,6 @@ const TabNavigation = () => {
         component={Calendar}
         options={{
           headerShown: false,
-          headerTitle: "시간표",
-          headerTitleAlign: "center",
           tabBarActiveTintColor: colors.colors.primary,
           tabBarIcon: (props) =>
             MaterialCommunityIconsSet({

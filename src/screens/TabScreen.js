@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import styled from "styled-components/native";
 import GeupsikScreen from "./GeupsikScreen";
 import CalendarScreen from "./CalendarScreen";
@@ -37,7 +37,7 @@ export const Geupsik = () => {
         <Stack.Screen
           name="급식screen"
           component={GeupsikScreen}
-          options={{ headerTitle: "급식" + schoolName, title: "급식" }}
+          //options={{ headerTitle: "급식" + schoolName, title: "급식" }}
         />
         <Stack.Screen
           name="first-launch"
@@ -65,10 +65,7 @@ export const Calendar = () => {
         <Stack.Screen
           name="시간표screen"
           component={CalendarScreen}
-          options={{
-            headerTitle: "시간표" + schoolName,
-            title: "시간표"
-          }}
+          options={{ header: () => <></> }}
         />
         <Stack.Screen
           name="에러"

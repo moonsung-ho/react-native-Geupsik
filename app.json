@@ -19,7 +19,7 @@
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "8",
+      "buildNumber": "9",
       "googleServicesFile": "./firebase/GoogleService-Info.plist"
     },
     "android": {
@@ -30,7 +30,7 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 112,
+      "versionCode": 113,
       "permissions": []
     },
     "web": {

@@ -23,6 +23,7 @@ import { Platform } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 import * as Analytics from "expo-firebase-analytics";
+import { Shadow } from "react-native-shadow-2";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -82,14 +83,6 @@ Number.prototype.zf = function (len) {
 export default function GeupsikScreen({ navigation }) {
   const [schoolName, setSchoolName] = useState("");
   const isFocused = useIsFocused();
-  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME, isFocused);
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!schoolNameAS.isLoading) {
-        navigation.setOptions({ headerTitle: `급식 - ${schoolNameAS.state}` });
-      }
-    }, [])
-  );
   useEffect(() => {
     Analytics.logEvent("geupsikScreenEnter");
   }, []);
@@ -108,6 +101,44 @@ export default function GeupsikScreen({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME, isFocused);
+  useEffect(() => {
+    //navigation.setOptions({ headerTitle: `급식 - ${schoolNameAS.state}` });
+    navigation.setOptions({
+      header: (props) => (
+        <View style={styles.rowContainer}>
+          <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
+            <Icon
+              name="keyboard-arrow-left"
+              size={20}
+              color={colors.colors.text}
+            />
+          </Pressable>
+          <TouchableOpacity onPress={showDatePicker}>
+            <TextInput
+              pointerEvents="none"
+              style={styles.textInput}
+              placeholderTextColor="#000000"
+              underlineColorAndroid="transparent"
+              editable={false}
+              value={text}
+            />
+          </TouchableOpacity>
+          <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
+            <Icon
+              name="keyboard-arrow-right"
+              size={20}
+              color={colors.colors.text}
+            />
+          </Pressable>
+        </View>
+      ),
+      headerStyle: {
+        backgroundColor: "#f4511e"
+      }
+    });
+  }, [text]);
 
   const loadingSpinnerTop =
     (Platform.OS === "ios" && 20) || (Platform.OS === "android" && 5) || 5;
@@ -145,7 +176,9 @@ export default function GeupsikScreen({ navigation }) {
     onChangeText(newDate.format("yyyy/MM/dd"));
   };
   function notLaunchedToday() {
-    fetch("https://geupsikapp.azurewebsites.net/newuser");
+    fetch("https://geupsikapp.azurewebsites.net/newuser").catch((error) => {
+      console.log(error);
+    });
     launchedTodayAS.setValue(new Date().toString());
   }
   const onShare = async () => {
@@ -161,7 +194,7 @@ export default function GeupsikScreen({ navigation }) {
 
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
   useEffect(() => {
-    if (!hasLaunchedAS.isLoading && !hasLaunchedAS.state) {
+    if (!hasLaunchedAS.isLoading && hasLaunchedAS.state === undefined) {
       navigation.navigate("first-launch");
     }
   }, [hasLaunchedAS.isLoading, hasLaunchedAS.state]);
@@ -199,7 +232,6 @@ export default function GeupsikScreen({ navigation }) {
       setOfficeCode(officeCodeAS.state);
     }
   }, [officeCodeAS.isLoading, officeCodeAS.state]);
-
   const allergyAS = useAsyncStorage(KEYS.ALLERGY, text);
   useEffect(() => {
     if (!allergyAS.isLoading) {
@@ -254,6 +286,165 @@ export default function GeupsikScreen({ navigation }) {
   const renderItem = ({ item }) => <Item menu={item} />;
 
   useEffect(() => {
+    getGeupsik();
+  }, [text, officeCode]);
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      flex: 1
+    },
+    buttonText: {
+      fontWeight: "bold",
+      color: colors.colors.text
+    },
+    rowContainer: {
+      flexDirection: "row",
+      marginTop: 50,
+      alignSelf: "center",
+      borderBottomWidth: 1,
+      borderBottomColor: colors.colors.border,
+      width: "100%",
+      alignContent: "center",
+      justifyContent: "center",
+      paddingBottom: 15
+    },
+    title: {
+      textAlign: "center",
+      fontSize: 30,
+      fontWeight: "bold",
+      color: colors.colors.text,
+      alignContent: "center"
+    },
+    textInput: {
+      fontSize: 16,
+      height: 50,
+      width: 120,
+      alignItems: "center",
+      alignContent: "center",
+      borderWidth: 1,
+      borderRadius: 12,
+      color: colors.colors.text,
+      padding: 10,
+      borderColor: colors.colors.border,
+      textAlign: "center",
+      ...Platform.select({
+        ios: {
+          shadowColor: "grey",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.6,
+          shadowRadius: 7
+        },
+        android: { elevation: 10 }
+      }),
+      backgroundColor: colors.colors.background
+    },
+    button: {
+      justifyContent: "center",
+      borderRadius: 12,
+      borderWidth: 1,
+      width: 50,
+      alignItems: "center",
+      marginHorizontal: 20,
+      borderColor: colors.colors.border,
+      ...Platform.select({
+        ios: {
+          shadowColor: "grey",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.6,
+          shadowRadius: 7
+        },
+        android: { elevation: 10 }
+      }),
+      backgroundColor: colors.colors.background
+    },
+    shareButton: {
+      width: 60,
+      height: 60,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 0,
+      borderRadius: 100,
+      backgroundColor: colors.colors.primary,
+      position: "absolute",
+      bottom: 10,
+      right: 10,
+      ...Platform.select({
+        ios: {
+          shadowColor: "grey",
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.6,
+          shadowRadius: 7
+        },
+        android: { elevation: 10 }
+      })
+    }
+  });
+
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator
+        style={{
+          position: "absolute",
+          right: 5,
+          top: loadingSpinnerTop,
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        color={
+          (apiLoadingState === loading.error && colors.colors.error) ||
+          "#999999"
+        }
+        size="large"
+        animating={
+          (apiLoadingState === loading.loaded && false) ||
+          (apiLoadingState === loading.loading && true) ||
+          (apiLoadingState === loading.beforeLoading && true) ||
+          (apiLoadingState === loading.error && true)
+        }
+      />
+      {isDatePickerVisible && Platform.OS != "ios" && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleConfirm}
+        />
+      )}
+      <View
+        style={{
+          ...Platform.select({
+            ios: {
+              shadowColor: "grey",
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.6,
+              shadowRadius: 7
+            },
+            android: { elevation: 10 }
+          }),
+          width: "80%",
+          backgroundColor: colors.colors.background,
+          marginTop: 70,
+          borderRadius: 20,
+          paddingVertical: 40,
+          paddingHorizontal: 11
+        }}
+      >
+        <FlatList
+          style={{}}
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item}
+        />
+      </View>
+      <Pressable onPress={onShare} style={styles.shareButton}>
+        <Icon name="share" size={22} color={"#FFF"} />
+      </Pressable>
+    </View>
+  );
+
+  function getGeupsik() {
     if (apiLoadingState === loading.beforeLoading) {
       setData(["로딩 중입니다."]);
     }
@@ -269,9 +460,9 @@ export default function GeupsikScreen({ navigation }) {
           setApiLoadingState(loading.loaded);
           setData(["급식이 없는 날입니다."]);
         } else {
-          navigation.setOptions({
-            headerTitle: `급식 - ${json.mealServiceDietInfo[1].row[0].SCHUL_NM}`
-          });
+          // navigation.setOptions({
+          //   headerTitle: `급식 - ${json.mealServiceDietInfo[1].row[0].SCHUL_NM}`
+          // });
           let meal =
             json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").join(
               "\n"
@@ -279,8 +470,10 @@ export default function GeupsikScreen({ navigation }) {
           let menus = meal.split("\n");
           let n = 0;
           while (n < menus.length) {
-            if (menus[n].includes(allergy + ".")) {
-              meal = meal.replace(menus[n], `<${menus[n]}>`);
+            if (!allergy === "") {
+              if (menus[n].includes(allergy + ".")) {
+                meal = meal.replace(menus[n], `<${menus[n]}>`);
+              }
             }
             if (menus[n].includes("밥")) {
               meal = meal.replace(menus[n], `${menus[n]}🍚`);
@@ -340,135 +533,5 @@ export default function GeupsikScreen({ navigation }) {
         setApiLoadingState(loading.error);
         console.log(error);
       });
-
-    return () => {
-      setApiLoadingState(loading.beforeLoading);
-      setData(["급식을 가져오는 중입니다."]);
-    };
-  }, [text]);
-
-  const styles = StyleSheet.create({
-    container: {
-      alignItems: "center",
-      flex: 1
-    },
-    buttonText: {
-      fontWeight: "bold",
-      color: colors.colors.text
-    },
-    rowContainer: {
-      flexDirection: "row",
-      marginTop: 20
-    },
-    title: {
-      textAlign: "center",
-      fontSize: 30,
-      fontWeight: "bold",
-      color: colors.colors.text,
-      alignContent: "center"
-    },
-    textInput: {
-      fontSize: 16,
-      height: 50,
-      width: 120,
-      alignItems: "center",
-      alignContent: "center",
-      borderWidth: 1,
-      borderRadius: 12,
-      color: colors.colors.text,
-      padding: 10,
-      borderColor: colors.colors.border,
-      textAlign: "center"
-    },
-    button: {
-      justifyContent: "center",
-      borderRadius: 12,
-      borderWidth: 1,
-      width: 50,
-      alignItems: "center",
-      marginHorizontal: 20,
-      borderColor: colors.colors.border
-    },
-    shareButton: {
-      width: 60,
-      height: 60,
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 0,
-      borderRadius: 100,
-      backgroundColor: colors.colors.primary,
-      position: "absolute",
-      bottom: 10,
-      right: 10
-    }
-  });
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.rowContainer}>
-        <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
-          <Icon
-            name="keyboard-arrow-left"
-            size={20}
-            color={colors.colors.text}
-          />
-        </Pressable>
-        <TouchableOpacity onPress={showDatePicker}>
-          <TextInput
-            pointerEvents="none"
-            style={styles.textInput}
-            placeholderTextColor="#000000"
-            underlineColorAndroid="transparent"
-            editable={false}
-            value={text}
-          />
-        </TouchableOpacity>
-        <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
-          <Icon
-            name="keyboard-arrow-right"
-            size={20}
-            color={colors.colors.text}
-          />
-        </Pressable>
-      </View>
-      <ActivityIndicator
-        style={{
-          position: "absolute",
-          right: 5,
-          top: loadingSpinnerTop,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-        color={
-          (apiLoadingState === loading.error && colors.colors.error) ||
-          "#999999"
-        }
-        size="large"
-        animating={
-          (apiLoadingState === loading.loaded && false) ||
-          (apiLoadingState === loading.loading && true) ||
-          (apiLoadingState === loading.beforeLoading && true) ||
-          (apiLoadingState === loading.error && true)
-        }
-      />
-      {isDatePickerVisible && Platform.OS != "ios" && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          display="default"
-          onChange={handleConfirm}
-        />
-      )}
-      <FlatList
-        style={{ marginTop: 100 }}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item}
-      />
-      <Pressable onPress={onShare} style={styles.shareButton}>
-        <Icon name="share" size={22} color={"#FFF"} />
-      </Pressable>
-    </View>
-  );
+  }
 }
