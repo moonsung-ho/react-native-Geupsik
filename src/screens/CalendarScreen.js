@@ -341,7 +341,8 @@ export default function CalendarScreen({ navigation }) {
           backgroundColor: colors.colors.background,
           marginTop: 70,
           borderRadius: 20,
-          padding: 40
+          paddingVertical: 40,
+          paddingHorizontal: 11
         }}
       >
         <FlatList
