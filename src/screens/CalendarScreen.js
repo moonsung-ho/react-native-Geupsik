@@ -292,7 +292,7 @@ export default function CalendarScreen({ navigation }) {
     rowContainer: {
       flexDirection: "row",
       marginTop: 50,
-      borderBottomWidth: 1,
+      //borderBottomWidth: 1,
       borderBottomColor: colors.colors.border,
       width: "100%",
       paddingBottom: 15,

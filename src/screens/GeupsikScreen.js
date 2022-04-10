@@ -302,7 +302,7 @@ export default function GeupsikScreen({ navigation }) {
       flexDirection: "row",
       marginTop: 50,
       alignSelf: "center",
-      borderBottomWidth: 1,
+      //borderBottomWidth: 1,
       borderBottomColor: colors.colors.border,
       width: "100%",
       alignContent: "center",
