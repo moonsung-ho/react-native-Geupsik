@@ -4,6 +4,9 @@ import Button from "./settings/SettingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "@react-navigation/native";
 import * as Analytics from "expo-firebase-analytics";
+import WebView from "react-native-webview";
+import Constants from "expo-constants";
+import Ad from "./Ad";
 
 export default function SettingsScreen({ navigation }) {
   const [coronaApiSource, setCoronaApiSource] = useState("로딩중");
@@ -50,7 +53,8 @@ export default function SettingsScreen({ navigation }) {
         justifyContent: "flex-start",
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor: colors.colors.border
+        borderColor: colors.colors.border,
+        flex: 1
       }}
     >
       <Button
@@ -112,7 +116,14 @@ export default function SettingsScreen({ navigation }) {
         iconMarginLeft={4}
         iconMarginRight={16}
       />
-      <View style={{ paddingVertical: 11 }}>
+      <View
+        style={{
+          paddingVertical: 11,
+          borderColor: colors.colors.border,
+          borderBottomWidth: 2,
+          borderTopWidth: 1
+        }}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -144,6 +155,7 @@ export default function SettingsScreen({ navigation }) {
           총 확진자 수: {totalPositive}
         </Text>
       </View>
+      <Ad />
     </View>
   );
 }
