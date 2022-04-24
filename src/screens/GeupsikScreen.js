@@ -20,10 +20,9 @@ import {
 } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Platform } from "react-native";
-import GestureRecognizer from "react-native-swipe-gestures";
 import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 import * as Analytics from "expo-firebase-analytics";
-import { Shadow } from "react-native-shadow-2";
+import Ad from "./Ad";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -367,7 +366,7 @@ export default function GeupsikScreen({ navigation }) {
       borderRadius: 100,
       backgroundColor: colors.colors.primary,
       position: "absolute",
-      bottom: 10,
+      bottom: 120,
       right: 10,
       ...Platform.select({
         ios: {
@@ -441,6 +440,7 @@ export default function GeupsikScreen({ navigation }) {
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Icon name="share" size={22} color={"#FFF"} />
       </Pressable>
+      <Ad />
     </View>
   );
 

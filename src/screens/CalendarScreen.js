@@ -14,11 +14,10 @@ import {
 } from "react-native";
 import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import GestureRecognizer from "react-native-swipe-gestures";
+import Ad from "./Ad";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import * as Analytics from "expo-firebase-analytics";
 import * as React from "react";
-import { useFocusEffect } from "@react-navigation/native";
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -307,7 +306,7 @@ export default function CalendarScreen({ navigation }) {
       borderRadius: 100,
       backgroundColor: colors.colors.primary,
       position: "absolute",
-      bottom: 10,
+      bottom: 120,
       right: 10,
       ...Platform.select({
         ios: {
@@ -385,6 +384,7 @@ export default function CalendarScreen({ navigation }) {
           (apiLoadingState === loading.error && true)
         }
       />
+      <Ad />
     </View>
   );
 
