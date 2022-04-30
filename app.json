@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식시간",
     "slug": "Geupsik",
-    "version": "5.1.0",
+    "version": "5.2.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "githubUrl": "https://github.com/sungho0205/react-native-Geupsik",
@@ -19,7 +19,7 @@
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "9",
+      "buildNumber": "12",
       "googleServicesFile": "./firebase/GoogleService-Info.plist"
     },
     "android": {
@@ -30,7 +30,7 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 113,
+      "versionCode": 116,
       "permissions": []
     },
     "web": {
