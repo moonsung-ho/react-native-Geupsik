@@ -94,7 +94,9 @@ export default function CalendarScreen({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [grade, setGrade] = useState();
   const [classN, setClassN] = useState();
-  const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
+  const [text, onChangeText] = useState(
+    date.format("yyyy/MM/dd(E)").replace("요일", "")
+  );
 
   const loadingSpinnerTop =
     (Platform.OS === "ios" && 20) || (Platform.OS === "android" && 5) || 5;
@@ -109,7 +111,9 @@ export default function CalendarScreen({ navigation }) {
     hideDatePicker();
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
-      onChangeText(date.nativeEvent.timestamp.format("yyyy/MM/dd"));
+      onChangeText(
+        date.nativeEvent.timestamp.format("yyyy/MM/dd(E)").replace("요일", "")
+      );
     } else {
     }
   };
@@ -185,7 +189,7 @@ export default function CalendarScreen({ navigation }) {
                 date.getDate() - 1
               );
               setDate(newDate);
-              onChangeText(newDate.format("yyyy/MM/dd"));
+              onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
             }}
           >
             <Icon
@@ -213,7 +217,7 @@ export default function CalendarScreen({ navigation }) {
                 date.getDate() + 1
               );
               setDate(newDate);
-              onChangeText(newDate.format("yyyy/MM/dd"));
+              onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
             }}
           >
             <Icon
@@ -238,7 +242,7 @@ export default function CalendarScreen({ navigation }) {
     textInput: {
       fontSize: 16,
       height: 50,
-      width: 120,
+      width: 150,
       alignItems: "center",
       alignContent: "center",
       borderWidth: 1,
@@ -306,7 +310,7 @@ export default function CalendarScreen({ navigation }) {
       borderRadius: 100,
       backgroundColor: colors.colors.primary,
       position: "absolute",
-      bottom: 120,
+      bottom: 70,
       right: 10,
       ...Platform.select({
         ios: {
