@@ -98,7 +98,9 @@ export default function GeupsikScreen({ navigation }) {
   const [officeCode, setOfficeCode] = useState("B09");
   const [allergy, setAllergy] = useState("");
   const [date, setDate] = useState(new Date());
-  const [text, onChangeText] = useState(date.format("yyyy/MM/dd"));
+  const [text, onChangeText] = useState(
+    date.format("yyyy/MM/dd(E)").replace("요일", "")
+  );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME, isFocused);
@@ -152,7 +154,9 @@ export default function GeupsikScreen({ navigation }) {
     hideDatePicker();
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
-      onChangeText(date.nativeEvent.timestamp.format("yyyy/MM/dd"));
+      onChangeText(
+        date.nativeEvent.timestamp.format("yyyy/MM/dd(E)").replace("요일", "")
+      );
     } else {
     }
   };
@@ -163,7 +167,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() - 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("yyyy/MM/dd"));
+    onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
   };
   const seeTomorrowGeupsik = () => {
     const newDate = new Date(
@@ -172,7 +176,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() + 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("yyyy/MM/dd"));
+    onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
   };
   function notLaunchedToday() {
     fetch("https://geupsikapp.azurewebsites.net/newuser").catch((error) => {
@@ -184,7 +188,7 @@ export default function GeupsikScreen({ navigation }) {
     Analytics.logEvent("GeupsikShare");
     try {
       await Share.share({
-        message: `${date.format("yyyy년 MM월 dd일")} 급식: \n${data}`
+        message: `${date.format("yyyy년 MM월 dd일 E")} 급식: \n${data}`
       });
     } catch (error) {
       alert(error.message);
@@ -193,10 +197,14 @@ export default function GeupsikScreen({ navigation }) {
 
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
   useEffect(() => {
-    if (!hasLaunchedAS.isLoading && hasLaunchedAS.state === undefined) {
+    if (
+      (!hasLaunchedAS.isLoading && hasLaunchedAS.state === undefined) ||
+      (!hasLaunchedAS.isLoading && hasLaunchedAS.state === null) ||
+      (!hasLaunchedAS.isLoading && hasLaunchedAS.state === "null")
+    ) {
       navigation.navigate("first-launch");
     }
-  }, [hasLaunchedAS.isLoading, hasLaunchedAS.state]);
+  }, [hasLaunchedAS.isLoading, hasLaunchedAS.state, text]);
 
   const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, text);
   useEffect(() => {
@@ -318,7 +326,7 @@ export default function GeupsikScreen({ navigation }) {
     textInput: {
       fontSize: 16,
       height: 50,
-      width: 120,
+      width: 150,
       alignItems: "center",
       alignContent: "center",
       borderWidth: 1,
@@ -366,7 +374,7 @@ export default function GeupsikScreen({ navigation }) {
       borderRadius: 100,
       backgroundColor: colors.colors.primary,
       position: "absolute",
-      bottom: 120,
+      bottom: 70,
       right: 10,
       ...Platform.select({
         ios: {
@@ -525,6 +533,7 @@ export default function GeupsikScreen({ navigation }) {
           }
           meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
           meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
+          meal = meal.replace(/[()]/g, ""); // 불필요한 괄호 제거
           setData(meal.split("\n"));
           setApiLoadingState(loading.loaded);
         }
