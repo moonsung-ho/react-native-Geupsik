@@ -195,6 +195,12 @@ export default function GeupsikScreen({ navigation }) {
     }
   };
 
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, text);
+  useEffect(() => {
+    if (!schoolCodeAS.isLoading) {
+      setSchoolCode(schoolCodeAS.state * 1);
+    }
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
   useEffect(() => {
     if (
@@ -204,15 +210,7 @@ export default function GeupsikScreen({ navigation }) {
     ) {
       navigation.navigate("first-launch");
     }
-  }, [hasLaunchedAS.isLoading, hasLaunchedAS.state, text]);
-
-  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, text);
-  useEffect(() => {
-    if (!schoolCodeAS.isLoading) {
-      setSchoolCode(schoolCodeAS.state * 1);
-    }
-  }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
-
+  }, [hasLaunchedAS.isLoading, hasLaunchedAS.state, text, schoolCode]);
   const launchedTodayAS = useAsyncStorage(KEYS.LAUNCHED_TODAY);
   useEffect(() => {
     if (!launchedTodayAS.isLoading) {

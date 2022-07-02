@@ -20,6 +20,8 @@ export default function Ad() {
           console.warn(error);
         }}
         scrollEnabled={false}
+        allowsLinkPreview={false}
+        pagingEnabled={false}
         onNavigationStateChange={(event) => {
           if (event.url !== "https://jazzy-chimera-4f518f.netlify.app/") {
             Linking.openURL(event.url);

@@ -116,6 +116,47 @@ export default function SettingsScreen({ navigation }) {
         iconMarginLeft={4}
         iconMarginRight={16}
       />
+      <Button
+        title="개발자의 학교 숙제 설문조사(참여 부탁드립니다)"
+        onPress={() =>
+          Linking.openURL("http://asq.kr/zQzG76oF").catch((error) => {
+            console.warn(error);
+          })
+        }
+        icon="check"
+        toggle={false}
+        iconMarginLeft={4}
+        iconMarginRight={16}
+      />
+      <Button
+        title="개발자의 친구 학교 숙제 설문조사(참여 부탁드립니다)"
+        onPress={() =>
+          Linking.openURL("https://forms.gle/hjgytb327FMj2MJs9").catch(
+            (error) => {
+              console.warn(error);
+            }
+          )
+        }
+        icon="check"
+        toggle={false}
+        iconMarginLeft={4}
+        iconMarginRight={16}
+      />
+      <Button
+        title="개발자의 또 다른 친구 학교 숙제 설문조사(참여 부탁드립니다)"
+        onPress={() =>
+          Linking.openURL("https://forms.gle/upYyETQHjwDLNDmQA").catch(
+            (error) => {
+              console.warn(error);
+            }
+          )
+        }
+        icon="check"
+        toggle={false}
+        iconMarginLeft={4}
+        iconMarginRight={16}
+      />
+
       <View
         style={{
           paddingVertical: 11,
