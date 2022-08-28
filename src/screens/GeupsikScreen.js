@@ -10,7 +10,8 @@ import {
   FlatList,
   Alert,
   Linking,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
@@ -208,6 +209,7 @@ export default function GeupsikScreen({ navigation }) {
       (!hasLaunchedAS.isLoading && hasLaunchedAS.state === null) ||
       (!hasLaunchedAS.isLoading && hasLaunchedAS.state === "null")
     ) {
+      hasLaunchedAS.setValue(KEYS.HAS_LAUNCHED);
       navigation.navigate("first-launch");
     }
   }, [hasLaunchedAS.isLoading, hasLaunchedAS.state, text, schoolCode]);
@@ -446,7 +448,9 @@ export default function GeupsikScreen({ navigation }) {
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Icon name="share" size={22} color={"#FFF"} />
       </Pressable>
-      <Ad />
+      <View style={{ justifyContent: "flex-end", flex: 1 }}>
+        <Ad />
+      </View>
     </View>
   );
 
@@ -476,11 +480,11 @@ export default function GeupsikScreen({ navigation }) {
           let menus = meal.split("\n");
           let n = 0;
           while (n < menus.length) {
-            if (!allergy === "") {
-              if (menus[n].includes(allergy + ".")) {
-                meal = meal.replace(menus[n], `<${menus[n]}>`);
-              }
+            // if (!allergy === "") {
+            if (menus[n].includes(allergy + ".")) {
+              meal = meal.replace(menus[n], `<${menus[n]}>`);
             }
+            //}
             if (menus[n].includes("밥")) {
               meal = meal.replace(menus[n], `${menus[n]}🍚`);
             }

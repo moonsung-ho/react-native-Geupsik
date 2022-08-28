@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식시간",
     "slug": "Geupsik",
-    "version": "5.2.1",
+    "version": "5.3.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "githubUrl": "https://github.com/sungho0205/react-native-Geupsik",
@@ -14,15 +14,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "12",
-      "googleServicesFile": "./firebase/GoogleService-Info.plist"
+      "buildNumber": "13",
+      "googleServicesFile": "./firebase/GoogleService-Info.plist",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -32,8 +33,11 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 116,
-      "permissions": []
+      "versionCode": 117,
+      "permissions": [],
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-7245930610023842~7170823403"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -48,6 +52,14 @@
           "measurementId": "G-6BGYP9XFT0"
         }
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-ads-admob",
+        {
+          "userTrackingPermission": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸"
+        }
+      ]
+    ]
   }
 }

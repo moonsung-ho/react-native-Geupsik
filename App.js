@@ -17,6 +17,7 @@ const App = () => {
   Appearance.addChangeListener(({ colorScheme }) => {
     setTheme(colorScheme);
   });
+
   return (
     <AppearanceProvider>
       <StatusBar

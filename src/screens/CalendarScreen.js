@@ -388,7 +388,9 @@ export default function CalendarScreen({ navigation }) {
           (apiLoadingState === loading.error && true)
         }
       />
-      <Ad />
+      <View style={{ justifyContent: "flex-end", flex: 1 }}>
+        <Ad />
+      </View>
     </View>
   );
 
