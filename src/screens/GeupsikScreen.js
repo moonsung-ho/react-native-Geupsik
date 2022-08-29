@@ -280,7 +280,8 @@ export default function GeupsikScreen({ navigation }) {
         <Text style={styles.title}>
           {menu.includes("<") && menu.includes(">") ? (
             <Text style={{ color: colors.colors.error }}>
-              {menu.replace("<", "").replace(">", "")}
+              {/* {menu.replace("<", "").replace(">", "")} */}
+              {menu}
             </Text>
           ) : (
             menu
@@ -480,57 +481,11 @@ export default function GeupsikScreen({ navigation }) {
           let menus = meal.split("\n");
           let n = 0;
           while (n < menus.length) {
-            // if (!allergy === "") {
-            if (menus[n].includes(allergy + ".")) {
-              meal = meal.replace(menus[n], `<${menus[n]}>`);
+            if (!allergy === "") {
+              if (menus[n].includes(allergy + ".")) {
+                meal = meal.replace(menus[n], `<${menus[n]}>`);
+              }
             }
-            //}
-            if (menus[n].includes("밥")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍚`);
-            }
-            if (menus[n].includes("우유")) {
-              meal = meal.replace(menus[n], `${menus[n]}🥛`);
-            }
-            if (menus[n].includes("사과")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍎`);
-            }
-            if (menus[n].includes("카레")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍛`);
-            }
-            if (menus[n].includes("닭")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍗`);
-            }
-            if (menus[n].includes("오렌지")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍊`);
-            }
-            if (menus[n].includes("포도")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍇`);
-            }
-            if (menus[n].includes("새우")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍤`);
-            }
-            if (menus[n].includes("스테이크")) {
-              meal = meal.replace(menus[n], `${menus[n]}🥩`);
-            }
-            if (menus[n].includes("파인애플")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍍`);
-            }
-            if (menus[n].includes("바나나")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍌`);
-            }
-            if (menus[n].includes("멜론") || menus[n].includes("메론")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍈`);
-            }
-            if (menus[n].includes("수박")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍉`);
-            }
-            if (menus[n].includes("버섯")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍄`);
-            }
-            if (menus[n].includes("오리")) {
-              meal = meal.replace(menus[n], `${menus[n]}🍗`);
-            }
-            //메뉴 뒤에 이모지 표시
             n = n + 1;
           }
           meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거

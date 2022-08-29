@@ -9,10 +9,10 @@ const androidProductionID = "ca-app-pub-7245930610023842/2837359556";
 
 const adBannerUnitId =
   Platform.OS === "android"
-    ? Device.isDevice && !__DEV__
+    ? Device.isDevice
       ? androidProductionID
       : testID
-    : Device.isDevice && !__DEV__
+    : Device.isDevice
     ? iOSProductionID
     : testID;
 
@@ -24,7 +24,7 @@ export default function Ad() {
         adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
         servePersonalizedAds={true} // true or false
         onDidFailToReceiveAdWithError={(err) => {
-          console.warn(err);
+          alert(err);
         }}
       />
     </View>

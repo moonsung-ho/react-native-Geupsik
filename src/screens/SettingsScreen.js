@@ -1,4 +1,11 @@
-import { View, Text, Linking, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  Alert
+} from "react-native";
 import { useEffect, useState } from "react";
 import Button from "./settings/SettingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,6 +14,7 @@ import * as Analytics from "expo-firebase-analytics";
 import WebView from "react-native-webview";
 import Constants from "expo-constants";
 import Ad from "./Ad";
+import * as Clipboard from "expo-clipboard";
 
 export default function SettingsScreen({ navigation }) {
   const [coronaApiSource, setCoronaApiSource] = useState("로딩중");
@@ -54,6 +62,9 @@ export default function SettingsScreen({ navigation }) {
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: colors.colors.border,
+        flex: 1,
+        alignContent: "center",
+        alignItems: "center",
         flex: 1
       }}
     >
@@ -118,46 +129,19 @@ export default function SettingsScreen({ navigation }) {
           iconMarginRight={16}
         />
         <Button
-          title="개발자의 학교 숙제 설문조사(참여 부탁드립니다)"
-          onPress={() =>
-            Linking.openURL("http://asq.kr/zQzG76oF").catch((error) => {
-              console.warn(error);
-            })
-          }
-          icon="check"
+          title="개발자에게 후원하기"
+          onPress={() => {
+            Clipboard.setString("토스뱅크 1908-6515-5247");
+            Alert.alert(
+              "계좌번호가 클립보드에 복사되었습니다",
+              "복사된 계좌번호로 후원금을 보내주세요. 후원금은 제가 잘 쓰겠습니다🥳"
+            );
+          }}
+          icon="dollar-sign"
           toggle={false}
-          iconMarginLeft={4}
-          iconMarginRight={16}
+          iconMarginLeft={8}
+          iconMarginRight={20}
         />
-        <Button
-          title="개발자의 친구 학교 숙제 설문조사(참여 부탁드립니다)"
-          onPress={() =>
-            Linking.openURL("https://forms.gle/hjgytb327FMj2MJs9").catch(
-              (error) => {
-                console.warn(error);
-              }
-            )
-          }
-          icon="check"
-          toggle={false}
-          iconMarginLeft={4}
-          iconMarginRight={16}
-        />
-        <Button
-          title="개발자의 또 다른 친구 학교 숙제 설문조사(참여 부탁드립니다)"
-          onPress={() =>
-            Linking.openURL("https://forms.gle/upYyETQHjwDLNDmQA").catch(
-              (error) => {
-                console.warn(error);
-              }
-            )
-          }
-          icon="check"
-          toggle={false}
-          iconMarginLeft={4}
-          iconMarginRight={16}
-        />
-
         <View
           style={{
             paddingVertical: 11,
@@ -197,10 +181,15 @@ export default function SettingsScreen({ navigation }) {
             총 확진자 수: {totalPositive}
           </Text>
         </View>
-        <View style={{ justifyContent: "flex-end", flex: 1 }}>
-          <Ad />
-        </View>
       </ScrollView>
+      <View
+        style={{
+          justifyContent: "flex-end",
+          flex: 1
+        }}
+      >
+        <Ad />
+      </View>
     </SafeAreaView>
   );
 }
