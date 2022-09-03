@@ -11,7 +11,8 @@ export const KEYS = {
   CLASS: "class",
   GRADE: "grade",
   LAUNCHED_TODAY: "Launchedtoday",
-  SELECTED_DATE: "selecteddate"
+  SELECTED_DATE: "selecteddate",
+  TRACKINGPERMISSION: "trackingpermission"
 };
 
 export const useAsyncStorage = (key, reloadState) => {

@@ -1,17 +1,10 @@
 import { useTheme } from "@react-navigation/native";
-import { requestPermissionsAsync } from "expo-ads-admob";
 import { View, Text, Image, Button } from "react-native";
 
 const icon = require("../../assets/adaptive-icon.png");
 
 export default function AppfirstLaunchScreen({ navigation }) {
   const colors = useTheme();
-
-  async function requestPermission() {
-    await requestPermissionsAsync();
-  }
-
-  requestPermission();
 
   return (
     <View style={{ flex: 1 }}>

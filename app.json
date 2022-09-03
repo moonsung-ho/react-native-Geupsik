@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
@@ -57,12 +59,7 @@
       }
     },
     "plugins": [
-      [
-        "expo-ads-admob",
-        {
-          "userTrackingPermission": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸"
-        }
-      ]
+      "expo-tracking-transparency"
     ]
   }
 }
