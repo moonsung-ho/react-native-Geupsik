@@ -29,7 +29,7 @@ export default function Ad() {
           trackingPermissionAS.state === "true" ? true : false
         } // true or false
         onDidFailToReceiveAdWithError={(err) => {
-          alert(err);
+          console.warn(err);
         }}
       />
     </View>

@@ -375,7 +375,7 @@ export default function GeupsikScreen({ navigation }) {
       borderRadius: 100,
       backgroundColor: colors.colors.primary,
       position: "absolute",
-      bottom: 70,
+      bottom: 10,
       right: 10,
       ...Platform.select({
         ios: {
@@ -449,9 +449,9 @@ export default function GeupsikScreen({ navigation }) {
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Icon name="share" size={22} color={"#FFF"} />
       </Pressable>
-      <View style={{ justifyContent: "flex-end", flex: 1 }}>
+      {/* <View style={{ justifyContent: "flex-end", flex: 1 }}>
         <Ad />
-      </View>
+      </View> */}
     </View>
   );
 

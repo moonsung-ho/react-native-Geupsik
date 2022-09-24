@@ -182,14 +182,14 @@ export default function SettingsScreen({ navigation }) {
           </Text>
         </View>
       </ScrollView>
-      <View
+      {/* <View
         style={{
           justifyContent: "flex-end",
           flex: 1
         }}
       >
         <Ad />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }

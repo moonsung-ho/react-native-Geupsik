@@ -310,7 +310,7 @@ export default function CalendarScreen({ navigation }) {
       borderRadius: 100,
       backgroundColor: colors.colors.primary,
       position: "absolute",
-      bottom: 70,
+      bottom: 10,
       right: 10,
       ...Platform.select({
         ios: {
@@ -388,9 +388,9 @@ export default function CalendarScreen({ navigation }) {
           (apiLoadingState === loading.error && true)
         }
       />
-      <View style={{ justifyContent: "flex-end", flex: 1 }}>
+      {/* <View style={{ justifyContent: "flex-end", flex: 1 }}>
         <Ad />
-      </View>
+      </View> */}
     </View>
   );
 

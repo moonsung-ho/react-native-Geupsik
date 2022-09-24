@@ -3,11 +3,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./src/navigations/Tab";
 import { AppearanceProvider } from "react-native-appearance";
 import { themes } from "./src/theme";
-import { Appearance, StatusBar } from "react-native";
+import { Alert, Appearance, StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import { requestPermissionsAsync } from "expo-ads-admob";
 import { KEYS, useAsyncStorage } from "./src/hooks/asyncStorage";
+import * as Clipboard from "expo-clipboard";
 
 const App = () => {
   const [theme, setTheme] = useState(Appearance.getColorScheme());
@@ -32,6 +33,13 @@ const App = () => {
 
   React.useEffect(() => {
     request();
+    if (Math.random() > 0.9) {
+      Alert.alert(
+        "개발자에게 후원하기",
+        "가난한 앱 개발자에게 후원을 해주세요! 확인 버튼을 누르면 계좌번호가 복사됩니다!"
+      );
+      Clipboard.setString("토스뱅크 1908-6515-5247");
+    }
   }, []);
 
   return (

@@ -14,14 +14,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "14",
+      "buildNumber": "16",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
@@ -38,7 +36,7 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 118,
+      "versionCode": 117,
       "permissions": [],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~7170823403"
@@ -58,8 +56,6 @@
         }
       }
     },
-    "plugins": [
-      "expo-tracking-transparency"
-    ]
+    "plugins": ["expo-tracking-transparency"]
   }
 }
