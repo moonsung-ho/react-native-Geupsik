@@ -32,8 +32,7 @@ const App = () => {
   }
 
   React.useEffect(() => {
-    request();
-    if (Math.random() > 0.9) {
+    if (Math.random() > 0.95) {
       Alert.alert(
         "개발자에게 후원하기",
         "가난한 앱 개발자에게 후원을 해주세요! 확인 버튼을 누르면 계좌번호가 복사됩니다!"

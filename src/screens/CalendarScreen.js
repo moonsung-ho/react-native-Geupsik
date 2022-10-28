@@ -251,15 +251,6 @@ export default function CalendarScreen({ navigation }) {
       padding: 10,
       borderColor: colors.colors.border,
       textAlign: "center",
-      ...Platform.select({
-        ios: {
-          shadowColor: "grey",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
-          shadowRadius: 7
-        },
-        android: { elevation: 10 }
-      }),
       backgroundColor: colors.colors.background
     },
     button: {
@@ -270,15 +261,6 @@ export default function CalendarScreen({ navigation }) {
       alignItems: "center",
       marginHorizontal: 20,
       borderColor: colors.colors.border,
-      ...Platform.select({
-        ios: {
-          shadowColor: "grey",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
-          shadowRadius: 7
-        },
-        android: { elevation: 10 }
-      }),
       backgroundColor: colors.colors.background
     },
     buttonText: {
@@ -331,18 +313,13 @@ export default function CalendarScreen({ navigation }) {
     <View style={styles.view}>
       <View
         style={{
-          ...Platform.select({
-            ios: {
-              shadowColor: "grey",
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.6,
-              shadowRadius: 7
-            },
-            android: { elevation: 10 }
-          }),
           width: "80%",
           backgroundColor: colors.colors.background,
-          marginTop: 70,
+          position: "absolute",
+          top: 0,
+          borderStyle: "solid",
+          borderWidth: 1,
+          borderColor: colors.colors.border,
           borderRadius: 20,
           paddingVertical: 40,
           paddingHorizontal: 11

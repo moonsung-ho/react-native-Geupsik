@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Geupsik, Settings, Calendar } from "../screens/TabScreen";
+import { Geupsik, Settings, Calendar, Community } from "../screens/TabScreen";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import Ad from "../screens/Ad";
 import { View } from "react-native";
 import { BottomTabBarHeightContext } from "@react-navigation/bottom-tabs";
+import React from "react";
+import { Alert } from "react-native";
 
 const MaterialIconsSet = ({ name, size, color }) => {
   return <MaterialIcons name={name} size={size} color={color} />;
@@ -15,7 +17,7 @@ const MaterialCommunityIconsSet = ({ name, size, color }) => {
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = () => {
+const TabNavigation = ({ navigation }) => {
   const colors = useTheme();
   return (
     <>
@@ -71,6 +73,20 @@ const TabNavigation = () => {
                 ...props,
                 name: "calendar-month",
                 size: 22
+              })
+          }}
+        />
+        <Tab.Screen
+          name="쉬는시간"
+          component={Community}
+          options={{
+            headerShown: false,
+            tabBarActiveTintColor: colors.colors.primary,
+            tabBarIcon: (props) =>
+              MaterialCommunityIconsSet({
+                ...props,
+                name: "chat",
+                size: 25
               })
           }}
         />

@@ -189,7 +189,9 @@ export default function GeupsikScreen({ navigation }) {
     Analytics.logEvent("GeupsikShare");
     try {
       await Share.share({
-        message: `${date.format("yyyy년 MM월 dd일 E")} 급식: \n${data}`
+        message: `${date.format(
+          "yyyy년 MM월 dd일 E"
+        )} 급식: \n${data}\nhttps://mealtime.page.link/downloads`
       });
     } catch (error) {
       alert(error.message);
@@ -252,7 +254,7 @@ export default function GeupsikScreen({ navigation }) {
         if (menu !== "급식이 없는 날입니다.") {
           Alert.alert(
             "이 음식이 뭐지?",
-            menu.replace("<", "").replace(">", "") + "을(를) 검색해 보자.",
+            menu.replace("⚠️", "") + "을(를) 검색해 보자.",
             [
               {
                 text: "취소",
@@ -262,8 +264,7 @@ export default function GeupsikScreen({ navigation }) {
                 text: "검색",
                 onPress: () =>
                   Linking.openURL(
-                    "https://www.google.com/search?q=" +
-                      menu.replace("<", "").replace(">", "")
+                    "https://www.google.com/search?q=" + menu.replace("⚠️", "")
                   ),
                 style: "default"
               }
@@ -278,11 +279,8 @@ export default function GeupsikScreen({ navigation }) {
     >
       <View>
         <Text style={styles.title}>
-          {menu.includes("<") && menu.includes(">") ? (
-            <Text style={{ color: colors.colors.error }}>
-              {/* {menu.replace("<", "").replace(">", "")} */}
-              {menu}
-            </Text>
+          {menu.includes("⚠️") ? (
+            <Text style={{ color: colors.colors.error }}>{menu}</Text>
           ) : (
             menu
           )}
@@ -295,7 +293,7 @@ export default function GeupsikScreen({ navigation }) {
 
   useEffect(() => {
     getGeupsik();
-  }, [text, officeCode]);
+  }, [text, officeCode, allergy]);
 
   const styles = StyleSheet.create({
     container: {
@@ -336,15 +334,6 @@ export default function GeupsikScreen({ navigation }) {
       padding: 10,
       borderColor: colors.colors.border,
       textAlign: "center",
-      ...Platform.select({
-        ios: {
-          shadowColor: "grey",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
-          shadowRadius: 7
-        },
-        android: { elevation: 10 }
-      }),
       backgroundColor: colors.colors.background
     },
     button: {
@@ -355,15 +344,6 @@ export default function GeupsikScreen({ navigation }) {
       alignItems: "center",
       marginHorizontal: 20,
       borderColor: colors.colors.border,
-      ...Platform.select({
-        ios: {
-          shadowColor: "grey",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
-          shadowRadius: 7
-        },
-        android: { elevation: 10 }
-      }),
       backgroundColor: colors.colors.background
     },
     shareButton: {
@@ -376,16 +356,7 @@ export default function GeupsikScreen({ navigation }) {
       backgroundColor: colors.colors.primary,
       position: "absolute",
       bottom: 10,
-      right: 10,
-      ...Platform.select({
-        ios: {
-          shadowColor: "grey",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
-          shadowRadius: 7
-        },
-        android: { elevation: 10 }
-      })
+      right: 10
     }
   });
 
@@ -422,18 +393,13 @@ export default function GeupsikScreen({ navigation }) {
       )}
       <View
         style={{
-          ...Platform.select({
-            ios: {
-              shadowColor: "grey",
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.6,
-              shadowRadius: 7
-            },
-            android: { elevation: 10 }
-          }),
           width: "80%",
           backgroundColor: colors.colors.background,
-          marginTop: 70,
+          position: "absolute",
+          top: 0,
+          borderStyle: "solid",
+          borderWidth: 1,
+          borderColor: colors.colors.border,
           borderRadius: 20,
           paddingVertical: 40,
           paddingHorizontal: 11
@@ -481,9 +447,9 @@ export default function GeupsikScreen({ navigation }) {
           let menus = meal.split("\n");
           let n = 0;
           while (n < menus.length) {
-            if (!allergy === "") {
-              if (menus[n].includes(allergy + ".")) {
-                meal = meal.replace(menus[n], `<${menus[n]}>`);
+            if (allergy) {
+              if (menus[n].split(" ")[2].includes(allergy + ".")) {
+                meal = meal.replace(menus[n], `${menus[n]}⚠️`);
               }
             }
             n = n + 1;
@@ -491,6 +457,7 @@ export default function GeupsikScreen({ navigation }) {
           meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
           meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
           meal = meal.replace(/[()]/g, ""); // 불필요한 괄호 제거
+          meal = meal.replace(/[ ]/g, ""); // 불필요한 공백 제거
           setData(meal.split("\n"));
           setApiLoadingState(loading.loaded);
         }

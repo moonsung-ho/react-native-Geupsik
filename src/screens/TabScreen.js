@@ -14,6 +14,9 @@ import CalendarErrorScreen from "./CalendarErrorScreen";
 import NoticeScreen from "./settings/NoticeScreen";
 import { useAsyncStorage, KEYS } from "../hooks/asyncStorage";
 import { useFocusEffect } from "@react-navigation/native";
+import { Alert } from "react-native";
+
+import { WebView } from "react-native-webview";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +24,18 @@ const Container = styled.View`
   flex: 1;
 `;
 
-export const Geupsik = () => {
+export const Geupsik = ({ navigation }) => {
+  React.useEffect(() => {
+    // if (Math.random() >= 0.5 && new Date() < new Date("202203")) {
+    if (Math.random() >= 0.8 && new Date() < new Date("2022-10-30")) {
+      Alert.alert(
+        "커뮤니티 서비스 '쉬는시간' 오픈!",
+        "쉬는시간 커뮤니티도 들어와 보세요! 확인을 누르면 쉬는시간 탭으로 이동합니다. 많이 써주세요!"
+      );
+      navigation.navigate("쉬는시간");
+    }
+  }, []);
+
   const [schoolName, setSchoolName] = useState("");
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
   useFocusEffect(
@@ -70,6 +84,27 @@ export const Calendar = () => {
         <Stack.Screen
           name="에러"
           component={CalendarErrorScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </Container>
+  );
+};
+
+export const Community = () => {
+  return (
+    <Container>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="쉬는시간"
+          component={() => {
+            return (
+              <WebView
+                source={{ uri: "https://breaktime.sungho.xyz" }}
+                style={{ marginTop: 30 }}
+              />
+            );
+          }}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
