@@ -25,7 +25,11 @@
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
       },
       "infoPlist": {
-        "NSUserTrackingUsageDescription": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸"
+        "NSUserTrackingUsageDescription": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸",
+        "SKAdNetworkIdentifier": [
+          "v9wttpbfk9.skadnetwork",
+          "n38lu8286q.skadnetwork"
+        ]
       }
     },
     "android": {
@@ -56,6 +60,11 @@
         }
       }
     },
-    "plugins": ["expo-tracking-transparency"]
+    "facebookScheme": "fb490492783097602",
+    "facebookAppId": "490492783097602",
+    "facebookDisplayName": "급식시간",
+    "facebookAutoLogAppEventsEnabled": true,
+    "facebookAdvertiserIDCollectionEnabled": true,
+    "plugins": [["expo-tracking-transparency"]]
   }
 }
