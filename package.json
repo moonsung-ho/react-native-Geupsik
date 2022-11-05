@@ -30,6 +30,7 @@
     "eas-cli": "^0.49.0",
     "expo": "~44.0.0",
     "expo-ads-admob": "~12.0.0",
+    "expo-ads-facebook": "~11.1.0",
     "expo-cli": "^5.3.0",
     "expo-clipboard": "~2.1.0",
     "expo-constants": "~13.0.1",

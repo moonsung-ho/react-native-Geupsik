@@ -5465,6 +5465,15 @@ expo-ads-admob@~12.0.0:
   dependencies:
     "@expo/config-plugins" "^4.0.2"
 
+expo-ads-facebook@~11.1.0:
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/expo-ads-facebook/-/expo-ads-facebook-11.1.1.tgz#204dcdd18f387493be74a8497fa0dff89ab61edf"
+  integrity sha512-F5O4De9abP8ED+KzhA/DEj33BT+pBsExC7lbzKjl4jqR2USJklTpc4y5ezilF7yHJBVQrfZ/avYq8lv8knIuDg==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    fbemitter "^2.1.1"
+    nullthrows "^1.1.1"
+
 expo-application@~4.0.0, expo-application@~4.0.2:
   version "4.0.2"
   resolved "https://registry.npmjs.org/expo-application/-/expo-application-4.0.2.tgz"
