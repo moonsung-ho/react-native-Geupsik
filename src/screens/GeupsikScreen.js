@@ -100,7 +100,7 @@ export default function GeupsikScreen({ navigation }) {
   const [allergy, setAllergy] = useState("");
   const [date, setDate] = useState(new Date());
   const [text, onChangeText] = useState(
-    date.format("yyyy/MM/dd(E)").replace("요일", "")
+    date.format("MM월 dd일(E)").replace("요일", "")
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -109,31 +109,36 @@ export default function GeupsikScreen({ navigation }) {
     //navigation.setOptions({ headerTitle: `급식 - ${schoolNameAS.state}` });
     navigation.setOptions({
       header: (props) => (
-        <View style={styles.rowContainer}>
-          <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
-            <Icon
-              name="keyboard-arrow-left"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
-          <TouchableOpacity onPress={showDatePicker}>
-            <TextInput
-              pointerEvents="none"
-              style={styles.textInput}
-              placeholderTextColor="#000000"
-              underlineColorAndroid="transparent"
-              editable={false}
-              value={text}
-            />
-          </TouchableOpacity>
-          <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
-            <Icon
-              name="keyboard-arrow-right"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
+        <View>
+          <View style={{ marginTop: 40 }}>
+            <Ad />
+          </View>
+          <View style={styles.rowContainer}>
+            <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
+              <Icon
+                name="keyboard-arrow-left"
+                size={20}
+                color={colors.colors.text}
+              />
+            </Pressable>
+            <TouchableOpacity onPress={showDatePicker}>
+              <TextInput
+                pointerEvents="none"
+                style={styles.textInput}
+                placeholderTextColor="#000000"
+                underlineColorAndroid="transparent"
+                editable={false}
+                value={text}
+              />
+            </TouchableOpacity>
+            <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
+              <Icon
+                name="keyboard-arrow-right"
+                size={20}
+                color={colors.colors.text}
+              />
+            </Pressable>
+          </View>
         </View>
       ),
       headerStyle: {
@@ -156,7 +161,7 @@ export default function GeupsikScreen({ navigation }) {
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
       onChangeText(
-        date.nativeEvent.timestamp.format("yyyy/MM/dd(E)").replace("요일", "")
+        date.nativeEvent.timestamp.format("MM월 dd일(E)").replace("요일", "")
       );
     } else {
     }
@@ -168,7 +173,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() - 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
+    onChangeText(newDate.format("MM월 dd일(E)").replace("요일", ""));
   };
   const seeTomorrowGeupsik = () => {
     const newDate = new Date(
@@ -177,7 +182,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() + 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
+    onChangeText(newDate.format("MM월 dd일(E)").replace("요일", ""));
   };
   function notLaunchedToday() {
     fetch("https://geupsikapp.azurewebsites.net/newuser").catch((error) => {
@@ -190,7 +195,7 @@ export default function GeupsikScreen({ navigation }) {
     try {
       await Share.share({
         message: `${date.format(
-          "yyyy년 MM월 dd일 E"
+          "MM월 dd일 E"
         )} 급식: \n${data}\nhttps://mealtime.page.link/downloads`
       });
     } catch (error) {
@@ -306,7 +311,7 @@ export default function GeupsikScreen({ navigation }) {
     },
     rowContainer: {
       flexDirection: "row",
-      marginTop: 50,
+      marginTop: 15,
       alignSelf: "center",
       //borderBottomWidth: 1,
       borderBottomColor: colors.colors.border,
@@ -415,9 +420,6 @@ export default function GeupsikScreen({ navigation }) {
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Icon name="share" size={22} color={"#FFF"} />
       </Pressable>
-      {/* <View style={{ justifyContent: "flex-end", flex: 1 }}>
-        <Ad />
-      </View> */}
     </View>
   );
 

@@ -23,8 +23,9 @@ export default function Ad() {
   return (
     <View>
       <AdMobBanner
-        bannerSize="banner"
-        adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
+        bannerSize="smartBannerPortrait"
+        //adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
+        adUnitID={"ca-app-pub-3940256099942544/6300978111"}
         servePersonalizedAds={
           trackingPermissionAS.state === "true" ? true : false
         } // true or false

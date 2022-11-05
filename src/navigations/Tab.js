@@ -7,6 +7,7 @@ import { View } from "react-native";
 import { BottomTabBarHeightContext } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { Alert } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const MaterialIconsSet = ({ name, size, color }) => {
   return <MaterialIcons name={name} size={size} color={color} />;
@@ -20,7 +21,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigation = ({ navigation }) => {
   const colors = useTheme();
   return (
-    <>
+    <SafeAreaProvider>
       <Tab.Navigator
         tabBarPosition="bottom"
         screenOptions={{
@@ -105,14 +106,7 @@ const TabNavigation = ({ navigation }) => {
           }}
         />
       </Tab.Navigator>
-      <BottomTabBarHeightContext.Consumer>
-        {(tabBarHeight) => (
-          <View style={{ justifyContent: "flex-start" }}>
-            <Ad />
-          </View>
-        )}
-      </BottomTabBarHeightContext.Consumer>
-    </>
+    </SafeAreaProvider>
   );
 };
 

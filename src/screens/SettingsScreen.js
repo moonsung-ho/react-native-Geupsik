@@ -33,7 +33,6 @@ export default function SettingsScreen({ navigation }) {
   const [isDarkmodeToggled, setIsDarkmodeToggled] = useState(
     isDarkmodeAsyncStorage
   );
-
   useEffect(() => {
     fetch(
       "https://api.corona-19.kr/korea/?serviceKey=LXNyctsed96ahp2mViJKQZ3EnAzTHwvUk"
@@ -47,6 +46,18 @@ export default function SettingsScreen({ navigation }) {
       .catch((error) => {
         console.warn(error);
       });
+  }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: (props) => (
+        <View>
+          <View style={{ marginTop: 40 }}>
+            <Ad />
+          </View>
+        </View>
+      )
+    });
   }, []);
 
   function toggleDarkmode() {
@@ -142,12 +153,23 @@ export default function SettingsScreen({ navigation }) {
           iconMarginLeft={8}
           iconMarginRight={20}
         />
+        <Button
+          title="개발자에게 문의하기"
+          onPress={() =>
+            Linking.openURL("https://www.facebook.com/appmealtime").catch(
+              (error) => {
+                console.warn(error);
+              }
+            )
+          }
+          icon="question"
+          toggle={false}
+          iconMarginLeft={6}
+          iconMarginRight={18}
+        />
         <View
           style={{
-            paddingVertical: 11,
-            borderColor: colors.colors.border,
-            borderBottomWidth: 2,
-            borderTopWidth: 1
+            paddingVertical: 11
           }}
         >
           <View
@@ -156,30 +178,8 @@ export default function SettingsScreen({ navigation }) {
               marginHorizontal: 11
             }}
           >
-            <View style={{ width: "100%" }}>
-              <Text style={{ fontWeight: "bold", color: colors.colors.text }}>
-                오늘의 코로나19
-              </Text>
-              <Text
-                style={{
-                  color: "gray",
-                  position: "absolute",
-                  right: 9,
-                  flex: 1,
-                  fontSize: 11
-                }}
-              >
-                출처: {coronaApiSource}
-              </Text>
-            </View>
+            <View style={{ width: "100%" }}></View>
           </View>
-          <Text style={{ marginHorizontal: 14, color: colors.colors.text }}>
-            오늘의 확진자 수:{" "}
-            {todayPositive.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </Text>
-          <Text style={{ marginHorizontal: 14, color: colors.colors.text }}>
-            총 확진자 수: {totalPositive}
-          </Text>
         </View>
       </ScrollView>
       {/* <View

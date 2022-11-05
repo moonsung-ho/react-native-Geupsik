@@ -14,9 +14,10 @@ import CalendarErrorScreen from "./CalendarErrorScreen";
 import NoticeScreen from "./settings/NoticeScreen";
 import { useAsyncStorage, KEYS } from "../hooks/asyncStorage";
 import { useFocusEffect } from "@react-navigation/native";
-import { Alert } from "react-native";
-
-import { WebView } from "react-native-webview";
+import { Alert, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import CommunityScreen from "./CommunityScreen";
+import Ad from "./Ad";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,12 +52,14 @@ export const Geupsik = ({ navigation }) => {
         <Stack.Screen
           name="급식screen"
           component={GeupsikScreen}
-          options={{ header: () => <></> }}
+          options={{
+            header: () => <></>
+          }}
         />
         <Stack.Screen
           name="first-launch"
           component={AppfirstLaunchScreen}
-          options={{ headerShown: false, headerTitle: "급식" }}
+          options={{ headerShown: true, headerTitle: "급식" }}
         />
       </Stack.Navigator>
     </Container>
@@ -96,15 +99,8 @@ export const Community = () => {
     <Container>
       <Stack.Navigator>
         <Stack.Screen
-          name="쉬는시간"
-          component={() => {
-            return (
-              <WebView
-                source={{ uri: "https://breaktime.sungho.xyz" }}
-                style={{ marginTop: 30 }}
-              />
-            );
-          }}
+          name="쉬는시간커뮤니티"
+          component={CommunityScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
@@ -119,7 +115,9 @@ export const Settings = () => {
         <Stack.Screen
           name="설정screen"
           component={SettingsScreen}
-          options={{ headerTitle: "더보기" }}
+          options={{
+            header: () => <></>
+          }}
         />
         <Stack.Screen name="학교 설정" component={SchoolSettingScreen} />
         <Stack.Screen name="알레르기 설정" component={AllergySettingScreen} />

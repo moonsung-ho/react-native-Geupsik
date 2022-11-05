@@ -95,7 +95,7 @@ export default function CalendarScreen({ navigation }) {
   const [grade, setGrade] = useState();
   const [classN, setClassN] = useState();
   const [text, onChangeText] = useState(
-    date.format("yyyy/MM/dd(E)").replace("요일", "")
+    date.format("MM월 dd일(E)").replace("요일", "")
   );
 
   const loadingSpinnerTop =
@@ -112,7 +112,7 @@ export default function CalendarScreen({ navigation }) {
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
       onChangeText(
-        date.nativeEvent.timestamp.format("yyyy/MM/dd(E)").replace("요일", "")
+        date.nativeEvent.timestamp.format("MM월 dd일(E)").replace("요일", "")
       );
     } else {
     }
@@ -179,53 +179,62 @@ export default function CalendarScreen({ navigation }) {
   useEffect(() => {
     navigation.setOptions({
       header: (props) => (
-        <View style={styles.rowContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              const newDate = new Date(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate() - 1
-              );
-              setDate(newDate);
-              onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
-            }}
-          >
-            <Icon
-              name="keyboard-arrow-left"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
-          <TouchableOpacity onPress={showDatePicker}>
-            <TextInput
-              pointerEvents="none"
-              style={styles.textInput}
-              placeholderTextColor="#000000"
-              underlineColorAndroid="transparent"
-              editable={false}
-              value={text}
-            />
-          </TouchableOpacity>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              const newDate = new Date(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate() + 1
-              );
-              setDate(newDate);
-              onChangeText(newDate.format("yyyy/MM/dd(E)").replace("요일", ""));
-            }}
-          >
-            <Icon
-              name="keyboard-arrow-right"
-              size={20}
-              color={colors.colors.text}
-            />
-          </Pressable>
+        <View>
+          <View style={{ marginTop: 40 }}>
+            <Ad />
+          </View>
+          <View style={styles.rowContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                const newDate = new Date(
+                  date.getFullYear(),
+                  date.getMonth(),
+                  date.getDate() - 1
+                );
+                setDate(newDate);
+                onChangeText(
+                  newDate.format("MM월 dd일(E)").replace("요일", "")
+                );
+              }}
+            >
+              <Icon
+                name="keyboard-arrow-left"
+                size={20}
+                color={colors.colors.text}
+              />
+            </Pressable>
+            <TouchableOpacity onPress={showDatePicker}>
+              <TextInput
+                pointerEvents="none"
+                style={styles.textInput}
+                placeholderTextColor="#000000"
+                underlineColorAndroid="transparent"
+                editable={false}
+                value={text}
+              />
+            </TouchableOpacity>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                const newDate = new Date(
+                  date.getFullYear(),
+                  date.getMonth(),
+                  date.getDate() + 1
+                );
+                setDate(newDate);
+                onChangeText(
+                  newDate.format("MM월 dd일(E)").replace("요일", "")
+                );
+              }}
+            >
+              <Icon
+                name="keyboard-arrow-right"
+                size={20}
+                color={colors.colors.text}
+              />
+            </Pressable>
+          </View>
         </View>
       )
     });
@@ -276,7 +285,7 @@ export default function CalendarScreen({ navigation }) {
     },
     rowContainer: {
       flexDirection: "row",
-      marginTop: 50,
+      marginTop: 15,
       //borderBottomWidth: 1,
       borderBottomColor: colors.colors.border,
       width: "100%",

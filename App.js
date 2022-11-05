@@ -9,6 +9,7 @@ import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import { requestPermissionsAsync } from "expo-ads-admob";
 import { KEYS, useAsyncStorage } from "./src/hooks/asyncStorage";
 import * as Clipboard from "expo-clipboard";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const App = () => {
   const [theme, setTheme] = useState(Appearance.getColorScheme());
@@ -42,21 +43,23 @@ const App = () => {
   }, []);
 
   return (
-    <AppearanceProvider>
-      <StatusBar
-        backgroundColor={
-          theme === "dark"
-            ? themes.darkTheme.colors.background
-            : themes.lightTheme.colors.background
-        }
-        barStyle={theme === "dark" ? "light-content" : "dark-content"}
-      />
-      <NavigationContainer
-        theme={theme === "dark" ? themes.darkTheme : themes.lightTheme}
-      >
-        <TabNavigation />
-      </NavigationContainer>
-    </AppearanceProvider>
+    <SafeAreaProvider>
+      <AppearanceProvider>
+        <StatusBar
+          backgroundColor={
+            theme === "dark"
+              ? themes.darkTheme.colors.background
+              : themes.lightTheme.colors.background
+          }
+          barStyle={theme === "dark" ? "light-content" : "dark-content"}
+        />
+        <NavigationContainer
+          theme={theme === "dark" ? themes.darkTheme : themes.lightTheme}
+        >
+          <TabNavigation />
+        </NavigationContainer>
+      </AppearanceProvider>
+    </SafeAreaProvider>
   );
 };
 

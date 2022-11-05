@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식시간",
     "slug": "Geupsik",
-    "version": "5.3.5",
+    "version": "5.3.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "githubUrl": "https://github.com/sungho0205/react-native-Geupsik",
@@ -19,13 +19,15 @@
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "19",
+      "buildNumber": "20",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
       },
       "infoPlist": {
-        "NSUserTrackingUsageDescription": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸"
+        "NSUserTrackingUsageDescription": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸",
+        "NSCameraUsageDescription": "게시글에 첨부 파일을 추가하시려면 카메라 권한을 허용해주세요.",
+        "NSMicrophoneUsageDescription": "동영상에 음성이 녹음되려면 오디오 녹음 권한을 허용해주세요."
       }
     },
     "android": {
@@ -36,8 +38,8 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 119,
-      "permissions": [],
+      "versionCode": 120,
+      "permissions": ["CAMERA", "RECORD_AUDIO"],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~7170823403"
       }
