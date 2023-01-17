@@ -26,16 +26,16 @@ const Container = styled.View`
 `;
 
 export const Geupsik = ({ navigation }) => {
-  React.useEffect(() => {
-    // if (Math.random() >= 0.5 && new Date() < new Date("202203")) {
-    if (Math.random() >= 0.8 && new Date() < new Date("2022-10-30")) {
-      Alert.alert(
-        "커뮤니티 서비스 '쉬는시간' 오픈!",
-        "쉬는시간 커뮤니티도 들어와 보세요! 확인을 누르면 쉬는시간 탭으로 이동합니다. 많이 써주세요!"
-      );
-      navigation.navigate("쉬는시간");
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   // if (Math.random() >= 0.5 && new Date() < new Date("202203")) {
+  //   if (Math.random() >= 0.8 && new Date() < new Date("2022-10-30")) {
+  //     Alert.alert(
+  //       "커뮤니티 서비스 '쉬는시간' 오픈!",
+  //       "쉬는시간 커뮤니티도 들어와 보세요! 확인을 누르면 쉬는시간 탭으로 이동합니다. 많이 써주세요!"
+  //     );
+  //     navigation.navigate("쉬는시간");
+  //   }
+  // }, []);
 
   const [schoolName, setSchoolName] = useState("");
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);

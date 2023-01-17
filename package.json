@@ -51,6 +51,7 @@
     "react-datepicker": "^4.6.0",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-android-widget": "^0.1.0",
     "react-native-appearance": "~0.3.3",
     "react-native-date-picker": "^4.1.5",
     "react-native-device-info": "^8.7.0",

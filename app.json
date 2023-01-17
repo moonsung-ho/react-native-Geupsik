@@ -19,7 +19,7 @@
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "20",
+      "buildNumber": "21",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
@@ -38,7 +38,7 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 120,
+      "versionCode": 121,
       "permissions": ["CAMERA", "RECORD_AUDIO"],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~7170823403"

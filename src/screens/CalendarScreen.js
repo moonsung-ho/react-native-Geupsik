@@ -180,7 +180,7 @@ export default function CalendarScreen({ navigation }) {
     navigation.setOptions({
       header: (props) => (
         <View>
-          <View style={{ marginTop: 40 }}>
+          <View style={{ marginTop: 80 }}>
             <Ad />
           </View>
           <View style={styles.rowContainer}>
