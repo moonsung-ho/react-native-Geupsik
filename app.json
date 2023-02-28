@@ -58,11 +58,11 @@
         }
       }
     },
-    "facebookScheme": "fb490492783097602",
-    "facebookAppId": "490492783097602",
-    "facebookDisplayName": "급식시간",
-    "facebookAutoLogAppEventsEnabled": true,
-    "facebookAdvertiserIDCollectionEnabled": true,
-    "plugins": [["expo-tracking-transparency"]]
+    "plugins": [["expo-tracking-transparency"]],
+    "extra": {
+      "eas": {
+        "projectId": "58a4186e-7d99-46ca-8705-5904a93877d5"
+      }
+    }
   }
 }

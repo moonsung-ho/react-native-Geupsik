@@ -78,20 +78,6 @@ const TabNavigation = ({ navigation }) => {
           }}
         />
         <Tab.Screen
-          name="쉬는시간"
-          component={Community}
-          options={{
-            headerShown: false,
-            tabBarActiveTintColor: colors.colors.primary,
-            tabBarIcon: (props) =>
-              MaterialCommunityIconsSet({
-                ...props,
-                name: "chat",
-                size: 25
-              })
-          }}
-        />
-        <Tab.Screen
           name="더보기"
           component={Settings}
           options={{

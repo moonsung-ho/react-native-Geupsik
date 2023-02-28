@@ -52,7 +52,7 @@ export default function SettingsScreen({ navigation }) {
     navigation.setOptions({
       header: (props) => (
         <View>
-          <View style={{ marginTop: 80 }}>
+          <View style={{ marginTop: 10 }}>
             <Ad />
           </View>
         </View>

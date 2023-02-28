@@ -110,7 +110,7 @@ export default function GeupsikScreen({ navigation }) {
     navigation.setOptions({
       header: (props) => (
         <View>
-          <View style={{ marginTop: 80 }}>
+          <View style={{ marginTop: 10 }}>
             <Ad />
           </View>
           <View style={styles.rowContainer}>
