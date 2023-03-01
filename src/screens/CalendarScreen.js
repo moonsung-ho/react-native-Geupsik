@@ -95,7 +95,7 @@ export default function CalendarScreen({ navigation }) {
   const [grade, setGrade] = useState();
   const [classN, setClassN] = useState();
   const [text, onChangeText] = useState(
-    date.format("MM월 dd일(E)").replace("요일", "")
+    date.format("MM월 dd일 (E)").replace("요일", "")
   );
 
   const loadingSpinnerTop =
@@ -112,7 +112,7 @@ export default function CalendarScreen({ navigation }) {
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
       onChangeText(
-        date.nativeEvent.timestamp.format("MM월 dd일(E)").replace("요일", "")
+        date.nativeEvent.timestamp.format("MM월 dd일 (E)").replace("요일", "")
       );
     } else {
     }
@@ -129,7 +129,7 @@ export default function CalendarScreen({ navigation }) {
         )}`
       });
     } catch (error) {
-      alert("에러가 발생했습니다." + error.message);
+      alert("에러가 발생했어요." + error.message);
     }
   };
 
@@ -302,16 +302,7 @@ export default function CalendarScreen({ navigation }) {
       backgroundColor: colors.colors.primary,
       position: "absolute",
       bottom: 10,
-      right: 10,
-      ...Platform.select({
-        ios: {
-          shadowColor: "grey",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
-          shadowRadius: 7
-        },
-        android: { elevation: 10 }
-      })
+      right: 10
     }
   });
   useEffect(() => {
@@ -382,10 +373,10 @@ export default function CalendarScreen({ navigation }) {
 
   function getCalendar() {
     if (apiLoadingState === loading.beforeLoading) {
-      setCalendar([{ subject: "로딩 중입니다.", period: "1" }]);
+      setCalendar([{ subject: "로딩 중이에요.", period: "1" }]);
     }
     setApiLoadingState(loading.loading);
-    setCalendar([{ subject: "로딩 중입니다.", period: "1" }]);
+    setCalendar([{ subject: "로딩 중이에요.", period: "1" }]);
     fetch(
       `https://open.neis.go.kr/hub/${schoolForm}Timetable?type=json&key=4c1690204c08404ca7f1775720f17054&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&ALL_TI_YMD=${date.format(
         "yyyyMMdd"
@@ -539,7 +530,7 @@ export default function CalendarScreen({ navigation }) {
           setCalendar(calendar);
         } else {
           setApiLoadingState(loading.loaded);
-          setCalendar([{ subject: "수업이 없는 날입니다.", period: "1" }]);
+          setCalendar([{ subject: "등록된 수업이 없어요.", period: "1" }]);
         }
       })
       .catch((error) => {

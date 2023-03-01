@@ -30,13 +30,13 @@ export default function CalendarErrorScreen({ navigation }) {
           source={icon}
         />
         <Text style={{ color: colors.colors.text, textAlign: "center" }}>
-          시간표 기능을 이용할 수 없습니다!
+          시간표 기능을 이용할 수 없어요.
         </Text>
         <Text style={{ color: colors.colors.text, textAlign: "center" }}>
           이 문제는 일부 학교에서 발생하는 문제로
         </Text>
         <Text style={{ color: colors.colors.text, textAlign: "center" }}>
-          학교에서 나이스에 반 등록을 하지 않은 것일 수 있습니다.
+          학교에서 나이스에 반 등록을 하지 않았을 수 있어요.
         </Text>
         <Text style={{ color: colors.colors.text, textAlign: "center" }}>
           학교를 다시 설정해 보거나 탭 바 중앙에 있는 시간표 버튼을 눌러 이

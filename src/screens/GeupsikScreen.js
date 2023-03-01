@@ -94,13 +94,13 @@ export default function GeupsikScreen({ navigation }) {
   };
   const [apiLoadingState, setApiLoadingState] = useState(loading.beforeLoading);
   const colors = useTheme();
-  const [data, setData] = useState(["급식을 가져오는 중입니다."]);
+  const [data, setData] = useState(["급식을 가져오고 있어요."]);
   const [schoolCode, setSchoolCode] = useState("7031159");
   const [officeCode, setOfficeCode] = useState("B09");
   const [allergy, setAllergy] = useState("");
   const [date, setDate] = useState(new Date());
   const [text, onChangeText] = useState(
-    date.format("MM월 dd일(E)").replace("요일", "")
+    date.format("MM월 dd일 (E)").replace("요일", "")
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -161,7 +161,7 @@ export default function GeupsikScreen({ navigation }) {
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
       onChangeText(
-        date.nativeEvent.timestamp.format("MM월 dd일(E)").replace("요일", "")
+        date.nativeEvent.timestamp.format("MM월 dd일 (E)").replace("요일", "")
       );
     } else {
     }
@@ -173,7 +173,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() - 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("MM월 dd일(E)").replace("요일", ""));
+    onChangeText(newDate.format("MM월 dd일 (E)").replace("요일", ""));
   };
   const seeTomorrowGeupsik = () => {
     const newDate = new Date(
@@ -182,7 +182,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() + 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("MM월 dd일(E)").replace("요일", ""));
+    onChangeText(newDate.format("MM월 dd일 (E)").replace("요일", ""));
   };
   function notLaunchedToday() {
     fetch("https://geupsikapp.azurewebsites.net/newuser").catch((error) => {
@@ -211,11 +211,7 @@ export default function GeupsikScreen({ navigation }) {
   }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
   useEffect(() => {
-    if (
-      (!hasLaunchedAS.isLoading && hasLaunchedAS.state === undefined) ||
-      (!hasLaunchedAS.isLoading && hasLaunchedAS.state === null) ||
-      (!hasLaunchedAS.isLoading && hasLaunchedAS.state === "null")
-    ) {
+    if (!hasLaunchedAS.isLoading && hasLaunchedAS.state !== "true") {
       hasLaunchedAS.setValue(KEYS.HAS_LAUNCHED);
       navigation.navigate("first-launch");
     }
@@ -256,10 +252,10 @@ export default function GeupsikScreen({ navigation }) {
   const Item = ({ menu }) => (
     <TouchableOpacity
       onLongPress={() => {
-        if (menu !== "급식이 없는 날입니다.") {
+        if (menu !== "등록된 급식이 없어요.") {
           Alert.alert(
             "이 음식이 뭐지?",
-            menu.replace("⚠️", "") + "을(를) 검색해 보자.",
+            menu.replace("⚠️", "") + "을(를) 검색해 볼까요?",
             [
               {
                 text: "취소",
@@ -367,26 +363,6 @@ export default function GeupsikScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator
-        style={{
-          position: "absolute",
-          right: 5,
-          top: loadingSpinnerTop,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-        color={
-          (apiLoadingState === loading.error && colors.colors.error) ||
-          "#999999"
-        }
-        size="large"
-        animating={
-          (apiLoadingState === loading.loaded && false) ||
-          (apiLoadingState === loading.loading && true) ||
-          (apiLoadingState === loading.beforeLoading && true) ||
-          (apiLoadingState === loading.error && true)
-        }
-      />
       {isDatePickerVisible && Platform.OS != "ios" && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -416,6 +392,26 @@ export default function GeupsikScreen({ navigation }) {
           renderItem={renderItem}
           keyExtractor={(item) => item}
         />
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            right: 5,
+            top: loadingSpinnerTop,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          color={
+            (apiLoadingState === loading.error && colors.colors.error) ||
+            "#999999"
+          }
+          size="large"
+          animating={
+            (apiLoadingState === loading.loaded && false) ||
+            (apiLoadingState === loading.loading && true) ||
+            (apiLoadingState === loading.beforeLoading && true) ||
+            (apiLoadingState === loading.error && true)
+          }
+        />
       </View>
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Icon name="share" size={22} color={"#FFF"} />
@@ -425,19 +421,19 @@ export default function GeupsikScreen({ navigation }) {
 
   function getGeupsik() {
     if (apiLoadingState === loading.beforeLoading) {
-      setData(["로딩 중입니다."]);
+      setData(["로딩 중이에요."]);
     }
     const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=4c1690204c08404ca7f1775720f17054&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
       "yyyyMMdd"
     )}`;
     setApiLoadingState(loading.loading);
-    setData(["로딩 중입니다."]);
+    setData(["로딩 중이에요."]);
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
         if (!("mealServiceDietInfo" in json)) {
           setApiLoadingState(loading.loaded);
-          setData(["급식이 없는 날입니다."]);
+          setData(["등록된 급식이 없어요."]);
         } else {
           // navigation.setOptions({
           //   headerTitle: `급식 - ${json.mealServiceDietInfo[1].row[0].SCHUL_NM}`
@@ -460,6 +456,7 @@ export default function GeupsikScreen({ navigation }) {
           meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
           meal = meal.replace(/[()]/g, ""); // 불필요한 괄호 제거
           meal = meal.replace(/[ ]/g, ""); // 불필요한 공백 제거
+          meal = meal.replace(/#/g, ""); // 불필요한 # 제거
           setData(meal.split("\n"));
           setApiLoadingState(loading.loaded);
         }

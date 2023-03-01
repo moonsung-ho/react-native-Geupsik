@@ -63,20 +63,9 @@
 // }
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { WidgetPreview } from "react-native-android-widget";
-
-import { HelloWidget } from "../widgets/helloworldwidget";
 
 export function HelloWidgetPreviewScreen() {
-  return (
-    <View style={styles.container}>
-      <WidgetPreview
-        renderWidget={() => <HelloWidget />}
-        width={320}
-        height={200}
-      />
-    </View>
-  );
+  return <View style={styles.container}></View>;
 }
 
 const styles = StyleSheet.create({

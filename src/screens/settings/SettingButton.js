@@ -7,13 +7,12 @@ export default function Button(props) {
   const colors = useTheme();
   const styles = StyleSheet.create({
     container: {
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
       borderColor: colors.colors.border,
       alignSelf: "stretch",
       flexDirection: "row",
       alignItems: "center",
-      height: 50
+      height: 50,
+      marginVertical: 7
     },
     button: {
       alignSelf: "stretch",

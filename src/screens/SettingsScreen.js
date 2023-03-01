@@ -15,11 +15,16 @@ import WebView from "react-native-webview";
 import Constants from "expo-constants";
 import Ad from "./Ad";
 import * as Clipboard from "expo-clipboard";
+import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 
 export default function SettingsScreen({ navigation }) {
   const [coronaApiSource, setCoronaApiSource] = useState("로딩중");
   const [todayPositive, setTodayPositive] = useState("로딩중");
   const [totalPositive, setTotalPositive] = useState("로딩중");
+  const [schoolName, setSchoolName] = useState("로딩중");
+  const [grade, setGrade] = useState("로딩중");
+  const [className, setClassName] = useState("로딩중");
+
   useEffect(() => {
     Analytics.logEvent("settingScreenEnter");
   }, []);
@@ -65,6 +70,25 @@ export default function SettingsScreen({ navigation }) {
     // AsyncStorage.setItem("isdarkmode", `${isDarkmodeToggled}`, () => {});
   }
 
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
+  useEffect(() => {
+    if (!schoolNameAS.isLoading) {
+      setSchoolName(schoolNameAS.state);
+    }
+  }, [schoolNameAS.isLoading, schoolNameAS.state]);
+  const gradeAS = useAsyncStorage(KEYS.GRADE);
+  useEffect(() => {
+    if (!gradeAS.isLoading) {
+      setGrade(gradeAS.state * 1);
+    }
+  }, [gradeAS.isLoading, gradeAS.state]);
+  const classAS = useAsyncStorage(KEYS.CLASS);
+  useEffect(() => {
+    if (!classAS.isLoading) {
+      setClassName(classAS.state * 1);
+    }
+  }, [classAS.isLoading, classAS.state]);
+
   return (
     <SafeAreaView
       style={{
@@ -80,6 +104,24 @@ export default function SettingsScreen({ navigation }) {
       }}
     >
       <ScrollView>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: colors.colors.border,
+            borderRadius: 10,
+            margin: 11,
+            padding: 10
+          }}
+        >
+          <Text style={{ color: colors.colors.text, fontSize: 22 }}>
+            {schoolName}
+          </Text>
+          <Text
+            style={{ color: colors.colors.text, fontSize: 15, marginTop: 5 }}
+          >
+            {grade}학년 {className}반
+          </Text>
+        </View>
         <Button
           title="학교 설정"
           onPress={() => navigation.navigate("학교 설정")}
@@ -144,7 +186,7 @@ export default function SettingsScreen({ navigation }) {
           onPress={() => {
             Clipboard.setString("토스뱅크 1908-6515-5247");
             Alert.alert(
-              "계좌번호가 클립보드에 복사되었습니다",
+              "계좌번호가 클립보드에 복사되었어요.",
               "복사된 계좌번호로 후원금을 보내주세요. 후원금은 제가 잘 쓰겠습니다🥳"
             );
           }}

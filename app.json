@@ -25,7 +25,7 @@
         "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
       },
       "infoPlist": {
-        "NSUserTrackingUsageDescription": "이 앱은 광고로 유지됩니다! 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않습니다! 💸",
+        "NSUserTrackingUsageDescription": "이 앱은 광고로 유지돼요. 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않아요! 💸",
         "NSCameraUsageDescription": "게시글에 첨부 파일을 추가하시려면 카메라 권한을 허용해주세요.",
         "NSMicrophoneUsageDescription": "동영상에 음성이 녹음되려면 오디오 녹음 권한을 허용해주세요."
       }
@@ -63,6 +63,11 @@
       "eas": {
         "projectId": "58a4186e-7d99-46ca-8705-5904a93877d5"
       }
-    }
+    },
+    "jsEngine": "jsc"
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7245930610023842/2837359556",
+    "ios_app_id": "ca-app-pub-7245930610023842/4484950317"
   }
 }

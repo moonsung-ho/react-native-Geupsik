@@ -1,6 +1,6 @@
 import { AdMobBanner } from "expo-ads-admob";
 import { View, Text } from "react-native";
-import { Platform } from "react-native";
+import { Platform, SafeAreaView } from "react-native";
 import * as Device from "expo-device";
 import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
 
@@ -21,7 +21,7 @@ export default function Ad() {
   const trackingPermissionAS = useAsyncStorage(KEYS.TRACKINGPERMISSION);
 
   return (
-    <View>
+    <SafeAreaView>
       <AdMobBanner
         bannerSize="smartBannerPortrait"
         //adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
@@ -33,9 +33,13 @@ export default function Ad() {
           console.warn(err);
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
+
+// export default function Ad() {
+//   return <View></View>;
+// }
 
 // import { useTheme } from "@react-navigation/native";
 // import { View } from "react-native";
