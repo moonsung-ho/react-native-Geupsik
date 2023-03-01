@@ -38,7 +38,7 @@ export default function HelpScreen() {
           <View style={[styles.child, {}]}>
             <Text style={[styles.text, { marginTop: 111 }]}>
               급식 화면에서 화살표 버튼으로 다음 날과 {"\n"}이전 날 급식을 볼 수
-              있습니다.
+              있어요.
             </Text>
           </View>
         </ImageBackground>
@@ -49,7 +49,7 @@ export default function HelpScreen() {
           <View style={[styles.child, {}]}>
             <Text style={[styles.text, { marginTop: 111 }]}>
               급식 화면에서 메뉴를 꾹 누르고 있으면 그 음식이 뭔지 검색할 수
-              있습니다.
+              있어요.
             </Text>
           </View>
         </ImageBackground>
@@ -59,7 +59,7 @@ export default function HelpScreen() {
         >
           <View style={[styles.child, {}]}>
             <Text style={[styles.text, { marginTop: -400 }]}>
-              급식 화면 오른쪽 밑 공유 버튼을 누르면 급식을 공유할 수 있습니다.
+              급식 화면 오른쪽 밑 공유 버튼을 누르면 급식을 공유할 수 있어요.
             </Text>
           </View>
         </ImageBackground>
@@ -70,13 +70,13 @@ export default function HelpScreen() {
           <View style={[styles.child, {}]}>
             <Text style={[styles.text, { marginTop: 111 }]}>
               급식 화면에서 메뉴를 꾹 누르고 있으면 그 음식이 뭔지 검색할 수
-              있습니다.
+              있어요.
             </Text>
           </View>
         </ImageBackground>
         <View style={[styles.child, {}]}>
           <Text style={[styles.text, { color: colors.colors.text }]}>
-            이 앱은 문성호가 만들었습니다!
+            이 앱은 문성호가 만들었어요!
           </Text>
         </View>
       </SwiperFlatList>

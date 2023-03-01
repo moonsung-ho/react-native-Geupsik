@@ -7,7 +7,7 @@ import { Dimensions } from "react-native";
 export default function NoticeScreen() {
   const colors = useTheme();
   const [data, setData] = useState([
-    { title: "불러오는 중입니다.", version: "", description: "" }
+    { title: "불러오는 중이에요.", version: "", description: "" }
   ]);
   useEffect(() => {
     fetch(
