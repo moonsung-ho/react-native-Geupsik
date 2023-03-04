@@ -10,8 +10,7 @@ import {
   FlatList,
   Alert,
   Linking,
-  ActivityIndicator,
-  Button
+  ActivityIndicator
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
@@ -212,7 +211,7 @@ export default function GeupsikScreen({ navigation }) {
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
   useEffect(() => {
     if (!hasLaunchedAS.isLoading && hasLaunchedAS.state !== "true") {
-      hasLaunchedAS.setValue(KEYS.HAS_LAUNCHED);
+      hasLaunchedAS.setValue("true");
       navigation.navigate("first-launch");
     }
   }, [hasLaunchedAS.isLoading, hasLaunchedAS.state, text, schoolCode]);

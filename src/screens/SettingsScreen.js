@@ -4,7 +4,8 @@ import {
   Linking,
   SafeAreaView,
   ScrollView,
-  Alert
+  Alert,
+  TouchableOpacity
 } from "react-native";
 import { useEffect, useState } from "react";
 import Button from "./settings/SettingButton";
@@ -16,6 +17,13 @@ import Constants from "expo-constants";
 import Ad from "./Ad";
 import * as Clipboard from "expo-clipboard";
 import { KEYS, useAsyncStorage } from "../hooks/asyncStorage";
+import { useIsFocused } from "@react-navigation/native";
+import { useCallback, useMemo, useRef } from "react";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider
+} from "@gorhom/bottom-sheet";
+import SchoolSettingScreen from "./settings/SchoolSettingScreen";
 
 export default function SettingsScreen({ navigation }) {
   const [coronaApiSource, setCoronaApiSource] = useState("로딩중");
@@ -24,6 +32,10 @@ export default function SettingsScreen({ navigation }) {
   const [schoolName, setSchoolName] = useState("로딩중");
   const [grade, setGrade] = useState("로딩중");
   const [className, setClassName] = useState("로딩중");
+  const [schoolURL, setSchoolURL] = useState("로딩중");
+  const [schoolTel, setSchoolTel] = useState("로딩중");
+  const [schoolFax, setSchoolFax] = useState("로딩중");
+  const [schoolCode, setSchoolCode] = useState("00000000");
 
   useEffect(() => {
     Analytics.logEvent("settingScreenEnter");
@@ -70,24 +82,66 @@ export default function SettingsScreen({ navigation }) {
     // AsyncStorage.setItem("isdarkmode", `${isDarkmodeToggled}`, () => {});
   }
 
-  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME);
+  const isFocused = useIsFocused();
+
+  const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME, isFocused);
   useEffect(() => {
     if (!schoolNameAS.isLoading) {
       setSchoolName(schoolNameAS.state);
     }
-  }, [schoolNameAS.isLoading, schoolNameAS.state]);
-  const gradeAS = useAsyncStorage(KEYS.GRADE);
+  }, [schoolNameAS.isLoading, schoolNameAS.state, isFocused]);
+  const gradeAS = useAsyncStorage(KEYS.GRADE, isFocused);
   useEffect(() => {
     if (!gradeAS.isLoading) {
       setGrade(gradeAS.state * 1);
     }
-  }, [gradeAS.isLoading, gradeAS.state]);
-  const classAS = useAsyncStorage(KEYS.CLASS);
+  }, [gradeAS.isLoading, gradeAS.state, isFocused]);
+  const classAS = useAsyncStorage(KEYS.CLASS, isFocused);
   useEffect(() => {
     if (!classAS.isLoading) {
       setClassName(classAS.state * 1);
     }
-  }, [classAS.isLoading, classAS.state]);
+  }, [classAS.isLoading, classAS.state, isFocused]);
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, isFocused);
+  useEffect(() => {
+    if (!schoolCodeAS.isLoading) {
+      setSchoolCode(schoolCodeAS.state);
+    }
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state, isFocused]);
+
+  useEffect(() => {
+    fetch(
+      `https://open.neis.go.kr/hub/schoolInfo?Type=json&SD_SCHUL_CODE=${schoolCode}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.schoolInfo) {
+          setSchoolURL(json.schoolInfo[1].row[0].HMPG_ADRES);
+          setSchoolTel(json.schoolInfo[1].row[0].ORG_TELNO);
+          setSchoolFax(json.schoolInfo[1].row[0].ORG_FAXNO);
+        } else {
+          setSchoolURL("null");
+          setSchoolTel("null");
+        }
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  }, [isFocused, schoolCode, schoolName]);
+
+  // ref
+  const bottomSheetModalRef = useRef(null);
+
+  // variables
+  const snapPoints = useMemo(() => ["15%", "70%"], []);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
   return (
     <SafeAreaView
@@ -110,21 +164,78 @@ export default function SettingsScreen({ navigation }) {
             borderColor: colors.colors.border,
             borderRadius: 10,
             margin: 11,
-            padding: 10
+            padding: 10,
+            flexDirection: "row",
+            alignSelf: "stretch",
+            flex: 1
           }}
         >
-          <Text style={{ color: colors.colors.text, fontSize: 22 }}>
-            {schoolName}
-          </Text>
-          <Text
-            style={{ color: colors.colors.text, fontSize: 15, marginTop: 5 }}
-          >
-            {grade}학년 {className}반
-          </Text>
+          <View style={{ alignSelf: "stretch", flex: 1 }}>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`${schoolURL}`).catch((error) => {
+                  console.warn(error);
+                });
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.colors.text,
+                  fontSize: 22,
+                  flex: 1
+                }}
+              >
+                {schoolName}
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                color: colors.colors.text,
+                fontSize: 15,
+                marginTop: 5
+              }}
+            >
+              {grade}학년 {className}반
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL(`tel:${schoolTel}`.replaceAll("-", "")).catch(
+                    (error) => {
+                      console.warn(error);
+                    }
+                  )
+                }
+              >
+                <Text
+                  style={{
+                    color: colors.colors.text,
+                    fontSize: 15,
+                    marginTop: 5,
+                    marginRight: 5
+                  }}
+                >
+                  전화: {schoolTel}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    color: colors.colors.text,
+                    fontSize: 15,
+                    marginTop: 5
+                  }}
+                >
+                  팩스: {schoolFax}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
         <Button
           title="학교 설정"
           onPress={() => navigation.navigate("학교 설정")}
+          // onPress={handlePresentModalPress}
           icon="school"
           toggle={false}
           iconMarginLeft={0}
@@ -168,18 +279,6 @@ export default function SettingsScreen({ navigation }) {
           toggle={false}
           iconMarginLeft={4}
           iconMarginRight={17}
-        />
-        <Button
-          title="건강상태 자가진단 바로가기"
-          onPress={() =>
-            Linking.openURL("https://hcs.eduro.go.kr").catch((error) => {
-              console.warn(error);
-            })
-          }
-          icon="check"
-          toggle={false}
-          iconMarginLeft={4}
-          iconMarginRight={16}
         />
         <Button
           title="개발자에게 후원하기"
@@ -232,6 +331,20 @@ export default function SettingsScreen({ navigation }) {
       >
         <Ad />
       </View> */}
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        backgroundStyle={{
+          backgroundColor: colors.colors.card,
+          borderWidth: 0
+        }}
+      >
+        <View>
+          <Text>ddd</Text>
+        </View>
+      </BottomSheetModal>
     </SafeAreaView>
   );
 }
