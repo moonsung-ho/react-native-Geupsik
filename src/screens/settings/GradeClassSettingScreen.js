@@ -45,7 +45,7 @@ function GradeClassSettingScreen(props) {
 
   useEffect(() => {
     fetch(
-      `https://open.neis.go.kr/hub/classInfo?ATPT_OFCDC_SC_CODE=${
+      `https://mealtimeapi.sungho-moon.workers.dev/hub/classInfo?ATPT_OFCDC_SC_CODE=${
         props.route.params.officeCode
       }&SD_SCHUL_CODE=${
         props.route.params.schoolCode

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./src/navigations/Tab";
 // import { AppearanceProvider } from "react-native-appearance";
@@ -12,6 +12,8 @@ import * as Clipboard from "expo-clipboard";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
 
 const App = () => {
   const [theme, setTheme] = useState(Appearance.getColorScheme());
@@ -42,6 +44,59 @@ const App = () => {
       );
       Clipboard.setString("토스뱅크 1908-6515-5247");
     }
+  }, []);
+
+  // First, set the handler that will cause the notification
+  // to show the alert
+
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false
+    })
+  });
+
+  // Second, call the method
+
+  const triggerGeupsikNotifications = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "오늘의 급식을 확인해 보세요!",
+        body: "급식시간 앱을 사용해서 오늘의 급식을 확인하세요!"
+      },
+      trigger: {
+        hour: 7,
+        minute: 30,
+        repeats: true
+      }
+    });
+  };
+  const triggerCalendarNotifications = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "내일의 시간표를 확인해 보세요!",
+        body: "급식시간 앱을 사용해서 내일 시간표를 확인하세요!"
+      },
+      trigger: {
+        hour: 22,
+        minute: 30,
+        repeats: true
+      }
+    });
+  };
+
+  useEffect(() => {
+    Permissions.getAsync(Permissions.NOTIFICATIONS).then((statusObj) => {
+      if (statusObj.status !== "granted") {
+        return;
+      } else {
+        Notifications.cancelAllScheduledNotificationsAsync();
+        triggerGeupsikNotifications();
+        triggerCalendarNotifications();
+      }
+      return statusObj;
+    });
   }, []);
 
   return (

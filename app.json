@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식시간",
     "slug": "Geupsik",
-    "version": "5.3.7",
+    "version": "5.3.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "githubUrl": "https://github.com/sungho0205/react-native-Geupsik",
@@ -12,18 +12,18 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/58a4186e-7d99-46ca-8705-5904a93877d5"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "23",
+      "buildNumber": "25",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-7245930610023842~6236181535"
-      },
       "infoPlist": {
         "NSUserTrackingUsageDescription": "이 앱은 광고로 유지돼요. 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않아요! 💸",
         "NSCameraUsageDescription": "게시글에 첨부 파일을 추가하시려면 카메라 권한을 허용해주세요.",
@@ -38,11 +38,11 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 122,
-      "permissions": ["CAMERA", "RECORD_AUDIO"],
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-7245930610023842~7170823403"
-      }
+      "versionCode": 124,
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -58,13 +58,20 @@
         }
       }
     },
-    "plugins": [["expo-tracking-transparency"]],
+    "plugins": [
+      [
+        "expo-tracking-transparency"
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "58a4186e-7d99-46ca-8705-5904a93877d5"
       }
     },
-    "jsEngine": "jsc"
+    "jsEngine": "jsc",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-7245930610023842/2837359556",

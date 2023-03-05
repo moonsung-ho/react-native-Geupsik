@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Linking } from "react-native";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Constants from "expo-constants";
+import Ad from "../Ad";
 
 export default function AppInfoScreen() {
   const [userCount, setUserCount] = useState("로딩중...");
@@ -30,6 +31,7 @@ export default function AppInfoScreen() {
   });
   return (
     <ScrollView style={{ marginBottom: 10 }}>
+      <Ad />
       <Text style={styles.text}>
         이 앱은 나이스의 open API를 활용하여 급식 정보를 제공해요. 나이스는
         우리나라의 교육행정정보시스템으로, 전국 모든 학교의 학생을 대상으로
@@ -130,7 +132,6 @@ export default function AppInfoScreen() {
       </Text>
       <Divider style={styles.divider} />
       <View style={{ flexDirection: "row" }}>
-        <Text style={styles.text}>오늘의 유저 수: {userCount}</Text>
         <Text style={styles.text}>앱 버전: {version}</Text>
       </View>
     </ScrollView>

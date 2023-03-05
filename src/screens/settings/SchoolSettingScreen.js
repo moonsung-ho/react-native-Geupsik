@@ -132,7 +132,7 @@ export default function SchoolSettingScreen({ navigation }) {
   function searchSchool(value) {
     setApiLoadingState(loading.loading);
     fetch(
-      `https://open.neis.go.kr/hub/schoolInfo?SCHUL_NM=${value}&Type=json&KEY=a9a5367947564a1aa13e46ba545de634`
+      `https://mealtimeapi.sungho-moon.workers.dev/hub/schoolInfo?SCHUL_NM=${value}&Type=json&KEY=a9a5367947564a1aa13e46ba545de634`
     )
       .then((res) => res.json())
       .then((json) => {

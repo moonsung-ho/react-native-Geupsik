@@ -422,7 +422,7 @@ export default function GeupsikScreen({ navigation }) {
     if (apiLoadingState === loading.beforeLoading) {
       setData(["로딩 중이에요."]);
     }
-    const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=4c1690204c08404ca7f1775720f17054&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
+    const url = `https://mealtimeapi.sungho-moon.workers.dev/hub/mealServiceDietInfo?Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date.format(
       "yyyyMMdd"
     )}`;
     setApiLoadingState(loading.loading);

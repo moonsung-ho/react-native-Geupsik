@@ -3,6 +3,7 @@ import { ScrollView, Text, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import { Dimensions } from "react-native";
+import Ad from "../Ad";
 
 export default function NoticeScreen() {
   const colors = useTheme();
@@ -22,6 +23,7 @@ export default function NoticeScreen() {
     <ScrollView
       style={{ width: Dimensions.get("window").width, flexWrap: "wrap" }}
     >
+      <Ad />
       {data.map(({ title, version, description }) => {
         return (
           <View key={title + version + description}>

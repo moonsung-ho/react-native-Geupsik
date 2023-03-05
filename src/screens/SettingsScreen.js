@@ -111,7 +111,7 @@ export default function SettingsScreen({ navigation }) {
 
   useEffect(() => {
     fetch(
-      `https://open.neis.go.kr/hub/schoolInfo?Type=json&SD_SCHUL_CODE=${schoolCode}`
+      `https://mealtimeapi.sungho-moon.workers.dev/hub/schoolInfo?Type=json&SD_SCHUL_CODE=${schoolCode}`
     )
       .then((response) => response.json())
       .then((json) => {

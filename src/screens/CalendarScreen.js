@@ -378,7 +378,7 @@ export default function CalendarScreen({ navigation }) {
     setApiLoadingState(loading.loading);
     setCalendar([{ subject: "로딩 중이에요.", period: "1" }]);
     fetch(
-      `https://open.neis.go.kr/hub/${schoolForm}Timetable?type=json&key=4c1690204c08404ca7f1775720f17054&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&ALL_TI_YMD=${date.format(
+      `https://mealtimeapi.sungho-moon.workers.dev/hub/${schoolForm}Timetable?type=json&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&ALL_TI_YMD=${date.format(
         "yyyyMMdd"
       )}&GRADE=${grade}&CLASS_NM=${classN}`
     )
