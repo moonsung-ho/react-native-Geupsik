@@ -52,7 +52,17 @@
         }
       }
     },
-    "plugins": [["expo-tracking-transparency"]],
+    "plugins": [
+      ["expo-tracking-transparency"],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "58a4186e-7d99-46ca-8705-5904a93877d5"
