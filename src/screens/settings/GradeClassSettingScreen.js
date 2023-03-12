@@ -44,6 +44,10 @@ function GradeClassSettingScreen(props) {
   });
 
   useEffect(() => {
+    setGradeClass("1", "1");
+  }, []);
+
+  useEffect(() => {
     fetch(
       `https://mealtimeapi.sungho-moon.workers.dev/hub/classInfo?ATPT_OFCDC_SC_CODE=${
         props.route.params.officeCode

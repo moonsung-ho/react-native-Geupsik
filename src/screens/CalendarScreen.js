@@ -389,7 +389,10 @@ export default function CalendarScreen({ navigation }) {
           let calendar = new Array();
           if (schoolForm === "els") {
             while (n < json.elsTimetable[0].head[0].list_total_count * 1) {
-              let subject = json.elsTimetable[1].row[n].ITRT_CNTNT;
+              let subject = json.elsTimetable[1].row[n].ITRT_CNTNT.replace(
+                "-",
+                ""
+              );
               calendar = calendar.concat({
                 subject: subject,
                 period: json.elsTimetable[1].row[n].PERIO
@@ -398,7 +401,10 @@ export default function CalendarScreen({ navigation }) {
             }
           } else if (schoolForm === "mis") {
             while (n < json.misTimetable[0].head[0].list_total_count * 1) {
-              let subject = json.misTimetable[1].row[n].ITRT_CNTNT;
+              let subject = json.misTimetable[1].row[n].ITRT_CNTNT.replace(
+                "-",
+                ""
+              ).replace("(자)", "🆓");
               calendar = calendar.concat({
                 subject: subject,
                 period: json.misTimetable[1].row[n].PERIO
@@ -407,7 +413,10 @@ export default function CalendarScreen({ navigation }) {
             }
           } else if (schoolForm === "his") {
             while (n < json.hisTimetable[0].head[0].list_total_count * 1) {
-              let subject = json.hisTimetable[1].row[n].ITRT_CNTNT;
+              let subject = json.hisTimetable[1].row[n].ITRT_CNTNT.replace(
+                "-",
+                ""
+              );
               calendar = calendar.concat({
                 subject: subject,
                 period: json.hisTimetable[1].row[n].PERIO
