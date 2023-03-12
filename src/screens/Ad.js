@@ -45,6 +45,34 @@ export default function Ad() {
   );
 }
 
+// import React from "react";
+// import {
+//   BannerAd,
+//   BannerAdSize,
+//   TestIds
+// } from "react-native-google-mobile-ads";
+
+// const iOSProductionID = "ca-app-pub-7245930610023842/4484950317";
+// const androidProductionID = "ca-app-pub-7245930610023842/2837359556";
+
+// const adUnitId = __DEV__
+//   ? TestIds.BANNER
+//   : Platform.OS === "android"
+//   ? androidProductionID
+//   : iOSProductionID;
+
+// export default function Ad() {
+//   return (
+//     <SafeAreaView>
+//       <BannerAd
+//         unitId={adUnitId}
+//         size={BannerAdSize.FULL_BANNER}
+//         requestOptions={{}}
+//       />
+//     </SafeAreaView>
+//   );
+// }
+
 // import { useTheme } from "@react-navigation/native";
 // import { View } from "react-native";
 // import WebView from "react-native-webview";
