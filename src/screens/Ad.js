@@ -37,41 +37,57 @@ import { Platform, SafeAreaView } from "react-native";
 //   );
 // }
 
-export default function Ad() {
-  return (
-    <SafeAreaView>
-      <View></View>
-    </SafeAreaView>
-  );
-}
-
-// import React from "react";
-// import {
-//   BannerAd,
-//   BannerAdSize,
-//   TestIds
-// } from "react-native-google-mobile-ads";
-
-// const iOSProductionID = "ca-app-pub-7245930610023842/4484950317";
-// const androidProductionID = "ca-app-pub-7245930610023842/2837359556";
-
-// const adUnitId = __DEV__
-//   ? TestIds.BANNER
-//   : Platform.OS === "android"
-//   ? androidProductionID
-//   : iOSProductionID;
-
 // export default function Ad() {
 //   return (
 //     <SafeAreaView>
-//       <BannerAd
-//         unitId={adUnitId}
-//         size={BannerAdSize.FULL_BANNER}
-//         requestOptions={{}}
-//       />
+//       <View></View>
 //     </SafeAreaView>
 //   );
 // }
+
+import React from "react";
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds
+} from "react-native-google-mobile-ads";
+import { useAsyncStorage, KEYS } from "../hooks/asyncStorage";
+
+const iOSProductionID = "ca-app-pub-7245930610023842/4484950317";
+const androidProductionID = "ca-app-pub-7245930610023842/2837359556";
+
+const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : Platform.OS === "android"
+  ? androidProductionID
+  : iOSProductionID;
+
+export default function Ad() {
+  const [allowPersonalizedAd, setAllowPersonalizedAd] = React.useState("true");
+
+  const trackingPermissionAS = useAsyncStorage(KEYS.TRACKINGPERMISSION);
+  React.useEffect(() => {
+    if (!trackingPermissionAS.isLoading) {
+      setAllowPersonalizedAd(trackingPermissionAS.state);
+    }
+  }, [allowPersonalizedAd, trackingPermissionAS.state]);
+
+  return (
+    <SafeAreaView>
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.FULL_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly:
+            allowPersonalizedAd === "true" ? false : true,
+          onAdFailedToLoad: () => {
+            console.warn("광고 로딩 실패");
+          }
+        }}
+      />
+    </SafeAreaView>
+  );
+}
 
 // import { useTheme } from "@react-navigation/native";
 // import { View } from "react-native";
