@@ -34,17 +34,13 @@ export default function AppfirstLaunchScreen({ navigation }) {
           설치해 주셔서 고마워요!
         </Text>
         <Text style={{ color: colors.colors.text }}>
-          아래 버튼을 누르면 설정으로 이동해요.
+          아래 버튼을 누르면 학교 설정을 할 수 있어요.
         </Text>
-        <Text style={{ color: colors.colors.text }}>
-          설정에서는 학교 설정 및 알레르기 유발 식품 설정을
-        </Text>
-        <Text style={{ color: colors.colors.text }}>할 수 있어요.</Text>
         <View style={{ marginTop: 15 }}>
           <Button
             onPress={() => {
-              navigation.navigate("더보기");
-              navigation.navigate("급식", { screen: "급식screen" });
+              navigation.navigate("학교 설정");
+              navigation.goBack();
             }}
             title="설정으로 이동"
           />

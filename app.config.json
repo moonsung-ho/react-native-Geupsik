@@ -2,7 +2,7 @@
   "expo": {
     "name": "급식시간",
     "slug": "Geupsik",
-    "version": "5.3.9",
+    "version": "5.4.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "githubUrl": "https://github.com/sungho0205/react-native-Geupsik",
@@ -15,14 +15,12 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/58a4186e-7d99-46ca-8705-5904a93877d5"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.sungho0205.geupsik",
-      "buildNumber": "25",
+      "buildNumber": "26",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "이 앱은 광고로 유지돼요. 맞춤형 광고 표시를 위한 데이터 수집이며 광고 표시 외에 아무 목적으로도 사용되지 않아요! 💸",
@@ -38,11 +36,8 @@
       "googleServicesFile": "./firebase/google-services.json",
       "userInterfaceStyle": "automatic",
       "package": "com.sungho0205.geupsik",
-      "versionCode": 124,
-      "permissions": [
-        "CAMERA",
-        "RECORD_AUDIO"
-      ]
+      "versionCode": 125,
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -70,6 +65,9 @@
         {
           "ios": {
             "useFrameworks": "static"
+          },
+          "android": {
+            "extraProguardRules": "-keep class com.google.android.gms.internal.consent_sdk.** { *; }"
           }
         }
       ]

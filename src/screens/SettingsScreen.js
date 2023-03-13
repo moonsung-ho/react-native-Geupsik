@@ -280,7 +280,7 @@ export default function SettingsScreen({ navigation }) {
           iconMarginLeft={4}
           iconMarginRight={17}
         />
-        <Button
+        {/* <Button
           title="개발자에게 후원하기"
           onPress={() => {
             Clipboard.setString("토스뱅크 1908-6515-5247");
@@ -293,7 +293,7 @@ export default function SettingsScreen({ navigation }) {
           toggle={false}
           iconMarginLeft={8}
           iconMarginRight={20}
-        />
+        /> */}
         <Button
           title="개발자에게 문의하기"
           onPress={() =>
