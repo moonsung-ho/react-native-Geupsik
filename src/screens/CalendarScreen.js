@@ -1,4 +1,4 @@
-import { useTheme } from "@react-navigation/native";
+import { useIsFocused, useTheme } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
   Text,
@@ -97,6 +97,7 @@ export default function CalendarScreen({ navigation }) {
   const [text, onChangeText] = useState(
     date.format("MM월 dd일 (E)").replace("요일", "")
   );
+  const isFocused = useIsFocused();
 
   const loadingSpinnerTop =
     (Platform.OS === "ios" && 20) || (Platform.OS === "android" && 5) || 5;
@@ -135,19 +136,19 @@ export default function CalendarScreen({ navigation }) {
 
   const colors = useTheme();
 
-  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, text);
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, isFocused);
   useEffect(() => {
     if (!schoolCodeAS.isLoading) {
       setSchoolCode(schoolCodeAS.state * 1);
     }
-  }, [schoolCodeAS.isLoading, schoolCodeAS.state, text]);
-  const gradeAS = useAsyncStorage(KEYS.GRADE, text);
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state, text, isFocused]);
+  const gradeAS = useAsyncStorage(KEYS.GRADE, isFocused);
   useEffect(() => {
     if (!gradeAS.isLoading) {
       setGrade(gradeAS.state * 1);
     }
-  }, [gradeAS.isLoading, gradeAS.state, text]);
-  const classAS = useAsyncStorage(KEYS.CLASS, text);
+  }, [gradeAS.isLoading, gradeAS.state, text, isFocused]);
+  const classAS = useAsyncStorage(KEYS.CLASS, isFocused);
   useEffect(() => {
     if (!classAS.isLoading) {
       setClassN(classAS.state * 1);
@@ -155,14 +156,14 @@ export default function CalendarScreen({ navigation }) {
         navigation.navigate("에러");
       }
     }
-  }, [classAS.isLoading, classAS.state, text]);
-  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, text);
+  }, [classAS.isLoading, classAS.state, text, isFocused]);
+  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, isFocused);
   useEffect(() => {
     if (!officeCodeAS.isLoading) {
       setOfficeCode(officeCodeAS.state);
     }
-  }, [officeCodeAS.isLoading, officeCodeAS.state, text]);
-  const schoolFormAS = useAsyncStorage(KEYS.SCHOOL_FORM, text);
+  }, [officeCodeAS.isLoading, officeCodeAS.state, text, isFocused]);
+  const schoolFormAS = useAsyncStorage(KEYS.SCHOOL_FORM, isFocused);
   useEffect(() => {
     if (!schoolFormAS.isLoading) {
       if (schoolFormAS.state === "초등학교") {
@@ -174,7 +175,7 @@ export default function CalendarScreen({ navigation }) {
       }
       getCalendar();
     }
-  }, [schoolFormAS.isLoading, schoolFormAS.state, text]);
+  }, [schoolFormAS.isLoading, schoolFormAS.state, text, isFocused]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -185,7 +186,10 @@ export default function CalendarScreen({ navigation }) {
           </View>
           <View style={styles.rowContainer}>
             <Pressable
-              style={styles.button}
+              style={[
+                styles.button,
+                { borderTopRightRadius: 0, borderBottomRightRadius: 0 }
+              ]}
               onPress={() => {
                 const newDate = new Date(
                   date.getFullYear(),
@@ -215,7 +219,10 @@ export default function CalendarScreen({ navigation }) {
               />
             </TouchableOpacity>
             <Pressable
-              style={styles.button}
+              style={[
+                styles.button,
+                { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }
+              ]}
               onPress={() => {
                 const newDate = new Date(
                   date.getFullYear(),
@@ -260,7 +267,13 @@ export default function CalendarScreen({ navigation }) {
       padding: 10,
       borderColor: colors.colors.border,
       textAlign: "center",
-      backgroundColor: colors.colors.background
+      backgroundColor: colors.colors.background,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0
     },
     button: {
       justifyContent: "center",
@@ -268,9 +281,9 @@ export default function CalendarScreen({ navigation }) {
       borderWidth: 1,
       width: 50,
       alignItems: "center",
-      marginHorizontal: 20,
       borderColor: colors.colors.border,
-      backgroundColor: colors.colors.background
+      backgroundColor: colors.colors.background,
+      height: 50
     },
     buttonText: {
       fontWeight: "bold",
@@ -307,7 +320,7 @@ export default function CalendarScreen({ navigation }) {
   });
   useEffect(() => {
     getCalendar();
-  }, [schoolForm, classN, grade, text]);
+  }, [schoolForm, classN, grade, text, schoolCode]);
 
   return (
     <View style={styles.view}>

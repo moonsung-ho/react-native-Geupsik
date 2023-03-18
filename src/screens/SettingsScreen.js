@@ -87,19 +87,31 @@ export default function SettingsScreen({ navigation }) {
   const schoolNameAS = useAsyncStorage(KEYS.SCHOOL_NAME, isFocused);
   useEffect(() => {
     if (!schoolNameAS.isLoading) {
-      setSchoolName(schoolNameAS.state);
+      if (schoolNameAS.state) {
+        setSchoolName(schoolNameAS.state);
+      } else {
+        setSchoolName("학교를 등록해 주세요.");
+      }
     }
   }, [schoolNameAS.isLoading, schoolNameAS.state, isFocused]);
   const gradeAS = useAsyncStorage(KEYS.GRADE, isFocused);
   useEffect(() => {
     if (!gradeAS.isLoading) {
-      setGrade(gradeAS.state * 1);
+      if (gradeAS.state) {
+        setGrade(gradeAS.state * 1);
+      } else {
+        setGrade("");
+      }
     }
   }, [gradeAS.isLoading, gradeAS.state, isFocused]);
   const classAS = useAsyncStorage(KEYS.CLASS, isFocused);
   useEffect(() => {
     if (!classAS.isLoading) {
-      setClassName(classAS.state * 1);
+      if (classAS.state) {
+        setClassName(classAS.state * 1);
+      } else {
+        setClassName("");
+      }
     }
   }, [classAS.isLoading, classAS.state, isFocused]);
   const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, isFocused);
@@ -120,8 +132,9 @@ export default function SettingsScreen({ navigation }) {
           setSchoolTel(json.schoolInfo[1].row[0].ORG_TELNO);
           setSchoolFax(json.schoolInfo[1].row[0].ORG_FAXNO);
         } else {
-          setSchoolURL("null");
-          setSchoolTel("null");
+          setSchoolURL("알 수 없음");
+          setSchoolTel("알 수 없음");
+          setSchoolFax("알 수 없음");
         }
       })
       .catch((error) => {

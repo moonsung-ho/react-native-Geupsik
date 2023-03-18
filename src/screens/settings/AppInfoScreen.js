@@ -6,19 +6,6 @@ import Constants from "expo-constants";
 import Ad from "../Ad";
 
 export default function AppInfoScreen() {
-  const [userCount, setUserCount] = useState("로딩중...");
-  const [version, setVersion] = useState("로딩중...");
-  useEffect(() => {
-    fetch("https://geupsikapp.azurewebsites.net/usercount")
-      .then((res) => res.json())
-      .then((json) => {
-        setUserCount(json[0].count);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setVersion(Constants.manifest.version);
-  }, []);
   const colors = useTheme();
   const styles = StyleSheet.create({
     text: {
@@ -131,9 +118,6 @@ export default function AppInfoScreen() {
         입니다.
       </Text>
       <Divider style={styles.divider} />
-      <View style={{ flexDirection: "row" }}>
-        <Text style={styles.text}>앱 버전: {version}</Text>
-      </View>
     </ScrollView>
   );
 }

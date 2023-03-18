@@ -99,7 +99,7 @@ export default function GeupsikScreen({ navigation }) {
   const [allergy, setAllergy] = useState("");
   const [date, setDate] = useState(new Date());
   const [text, onChangeText] = useState(
-    date.format("MM월 dd일 (E)").replace("요일", "")
+    date.format("MM월 dd일(E)").replace("요일", "")
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -113,7 +113,13 @@ export default function GeupsikScreen({ navigation }) {
             <Ad />
           </View>
           <View style={styles.rowContainer}>
-            <Pressable style={styles.button} onPress={seeYesterdayGeupsik}>
+            <Pressable
+              style={[
+                styles.button,
+                { borderTopRightRadius: 0, borderBottomRightRadius: 0 }
+              ]}
+              onPress={seeYesterdayGeupsik}
+            >
               <Icon
                 name="keyboard-arrow-left"
                 size={20}
@@ -130,7 +136,13 @@ export default function GeupsikScreen({ navigation }) {
                 value={text}
               />
             </TouchableOpacity>
-            <Pressable style={styles.button} onPress={seeTomorrowGeupsik}>
+            <Pressable
+              style={[
+                styles.button,
+                { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }
+              ]}
+              onPress={seeTomorrowGeupsik}
+            >
               <Icon
                 name="keyboard-arrow-right"
                 size={20}
@@ -160,7 +172,7 @@ export default function GeupsikScreen({ navigation }) {
     if (date.type === "set") {
       setDate(date.nativeEvent.timestamp);
       onChangeText(
-        date.nativeEvent.timestamp.format("MM월 dd일 (E)").replace("요일", "")
+        date.nativeEvent.timestamp.format("MM월 dd일(E)").replace("요일", "")
       );
     } else {
     }
@@ -172,7 +184,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() - 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("MM월 dd일 (E)").replace("요일", ""));
+    onChangeText(newDate.format("MM월 dd일(E)").replace("요일", ""));
   };
   const seeTomorrowGeupsik = () => {
     const newDate = new Date(
@@ -181,7 +193,7 @@ export default function GeupsikScreen({ navigation }) {
       date.getDate() + 1
     );
     setDate(newDate);
-    onChangeText(newDate.format("MM월 dd일 (E)").replace("요일", ""));
+    onChangeText(newDate.format("MM월 dd일(E)").replace("요일", ""));
   };
   function notLaunchedToday() {
     fetch("https://geupsikapp.azurewebsites.net/newuser").catch((error) => {
@@ -202,12 +214,16 @@ export default function GeupsikScreen({ navigation }) {
     }
   };
 
-  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, text);
+  const schoolCodeAS = useAsyncStorage(KEYS.SCHOOL_CODE, isFocused);
   useEffect(() => {
     if (!schoolCodeAS.isLoading) {
-      setSchoolCode(schoolCodeAS.state * 1);
+      if (schoolCodeAS.state) {
+        setSchoolCode(schoolCodeAS.state * 1);
+      } else {
+        navigation.navigate("first-launch");
+      }
     }
-  }, [schoolCodeAS.isLoading, schoolCodeAS.state]);
+  }, [schoolCodeAS.isLoading, schoolCodeAS.state, isFocused]);
   const hasLaunchedAS = useAsyncStorage(KEYS.HAS_LAUNCHED);
   useEffect(() => {
     if (!hasLaunchedAS.isLoading && hasLaunchedAS.state !== "true") {
@@ -235,12 +251,12 @@ export default function GeupsikScreen({ navigation }) {
     }
   }, [launchedTodayAS.isLoading, launchedTodayAS.state]);
 
-  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, text);
+  const officeCodeAS = useAsyncStorage(KEYS.OFFICE_CODE, isFocused);
   useEffect(() => {
     if (!officeCodeAS.isLoading) {
       setOfficeCode(officeCodeAS.state);
     }
-  }, [officeCodeAS.isLoading, officeCodeAS.state]);
+  }, [officeCodeAS.isLoading, officeCodeAS.state, isFocused]);
   const allergyAS = useAsyncStorage(KEYS.ALLERGY, text);
   useEffect(() => {
     if (!allergyAS.isLoading) {
@@ -254,7 +270,7 @@ export default function GeupsikScreen({ navigation }) {
         if (menu !== "등록된 급식이 없어요.") {
           Alert.alert(
             "이 음식이 뭐지?",
-            menu.replace("⚠️", "") + "을(를) 검색해 볼까요?",
+            menu.replace("⚠️", "") + "을(를) 검색할까요?",
             [
               {
                 text: "취소",
@@ -293,7 +309,7 @@ export default function GeupsikScreen({ navigation }) {
 
   useEffect(() => {
     getGeupsik();
-  }, [text, officeCode, allergy]);
+  }, [text, officeCode, allergy, schoolCode]);
 
   const styles = StyleSheet.create({
     container: {
@@ -334,7 +350,13 @@ export default function GeupsikScreen({ navigation }) {
       padding: 10,
       borderColor: colors.colors.border,
       textAlign: "center",
-      backgroundColor: colors.colors.background
+      backgroundColor: colors.colors.background,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0
     },
     button: {
       justifyContent: "center",
@@ -342,9 +364,10 @@ export default function GeupsikScreen({ navigation }) {
       borderWidth: 1,
       width: 50,
       alignItems: "center",
-      marginHorizontal: 20,
+      marginHorizontal: 0,
       borderColor: colors.colors.border,
-      backgroundColor: colors.colors.background
+      backgroundColor: colors.colors.background,
+      height: 50
     },
     shareButton: {
       width: 60,
@@ -452,10 +475,14 @@ export default function GeupsikScreen({ navigation }) {
             n = n + 1;
           }
           meal = meal.replace(/[0-9]/g, ""); // 불필요한 숫자 제거
+          meal = meal.replace(/[a-z]/g, ""); // 불필요한 문자 제거
+          meal = meal.replace(/[A-Z]/g, ""); // 불필요한 문자 제거
           meal = meal.replace(/\./g, ""); // 불필요한 마침표 제거
           meal = meal.replace(/[()]/g, ""); // 불필요한 괄호 제거
           meal = meal.replace(/[ ]/g, ""); // 불필요한 공백 제거
           meal = meal.replace(/#/g, ""); // 불필요한 # 제거
+          meal = meal.replace(/-/g, ""); // 불필요한 - 제거
+          meal = meal.replace(/\*/g, ""); // 불필요한 * 제거
           setData(meal.split("\n"));
           setApiLoadingState(loading.loaded);
         }
