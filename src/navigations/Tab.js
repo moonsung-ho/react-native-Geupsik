@@ -21,32 +21,40 @@ const Tab = createBottomTabNavigator();
 const TabNavigation = ({ navigation }) => {
   const colors = useTheme();
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{ backgroundColor: colors.colors.background }}>
       <Tab.Navigator
         tabBarPosition="bottom"
         screenOptions={{
-          tabBarIconStyle: { alignItems: "center" },
-          tabBarBounces: false,
-          tabBarInactiveTintColor: colors.colors.border,
-          tabBarItemStyle: {
-            borderColor: colors.colors.border,
-            borderTopWidth: 1,
-            height: 48
+          tabBarIconStyle: {
+            alignItems: "center",
+            borderColor: colors.colors.border
           },
-          // tabBarBackground: () => (
-          //   <View style={{ justifyContent: "flex-start", marginBottom: 48 }}>
-          //     <Ad />
-          //   </View>
-          // ),
-          tabBarIndicatorStyle: { backgroundColor: "#fff", width: 0 },
-          tabBarLabelStyle: { fontSize: 11, margin: 0 }
+          tabBarItemStyle: {
+            height: 48,
+            borderColor: colors.colors.border
+          },
+          tabBarStyle: {
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            borderRightWidth: 1,
+            borderLeftWidth: 1,
+            borderColor: colors.colors.border,
+            borderTopWidth: 1
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: "#fff",
+            width: 0,
+            borderColor: colors.colors.border
+          },
+          tabBarLabelStyle: {
+            fontSize: 11,
+            margin: 0,
+            borderColor: colors.colors.border
+          }
         }}
         showPageIndicator={true}
         backBehavior={"history"}
       >
-        {/* <View style={{ justifyContent: "flex-end", flex: 1 }}>
-        <Ad />
-      </View> */}
         <Tab.Screen
           name="급식"
           component={Geupsik}
@@ -60,7 +68,14 @@ const TabNavigation = ({ navigation }) => {
                 ...props,
                 name: "food-fork-drink",
                 size: 22
-              })
+              }),
+            style: {
+              backgroundColor: "red",
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25,
+              position: "absolute",
+              bottom: 0
+            }
           }}
         />
         <Tab.Screen

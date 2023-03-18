@@ -161,8 +161,7 @@ export default function SettingsScreen({ navigation }) {
       style={{
         alignItems: "flex-start",
         justifyContent: "flex-start",
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
+
         borderColor: colors.colors.border,
         flex: 1,
         alignContent: "center",
