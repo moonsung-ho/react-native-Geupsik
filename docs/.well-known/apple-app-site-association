@@ -1,15 +1,10 @@
 {
-	applinks: {
-        details: [
-            {
-                appIDs: ["S6Q48J2C6X.com.sungho0205.geupsik"],
-                components: [
-               		{
-                	/: “*”
-                    }
-                ] 
-            }
-        ]
+    "applinks": {
+        "apps": [],
+        "details": [{
+            "appID": "S6Q48J2C6X.com.sungho0205.geupsik",
+            "paths": ["*"]
+            }]
     }
 	"appclips": {
 		"apps": [
